@@ -1,0 +1,7 @@
+{
+  "name": "MD Codes Treatment Plan ",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
