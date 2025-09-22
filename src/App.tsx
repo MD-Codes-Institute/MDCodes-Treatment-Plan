@@ -1,85 +1,105 @@
-import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
+  IonHeader,
   IonIcon,
+  IonImg,
   IonLabel,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
   IonTabs,
-  setupIonicReact
-} from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
+  IonToolbar,
+  setupIonicReact,
+} from "@ionic/react";
 
-/* Core CSS required for Ionic components to work properly */
-import '@ionic/react/css/core.css';
+import { IonReactRouter } from "@ionic/react-router";
+import { Route, Redirect, Switch } from "react-router-dom";
+import { ellipse, triangle } from "ionicons/icons";
 
-/* Basic CSS for apps built with Ionic */
-import '@ionic/react/css/normalize.css';
-import '@ionic/react/css/structure.css';
-import '@ionic/react/css/typography.css';
+import Tab1 from "./pages/Tab1";
+import Tab2 from "./pages/Tab2";
+import Tab3 from "./pages/Tab3";
+import SignUp from "./pages/credentials/SignUp/SignUp";
+import SignIn from "./pages/credentials/SignIn/SignIn";
 
-/* Optional CSS utils that can be commented out */
-import '@ionic/react/css/padding.css';
-import '@ionic/react/css/float-elements.css';
-import '@ionic/react/css/text-alignment.css';
-import '@ionic/react/css/text-transformation.css';
-import '@ionic/react/css/flex-utils.css';
-import '@ionic/react/css/display.css';
+import "./App.css";
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-
-/* import '@ionic/react/css/palettes/dark.always.css'; */
-/* import '@ionic/react/css/palettes/dark.class.css'; */
-import '@ionic/react/css/palettes/dark.system.css';
-
-/* Theme variables */
-import './theme/variables.css';
+/* Ionic CSS */
+import "@ionic/react/css/core.css";
+import "@ionic/react/css/normalize.css";
+import "@ionic/react/css/structure.css";
+import "@ionic/react/css/typography.css";
+import "@ionic/react/css/padding.css";
+import "@ionic/react/css/float-elements.css";
+import "@ionic/react/css/text-alignment.css";
+import "@ionic/react/css/text-transformation.css";
+import "@ionic/react/css/flex-utils.css";
+import "@ionic/react/css/display.css";
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
+    <IonHeader>
+      <IonToolbar>
+        <IonImg
+          src="../resources/MdCodes_White.png"
+          alt="Logo"
+          className="logo-header"
+        ></IonImg>
+      </IonToolbar>
+    </IonHeader>
     <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/tab1">
-            <Tab1 />
-          </Route>
-          <Route exact path="/tab2">
-            <Tab2 />
-          </Route>
-          <Route path="/tab3">
-            <Tab3 />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/tab1" />
-          </Route>
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/tab1">
-            <IonIcon aria-hidden="true" icon={triangle} />
-            <IonLabel>Tab 1</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
-            <IonIcon aria-hidden="true" icon={ellipse} />
-            <IonLabel>Tab 2</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon aria-hidden="true" icon={square} />
-            <IonLabel>Tab 3</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
+      <IonRouterOutlet>
+        <Switch>
+          {/* Redirecionamento padrão */}
+          <Route exact path="/" render={() => <Redirect to="/signin" />} />
+
+          {/* Página de login */}
+          <Route path="/signin" component={SignIn} />
+
+          <Route path="/signup" component={SignUp} />
+
+          {/* Tabs encapsuladas */}
+          <Route
+            path="/tabs"
+            render={() => (
+              <IonTabs>
+                <IonRouterOutlet>
+                  <Route path="/tabs/tab1" component={Tab1} exact />
+                  <Route path="/tabs/tab2" component={Tab2} exact />
+                  <Route path="/tabs/tab3" component={Tab3} exact />
+                  <Redirect exact from="/tabs" to="/tabs/tab1" />
+                </IonRouterOutlet>
+
+                <IonTabBar slot="bottom">
+                  <IonTabButton tab="tab1" href="/tabs/tab1">
+                    <IonImg
+                      src="../resources/face-icon-20.svg"
+                      className="icons-tabs"
+                    ></IonImg>
+                    <IonLabel>MD Codes</IonLabel>
+                  </IonTabButton>
+                  <IonTabButton tab="tab2" href="/tabs/tab2">
+                    <IonImg
+                      src="../resources/icon-flip-chart.svg"
+                      className="icons-tabs"
+                    ></IonImg>
+                    <IonLabel>Flip Chart</IonLabel>
+                  </IonTabButton>
+                  <IonTabButton tab="Tab3" href="/tabs/tab3">
+                    <IonImg
+                      src="../resources/login.png"
+                      className="icons-tabs"
+                    ></IonImg>
+                    <IonLabel>Profile</IonLabel>
+                  </IonTabButton>
+                </IonTabBar>
+              </IonTabs>
+            )}
+          />
+        </Switch>
+      </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
 );

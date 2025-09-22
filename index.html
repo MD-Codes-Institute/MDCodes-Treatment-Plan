@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <title>Ionic App</title>
-    
+
     <base href="/" />
-    
+
     <meta name="color-scheme" content="light dark" />
     <meta
       name="viewport"
@@ -13,11 +13,54 @@
     />
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
-    
+
     <link rel="manifest" href="/manifest.json" />
-    
-    <link rel="shortcut icon" type="image/png" href="/favicon.png" />
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="shortcut icon" type="image/png" href="/favicon.png" />`
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+  default-src 'self' capacitor: data: blob: https:;
+  img-src 'self' data: blob: https:;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  /* opcional, mas ajuda em alguns browsers */
+  style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' capacitor: blob:
+    https://www.gstatic.com
+    https://www.google.com
+    https://www.recaptcha.net
+    https://apis.google.com
+    https://www.googletagmanager.com;
+  connect-src 'self' capacitor: data: blob:
+    https://*.googleapis.com
+    https://identitytoolkit.googleapis.com
+    https://securetoken.googleapis.com
+    https://www.googleapis.com
+    https://firestore.googleapis.com
+    https://firebasestorage.googleapis.com
+    https://*.firebaseio.com
+    https://*.gstatic.com
+    https://*.firebaseapp.com
+    https://*.googleusercontent.com
+    https://www.google.com
+    https://www.recaptcha.net
+    https://fonts.googleapis.com
+    https://fonts.gstatic.com
+    http://localhost:* ws://localhost:*;
+  frame-src 'self'
+    https://www.google.com
+    https://www.recaptcha.net
+    https://recaptcha.google.com;
+  font-src 'self' data: https://fonts.gstatic.com;
+"
+    />
+
     <!-- add to homescreen for ios -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Ionic App" />

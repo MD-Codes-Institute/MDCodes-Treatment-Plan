@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;700&display=swap");
+
+:root {
+  --ion-background: #1c1c1c;
+  --ion-background-containers: #171717;
+  --ion-background-inputs: #2b2a2a;
+  --ion-background-buttons: #967F43;
+  --font-color: #ffff;
+  --ion-font-family: "Comfortaa", sans-serif;
+}
+html,
+body,
+ion-app,
+ion-content {
+  --background: var(--ion-background);
+  font-family: var(--ion-font-family), sans-serif;
+}
+
+ion-toolbar, ion-tab-bar{
+    --background: var(--ion-background-containers);
+    height: 5rem;
+    box-shadow: 2px 1px 10px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+
+ion-label{
+  color: var(--font-color);
+}
+
+label{
+  color: var(--font-color);
+  margin: 10px;
+}
+p{
+  color: var(--font-color);
+}
+
+.logo-header{
+  margin-top: 12px;
+  width: 15rem;
+}
+.icons-tabs{
+  height: 35px;
+  width: 35px;
+  margin: 5px;
+}
