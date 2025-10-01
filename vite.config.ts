@@ -5,7 +5,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   base: './',                // ✅ gera ./assets/... no index.html
-  build: { outDir: 'dist' }, // ✅ garante pasta final
+  build: { outDir: 'dist', sourcemap: true }, // ✅ garante pasta final
   plugins: [react(), legacy()],
   test: {
     globals: true,

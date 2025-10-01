@@ -1,107 +1,67 @@
+// App.tsx (Versão Final Refatorada)
+
 import {
   IonApp,
-  IonHeader,
-  IonIcon,
-  IonImg,
-  IonLabel,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-  IonToolbar,
-  setupIonicReact,
+  IonSpinner,
+  // ... outros imports do Ionic ...
 } from "@ionic/react";
-
 import { IonReactRouter } from "@ionic/react-router";
-import { Route, Redirect, Switch } from "react-router-dom";
-import { ellipse, triangle } from "ionicons/icons";
+import { Switch, Route, Redirect } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "./firebaseConfig";
 
-import Tab1 from "./pages/Tab1";
-import Tab2 from "./pages/Tab2";
-import Tab3 from "./pages/Tab3";
-import SignUp from "./pages/credentials/SignUp/SignUp";
+// Importe suas páginas e o novo PrivateRoute
+import PrivateRoutes from "./PrivateRoutes"; // Vamos criar este wrapper a seguir
+import PrivateRoute from "./components/PrivateRoute"; // O que acabamos de criar
 import SignIn from "./pages/credentials/SignIn/SignIn";
-
+import SignUp from "./pages/credentials/SignUp/SignUp";
 import "./App.css";
+// ... seus imports de CSS ...
 
-/* Ionic CSS */
-import "@ionic/react/css/core.css";
-import "@ionic/react/css/normalize.css";
-import "@ionic/react/css/structure.css";
-import "@ionic/react/css/typography.css";
-import "@ionic/react/css/padding.css";
-import "@ionic/react/css/float-elements.css";
-import "@ionic/react/css/text-alignment.css";
-import "@ionic/react/css/text-transformation.css";
-import "@ionic/react/css/flex-utils.css";
-import "@ionic/react/css/display.css";
+const App: React.FC = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const [checkingStatus, setCheckingStatus] = useState(true);
 
-setupIonicReact();
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setCheckingStatus(false);
+    });
+    return () => unsubscribe();
+  }, []);
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonHeader>
-      <IonToolbar>
-        <IonImg
-          src="../resources/MdCodes_White.png"
-          alt="Logo"
-          className="logo-header"
-        ></IonImg>
-      </IonToolbar>
-    </IonHeader>
-    <IonReactRouter>
-      <IonRouterOutlet>
+  if (checkingStatus) {
+    return (
+      <IonApp>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+          <IonSpinner />
+        </div>
+      </IonApp>
+    );
+  }
+
+  return (
+    <IonApp>
+      <IonReactRouter>
         <Switch>
-          {/* Redirecionamento padrão */}
-          <Route exact path="/" render={() => <Redirect to="/signin" />} />
+          {/* Rotas Públicas */}
+          <Route exact path="/signin" component={SignIn} />
+          <Route exact path="/signup" component={SignUp} />
 
-          {/* Página de login */}
-          <Route path="/signin" component={SignIn} />
+          {/* Rota Privada para as Tabs */}
+          {/* O PrivateRoute vai decidir se mostra as Tabs ou redireciona para /signin */}
+          <PrivateRoute path="/tabs" component={PrivateRoutes} user={user} />
 
-          <Route path="/signup" component={SignUp} />
-
-          {/* Tabs encapsuladas */}
-          <Route
-            path="/tabs"
-            render={() => (
-              <IonTabs>
-                <IonRouterOutlet>
-                  <Route path="/tabs/tab1" component={Tab1} exact />
-                  <Route path="/tabs/tab2" component={Tab2} exact />
-                  <Route path="/tabs/tab3" component={Tab3} exact />
-                  <Redirect exact from="/tabs" to="/tabs/tab1" />
-                </IonRouterOutlet>
-
-                <IonTabBar slot="bottom">
-                  <IonTabButton tab="tab1" href="/tabs/tab1">
-                    <IonImg
-                      src="../resources/face-icon-20.svg"
-                      className="icons-tabs"
-                    ></IonImg>
-                    <IonLabel>MD Codes</IonLabel>
-                  </IonTabButton>
-                  <IonTabButton tab="tab2" href="/tabs/tab2">
-                    <IonImg
-                      src="../resources/icon-flip-chart.svg"
-                      className="icons-tabs"
-                    ></IonImg>
-                    <IonLabel>Flip Chart</IonLabel>
-                  </IonTabButton>
-                  <IonTabButton tab="Tab3" href="/tabs/tab3">
-                    <IonImg
-                      src="../resources/login.png"
-                      className="icons-tabs"
-                    ></IonImg>
-                    <IonLabel>Profile</IonLabel>
-                  </IonTabButton>
-                </IonTabBar>
-              </IonTabs>
-            )}
-          />
+          {/* Redirecionamento Inicial */}
+          {/* Se carregar na raiz '/', decida para onde ir */}
+          <Route exact path="/">
+            {user ? <Redirect to="/tabs" /> : <Redirect to="/signin" />}
+          </Route>
         </Switch>
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;

@@ -55,15 +55,9 @@ const Tab2: React.FC = () => {
 
 
   return (
-    <IonPage>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Plano</IonTitle>
-          </IonToolbar>
-        </IonHeader>
+    
+      <IonContent className="container-main">
 
-        {/* Cabeçalho */}
         <section className="container-header">
           <div className="container-input">
             <div className="container-age">
@@ -144,7 +138,7 @@ const Tab2: React.FC = () => {
           </section>
         ))}
       </IonContent>
-    </IonPage>
+
   );
 };
 

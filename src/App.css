@@ -16,7 +16,7 @@ ion-content {
   font-family: var(--ion-font-family), sans-serif;
 }
 
-ion-toolbar, ion-tab-bar{
+ion-toolbar, ion-tab-bar, ion-header{
     --background: var(--ion-background-containers);
     height: 5rem;
     box-shadow: 2px 1px 10px 4px rgba(0, 0, 0, 0.2);
@@ -30,7 +30,6 @@ ion-label{
 
 label{
   color: var(--font-color);
-  margin: 10px;
 }
 p{
   color: var(--font-color);
