@@ -4,70 +4,56 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
+  IonButton,
+  IonLoading,
+  IonImg,
 } from "@ionic/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebaseConfig";
 import "./SignIn.css";
 
 const SignIn: React.FC = () => {
-  const history = useHistory();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [resp, setResp] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // Melhor nome para 'resp'
   const [loading, setLoading] = useState(false);
 
-  
-  useEffect(() => {
-    (async () => {
-      // @ts-ignore (em versões novas existe auth.authStateReady)
-      if (typeof auth.authStateReady === "function") {
-        try { await auth.authStateReady(); } catch {}
-      }
-      if (auth.currentUser) {
-        console.log("Already logged:", auth.currentUser.uid);
-        history.replace("/tabs/tab1");
-      }
-    })();
-  }, [history]);
+  const history = useHistory();
 
   const doSignIn = async () => {
-    if (loading) return;
-    setResp("");
-    setLoading(true);
+    setErrorMessage(""); // Limpa mensagens de erro anteriores
+
+    console.log("SignIn.tsx: 👉 doSignIn chamado para:", email);
+
     try {
-      const cred = await signInWithEmailAndPassword(auth, email.trim(), password);
-      console.log("Signed in:", cred.user.uid);
-
-      // força a troca de token (STS). Se isso falhar, loga o erro mas segue a navegação.
-      try {
-        const t = await cred.user.getIdToken();
-        console.log("Token length:", t.length);
-      } catch (e) {
-        console.warn("getIdToken failed (ok em dev):", e);
-      }
-
-      // navega imediatamente (sem esperar observer)
-      history.replace("/tabs/tab1");
-    } catch (error: any) {
-      console.error("Firebase sign-in error:", error);
-      const code = error?.code || "unknown";
-      if (code === "auth/invalid-credential") setResp("User not created or found.");
-      else if (code === "auth/user-not-found") setResp("User not found.");
-      else if (code === "auth/wrong-password") setResp("Incorrect password.");
-      else if (code === "auth/network-request-failed") setResp("Network error. Confira conexão/ATS/App Check/API key.");
-      else setResp(`Login failed (${code}): ${error?.message ?? "Unknown error"}`);
+      const cred = await signInWithEmailAndPassword(
+        auth,
+        email.trim(),
+        password
+      );
+      window.location.href = "/tabs";
+    } catch (err: any) {
+      console.error(
+        "SignIn.tsx: ❌ signIn error:",
+        err?.code,
+        err?.message,
+        err
+      );
+      const code = err?.code || "unknown";
+      if (code === "auth/invalid-credential")
+        setErrorMessage("Credencial inválida. Verifique e-mail e senha.");
+      else if (code === "auth/user-not-found")
+        setErrorMessage("Usuário não encontrado.");
+      else if (code === "auth/wrong-password")
+        setErrorMessage("Senha incorreta.");
+      else if (code === "auth/network-request-failed")
+        setErrorMessage("Erro de rede. Verifique sua conexão.");
+      else setErrorMessage(`Erro (${code}): ${err?.message ?? "desconhecido"}`);
     } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      doSignIn();
+      setLoading(false); // Desativa o spinner, sucesso ou falha
+      console.log("SignIn.tsx: Login finalizado.");
     }
   };
 
@@ -75,50 +61,56 @@ const SignIn: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login</IonTitle>
+          <IonImg
+            className="logo-header"
+            src="/resources/MdCodes_White.png"
+            alt="Logo"
+          ></IonImg>
         </IonToolbar>
       </IonHeader>
-
       <IonContent className="ion-padding container">
-        <div className="container">
+        <div className="container container-inputs">
           <label>E-mail:</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="exemplo@email.com"
-            required
             className="custom-input"
             autoCapitalize="none"
             autoCorrect="off"
             inputMode="email"
+            required
           />
-
           <label>Password:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="********"
-            required
             className="custom-input"
+            required
           />
-
-          <p>{resp}</p>
-
-          <button
-            type="button"
-            className="button-login"
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          
+          <IonButton
+            expand="block"
             onClick={doSignIn}
             disabled={loading || !email || !password}
+            className="button-login"
           >
-            {loading ? "Logging in..." : "Login"}
-          </button>
-
-          <Link to="/signup" className="link-register">Click here to register</Link>
+            {loading ? "logging in..." : "Login"}
+          </IonButton>
+    
+          <Link
+            to="/signup"
+            className="link-register"
+            style={{ display: "block", marginTop: 12, textAlign: "center" }}
+          >
+            Click here to register
+          </Link>
         </div>
+
+        {/* IonLoading para feedback visual durante o login */}
+        <IonLoading isOpen={loading} message={"logging in..."} duration={0} />
       </IonContent>
     </IonPage>
   );

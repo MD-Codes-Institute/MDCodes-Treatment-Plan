@@ -1,14 +1,10 @@
-/* comeco dos estilos do cabecalho */
-.container-header {
-  margin-top: 5rem;
-  display: flex;
-  justify-content: center;
+.container-header{
+  margin-left: 10px;
 }
 
 .container-input {
   display: flex;
   flex-direction: column;
-  margin-top: 30px;
   width: 90%;
 }
 .container-age {
@@ -63,11 +59,11 @@
 .sub-container-colums-title {
   display: flex;
   flex-direction: row;
-  margin-top: 30px;
+  padding: 0;
 }
 
 .sub-container-colums-title p {
-  padding: 0 19px;
+  padding: 10px;  
 }
 
 .list-colums{
