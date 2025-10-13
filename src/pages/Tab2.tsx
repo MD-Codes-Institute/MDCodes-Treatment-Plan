@@ -31,22 +31,29 @@ const Tab2: React.FC = () => {
 
   
   useEffect(() => {
-    if (!preselected) return;
-    const newRow: Row = {
-      id: uid(),
-      code: preselected,
-      product: "VM",
-      right: "0.1",
-      mid: "0",
-      left: "0.1",
-    };
-    setRows(prev => [...prev, newRow]);
-    // Dica: se você NÃO quiser permitir duplicados consecutivos, faça:
     
-  }, [preselected]);
+    const codeList = localStorage.getItem("debugCodeList") || "[]";
+    const codes: string[] = JSON.parse(codeList)
+
+    if(codes.length == 0 || codes.length <= 0) return;
+    
+      const newRows: Row [] = codes.map(code => ({
+        id: uid(),
+        code: code,
+        product: "VM",
+        right: "0.1",
+        mid: "0",
+        left: "0.1",
+      })) 
+    
+      setRows(newRows)
+    }, [preselected]);
+
+    
 
   function updateRow<T extends keyof Row>(id: string, field: T, value: Row[T]) {
     setRows(prev => prev.map(r => (r.id === id ? { ...r, [field]: value } : r)));
+    
   }
 
   function removeRow(id: string) {
@@ -57,7 +64,6 @@ const Tab2: React.FC = () => {
   return (
     
       <IonContent className="container-main">
-
         <section className="container-header">
           <div className="container-input">
             <div className="container-age">

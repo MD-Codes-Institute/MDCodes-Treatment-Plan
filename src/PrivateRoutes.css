@@ -7,20 +7,16 @@ ion-tab-bar {
   display: flex !important;
   justify-content: space-around !important;
   align-items: center !important;
-  padding-bottom: 5px ;
+  padding-bottom: 10px;
 }
-
 
 
 ion-tab-button::part(native) {
   display: flex !important;
-  flex-direction: row !important;
+  flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
   text-decoration: none;
-}
-.logo-header {
-  width: 15rem;
 }
 
 .icons-tabs {
@@ -43,6 +39,3 @@ ion-tab-button.tab-selected ion-label {
   font-weight: bold;
 }
 
-ion-tab-button ion-img{
-  margin: 0 auto;
-}

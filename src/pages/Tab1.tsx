@@ -173,6 +173,22 @@ export default function Tab1() {
   }
 
   function goToInputs(code: string) {
+    console.log(`Código clicado: ${code}`);
+
+    // Passo 1: Ler a lista de códigos que JÁ EXISTE no localStorage.
+    // Usamos `|| '[]'` para o caso de ser a primeira vez e a lista ainda não existir.
+    const listaSalvaString = localStorage.getItem("debugCodeList") || "[]";
+    const listaAtual: string[] = JSON.parse(listaSalvaString);
+
+    // Passo 2: Adicionar (concatenar) o NOVO código à lista que acabamos de ler.
+    const novaLista = [...listaAtual, code];
+
+    // Passo 3: Salvar a lista ATUALIZADA de volta no localStorage.
+    // Precisamos converter o array para uma string JSON para poder salvá-lo.
+    localStorage.setItem("debugCodeList", JSON.stringify(novaLista));
+
+    // Passo 4: Logar no console para vermos o resultado na hora!
+    console.log("Lista de códigos de debug atualizada:", novaLista);
     history.push(`/tabs/tab2?code=${encodeURIComponent(code)}`);
   }
 
@@ -229,7 +245,7 @@ export default function Tab1() {
               >
                 {(active.options ?? []).map((label, i) => (
                   <motion.button
-                    key={label}
+                    key={`${label}-${i}`}
                     className={`point child ${active.id}-child ${active.id}-${
                       i + 1
                     }`}
