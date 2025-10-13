@@ -21,12 +21,6 @@ import './PrivateRoutes.css';
 
 const PrivateRoutes: React.FC = () => (
   <IonPage className='ion-page'>
-    
-    <IonHeader>
-      <IonToolbar>
-       <IonImg className='logo-header' src='/resources/MdCodes_White.png' alt='Logo'></IonImg>
-      </IonToolbar>
-    </IonHeader>
 
     <IonContent>
       <IonTabs>

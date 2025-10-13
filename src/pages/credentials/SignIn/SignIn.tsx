@@ -2,8 +2,6 @@ import {
   IonContent,
   IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
   IonButton,
   IonLoading,
   IonImg,
@@ -59,58 +57,51 @@ const SignIn: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonImg
-            className="logo-header"
-            src="/resources/MdCodes_White.png"
-            alt="Logo"
-          ></IonImg>
-        </IonToolbar>
-      </IonHeader>
       <IonContent className="ion-padding container">
-        <div className="container container-inputs">
-          <label>E-mail:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="custom-input"
-            autoCapitalize="none"
-            autoCorrect="off"
-            inputMode="email"
-            required
-          />
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="custom-input"
-            required
-          />
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
-          
-          <IonButton
-            expand="block"
-            onClick={doSignIn}
-            disabled={loading || !email || !password}
-            className="button-login"
-          >
-            {loading ? "logging in..." : "Login"}
-          </IonButton>
-    
-          <Link
-            to="/signup"
-            className="link-register"
-            style={{ display: "block", marginTop: 12, textAlign: "center" }}
-          >
-            Click here to register
-          </Link>
-        </div>
+        <div className="container-center">
+          <div className="container container-inputs">
+            <label>E-mail:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="custom-input"
+              autoCapitalize="none"
+              autoCorrect="off"
+              inputMode="email"
+              required
+            />
+            <label>Password:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="custom-input"
+              required
+            />
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-        {/* IonLoading para feedback visual durante o login */}
-        <IonLoading isOpen={loading} message={"logging in..."} duration={0} />
+            <IonButton
+              expand="block"
+              onClick={doSignIn}
+              disabled={loading || !email || !password}
+              className="button-login"
+            >
+              {loading ? "logging in..." : "Login"}
+            </IonButton>
+
+            <Link
+              to="/signup"
+              className="link-register"
+              style={{ display: "block", marginTop: 12, textAlign: "center" }}
+            >
+              Click here to register
+            </Link>
+          </div>
+
+          {/* IonLoading para feedback visual durante o login */}
+          <IonLoading isOpen={loading} message={"logging in..."} duration={0} />
+        </div>
       </IonContent>
     </IonPage>
   );
