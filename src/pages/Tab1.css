@@ -179,7 +179,7 @@
 
 /* EXEMPLO: distância diferente por breakpoint (todos os clusters) */
 
-@media (min-width:380px) and (max-width:430px){ /* dispostivos mobiles similares ao pixel 7 */
+ @media (min-width:380px) and (max-width:430px){ /* dispostivos mobiles similares ao pixel 7 */
   .cluster{ --r:48px; }
  
 
@@ -543,13 +543,13 @@
 .cluster-f .f-1{ top:256px; left:81.92px; } 
 .cluster-f .f-2{ top:256px; left:204.8px; } 
 .cluster-f .f-3{ top:256px; left:-51.2px; }
-}@media(min-width:750px) and (max-width:800px){ /*referencia-Ipad mini*/
+}@media(min-width:750px) and (max-width:800px) and (orientation: portrait){ /*referencia-Ipad mini*/
   .cluster{ --r:48px; }
  .point{
-  width:40px;          
-  height:40px;           
-  line-height:40px;     
-  font-size:1.05rem;       
+  width:35px;          
+  height:35px;           
+  line-height:35px;     
+  font-size:0.9rem;       
   box-shadow:0 0 10px rgba(0,0,0,.4);  
 }
   .img-zoom{
@@ -698,13 +698,13 @@
 .cluster-f .f-2{ top:230.68px; left:145px;  } 
 .cluster-f .f-3{ top:230.68px; left:-110px; }
 
-}@media(min-width:800px) and (max-width:850px){ /*referencia-Ipad air*/
+}@media(min-width:800px) and (max-width:850px) and (orientation: portrait){ /*referencia-Ipad air*/
   .cluster{ --r:48px; }
    .point{
-  width:45px;          
-  height:45px;           
-  line-height:45px;     
-  font-size:1.18rem;       
+  width:38px;          
+  height:38px;           
+  line-height:38px;     
+  font-size:1rem;       
   box-shadow:0 0 10px rgba(0,0,0,.4);  
 }
   .img-zoom{
@@ -859,13 +859,13 @@
 .cluster-f .f-2{ top: 270px; left:  230px;} 
 .cluster-f .f-3{ top: 270px; left: -70px;}
 
-}@media(min-width:900px) and (max-width:950px){ /*referencia-tabS9 e S8+*/
+}@media(min-width:900px) and (max-width:950px) and (orientation: portrait){ /*referencia-tabS9 e S8+*/
   .cluster{ --r:48px; }
    .point{
-  width:57px;          
-  height:57px;           
-  line-height:57px;     
-  font-size:1.55rem;       
+  width:46px;          
+  height:46px;           
+  line-height:46px;     
+  font-size:1.25rem;       
   box-shadow:0 0 10px rgba(0,0,0,.4);  
 }
   .img-zoom{
@@ -875,6 +875,13 @@
   background-repeat: no-repeat;
   will-change:transform; z-index:1;
 }
+ .cluster-f .point{
+    width:50px;
+    height:50px;
+    line-height:50px;
+    font-size:1.3rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
   .img-f{
   position:absolute; inset:0;
   background-image:url("../resources/Rosto MDCI 2024 - Frontal_V5_FINAL.png");
@@ -884,6 +891,13 @@
   background-repeat: no-repeat;
   will-change:transform; z-index:1;
 }
+ .cluster-g .point{
+    width:50px;
+    height:50px;
+    line-height:50px;
+    font-size:1.3rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
 .img-g{
   position:absolute; inset:0;
   background-image:url("../resources/Rosto MDCI 2024 - Frontal_V5_FINAL.png");
@@ -902,12 +916,19 @@
   background-repeat: no-repeat;
   will-change:transform; z-index:1;
 }
+ .cluster-lp .point{
+    width:50px;
+    height:50px;
+    line-height:50px;
+    font-size:1.25rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
 .img-lp{
   position:absolute; inset:0;
   background-image:url("../resources/Rosto Frontal C.png");
   transition: 0.2s;
   background-size: 110%;
-   background-position: 160% 90%;
+   background-position: 160% 98%;
   background-repeat: no-repeat;
   will-change:transform; z-index:1;
 }
@@ -929,7 +950,13 @@ background-position:-110% 85%;
   background-repeat: no-repeat;
   will-change:transform; z-index:1;
 }
-
+ .cluster-n .point{
+    width:48px;
+    height:48px;
+    line-height:48px;
+    font-size:1.3rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
   /* Posicionando as regiões de cada código*/
 .ck { top:53%; left:51%; }
 .e  { top:30%; left:41%; }
@@ -953,35 +980,35 @@ background-position:-110% 85%;
 /* Posicionando os filhos (childs) */
 .cluster-ck .ck-1{ top: -150px; left: 85px;} 
 .cluster-ck .ck-2{ top: -80px; left: -45px;} 
-.cluster-ck .ck-3{ top: -20px; left: -160px;} 
+.cluster-ck .ck-3{ top: -20px; left: -150px;} 
 .cluster-ck .ck-4{ top: 10px; left: 90px;}
-.cluster-ck .ck-5{ top: 110px; left: -110px;}
+.cluster-ck .ck-5{ top: 110px; left: -90px;}
 
 
 .cluster-e .e-1{ top: 75px; left: 130px;} 
 .cluster-e .e-2{ top: 5px; left: -05px;} 
 .cluster-e .e-3{ top: 45px; left: -170px;}
 
-.cluster-o .o-1{ top: 15px; left: 70px;} 
-.cluster-o .o-2{ top: 100px; left: 25px;} 
-.cluster-o .o-3{ top: -70px; left: 25px;}
+.cluster-o .o-1{ top: 15px; left: 60px;} 
+.cluster-o .o-2{ top: 90px; left: 25px;} 
+.cluster-o .o-3{ top: -60px; left: 25px;}
 
-.cluster-t .t-1{ top: 60px; left: 10px;} 
-.cluster-t .t-2{ top: 20px; left: 85px;} 
+.cluster-t .t-1{ top: 90px; left: 10px;} 
+.cluster-t .t-2{ top: 50px; left: 75px;} 
 
 .cluster-tt .tt-1{ top:140px;  left:-90px;  } 
 .cluster-tt .tt-2{ top:90px;  left:90px;  } 
 .cluster-tt .tt-3{ top:90px;   left:-255px; }
 
-.cluster-jw .jw-1{ top: -50px; left: -300px;} 
-.cluster-jw .jw-2{ top: -245px; left: -280px;} 
-.cluster-jw .jw-3{ top: 70px; left: -405px;} 
-.cluster-jw .jw-4{ top: 215px; left: -675px;}
-.cluster-jw .jw-5{ top: 240px; left: -765px;}
+.cluster-jw .jw-1{ top: -50px; left: -280px;} 
+.cluster-jw .jw-2{ top: -250px; left: -250px;}
+.cluster-jw .jw-3{ top: 60px; left: -405px;} 
+.cluster-jw .jw-4{ top: 160px; left: -600px;}
+.cluster-jw .jw-5{ top: 190px; left: -690px;}
 
-.cluster-nl .nl-1{ top: -30px; left: -40px;} 
-.cluster-nl .nl-2{ top: 35px; left: -5px;} 
-.cluster-nl .nl-3{ top: 100px; left: 30px;}
+.cluster-nl .nl-1{ top: -30px; left: -25px;} 
+.cluster-nl .nl-2{ top: 25px; left: 10px;} 
+.cluster-nl .nl-3{ top: 80px; left: 45px;}
 
 .cluster-n .n-1{ top: 215px; left: 15px;} 
 .cluster-n .n-2{ top: 145px; left: -10px;} 
@@ -996,21 +1023,21 @@ background-position:-110% 85%;
 .cluster-c .c-5{ top:140px;  left:45px;   }
 .cluster-c .c-6{ top:-45px; left:165px;   }
 
-.cluster-m .m-1{ top: -40px; left: -50px;} 
-.cluster-m .m-2{ top: 35px; left: -19px;} 
-.cluster-m .m-3{ top: 110px; left: 12px;}
+.cluster-m .m-1{ top: -80px; left: -10px;} 
+.cluster-m .m-2{ top: -15px; left: 25px;} 
+.cluster-m .m-3{ top:50px; left: 60px;}
 
 .cluster-lp .lp-2{  top: -85px;   left: 170px; } /* Lp1 upper/Cima */
 .cluster-lp .lp-1{  top: -20px;     left: 155px; } /* Lp1 Lower/Baixo */
-.cluster-lp .lp-3{  top: -170px;  left: 230px; } /* Lp2  */ 
-.cluster-lp .lp-4{  top: -140px;  left: 390px; } /* Lp3 Upper/Cima */
-.cluster-lp .lp-5{  top: 50px;   left: 390px; } /* Lp3 Lower/Baixo */
-.cluster-lp .lp-6{  top: -80px;   left: 280px; } /* Lp4 */
-.cluster-lp .lp-7{  top: -5px;   left: 300px; } /* Lp5 */
+.cluster-lp .lp-3{  top: -160px;  left: 215px; } /* Lp2  */ 
+.cluster-lp .lp-4{  top: -130px;  left: 350px; } /* Lp3 Upper/Cima */
+.cluster-lp .lp-5{  top: 40px;   left: 350px; } /* Lp3 Lower/Baixo */
+.cluster-lp .lp-6{  top: -80px;   left: 245px; } /* Lp4 */
+.cluster-lp .lp-7{  top: -15px;   left: 265px; } /* Lp5 */
 .cluster-lp .lp-8{  top: -65px;   left: 30px;  } /* Lp6 */
-.cluster-lp .lp-9{  top: -210px;  left: 315px; } /* Lp7 */
-.cluster-lp .lp-10{ top: -180px;    left: 450px; } /* Lp8 Upper/Cima */
-.cluster-lp .lp-11{ top: 90px;  left: 450px; } /* Lp8 Lower/Baixo*/
+.cluster-lp .lp-9{  top: -190px;  left: 295px; } /* Lp7 */
+.cluster-lp .lp-10{ top: -180px;    left: 390px; } /* Lp8 Upper/Cima */
+.cluster-lp .lp-11{ top: 90px;  left: 390px; } /* Lp8 Lower/Baixo*/
 
 .cluster-g .g-1{ top:40px; left:180px; } /* G1 left/esquerdo */
 .cluster-g .g-2{ top:40px; left:310px; } /* G1 right/direito*/
@@ -1193,6 +1220,13 @@ background-position:-110% 175%;
   font-size:0.8rem;       
   box-shadow:0 0 10px rgba(0,0,0,.4);  
 }
+ .cluster-o .point{
+    width:35px;
+    height:35px;
+    line-height:35px;
+    font-size:0.95rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
   .img-zoom{
   position:absolute; inset:0;
   background-image:url("../resources/Rosto MDCI 2024 - Oblique_V1_FINAL 1.png");
@@ -1210,6 +1244,13 @@ background-position:-110% 175%;
   background-repeat: no-repeat;
   will-change:transform; z-index:1;
 }
+ .cluster-g .point{
+    width:38px;
+    height:38px;
+    line-height:38px;
+    font-size:1.05rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
 .img-g{
   position:absolute; inset:0;
   background-image:url("../resources/Rosto MDCI 2024 - Frontal_V5_FINAL.png");
@@ -1241,7 +1282,7 @@ background-position:-110% 175%;
     width:42px;
     height:42px;
     line-height:42px;
-    font-size:1.1rem;   /* ajuste fino do número */
+    font-size:1.12rem;   /* ajuste fino do número */
     box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
   }
 .img-lp{
@@ -1298,9 +1339,10 @@ background-position:-110% 175%;
     width:32px;
     height:32px;
     line-height:32px;
-    font-size:0.82rem;   /* ajuste fino do número */
+    font-size:0.80rem;   /* ajuste fino do número */
     box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
   }
+  
   /* Posicionando as regiões de cada código*/
 .ck { top:53%; left:51%; } 
 .e  { top:28.5%; left:46.2%; }
@@ -1390,47 +1432,327 @@ background-position:-110% 175%;
 .cluster-f .f-1{ top: 65px; left: 225px;} 
 .cluster-f .f-2{ top: 65px; left:  315px;} 
 .cluster-f .f-3{ top: 65px; left: 135px;}
-}@media (min-width:1350px) and (max-width:1400px) and (orientation: landscape){
+
+}@media (min-width:1150px)and (max-width:1300px) and (orientation: landscape) /*Ipad Air landscape(deitado)*/{
   .cluster{ --r:48px; }
    .point{
-  width:30px;          
-  height:30px;           
-  line-height:30px;     
-  font-size:0.8rem;       
+  width:34px;          
+  height:34px;           
+  line-height:34px;     
+  font-size:0.93rem;       
+  box-shadow:0 0 10px rgba(0,0,0,.4);  
+}
+
+  .img-zoom{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto MDCI 2024 - Oblique_V1_FINAL 1.png");
+  background-size:55%;
+  background-position: 50% 35%;
+  background-repeat: no-repeat;
+  will-change:transform; z-index:1;
+}
+
+ .cluster-f .point{
+    width:40px;
+    height:40px;
+    line-height:40px;
+    font-size:1.15rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+
+  .img-f{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto MDCI 2024 - Frontal_V5_FINAL.png");
+  transition: 0.2s;
+  background-size:50%;
+  background-position: 40% -30%;
+  background-repeat: no-repeat;
+  will-change:transform; z-index:1;
+}
+ .cluster-g .point{
+    width:32px;
+    height:32px;
+    line-height:32px;
+    font-size:0.8rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+}
+
+.img-g{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto MDCI 2024 - Frontal_V5_FINAL.png");
+  transition: 0.2s;
+  background-size:50%; 
+  background-position:40% 180%;
+  background-repeat: no-repeat;
+  will-change:transform; z-index:1;
+}
+
+ .cluster-tt .point{
+    width:47px;
+    height:47px;
+    line-height:47px;
+    font-size:1.2rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+.img-tt{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto MDCI 2024 - Frontal_V5_FINAL.png");
+  transition: 0.5s;
+  background-size:60%;
+  background-position: 46% 20%;
+  background-repeat: no-repeat;
+  will-change:transform; z-index:1;
+}
+ 
+   .cluster-lp .point{
+    width:46px;
+    height:46px;
+    line-height:46px;
+    font-size:1.18rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+
+.img-lp{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto Frontal C.png");
+  transition: 0.2s;
+  background-size:95%;
+   background-position: -35% 70%;
+  background-repeat: no-repeat;
+  will-change:transform; z-index:1;
+  
+}
+
+.cluster-c .point{
+    width:42px;
+    height:42px;
+    line-height:42px;
+    font-size:1.15rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+.img-c{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto Frontal C.png");
+  transition: 0.2s;
+   background-size:50%;
+  background-position: 36% 70%;
+  background-repeat: no-repeat;
+  will-change:transform; z-index:1;
+}
+
+.cluster-jw .point{
+    width:33px;
+    height:33px;
+    line-height:33px;
+    font-size:0.82rem;   /* ajuste fino do número */
+}
+
+.img-zoom-jw{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto MDCI 2024 - Oblique_V1_FINAL 1.png");
+  transition: 0.2s;
+ background-size:60%;
+  background-position: 50% ;
+  background-repeat: no-repeat;
+  will-change:transform; z-index:1;
+}
+
+.cluster-nl .point{
+    width:36px;
+    height:36px;
+    line-height:36px;
+    font-size:0.9rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+  .cluster-m .point{
+    width:36px;
+    height:36px;
+    line-height:36px;
+    font-size:0.9rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+  .cluster-n .point{
+    width:35px;
+    height:35px;
+    line-height:35px;
+    font-size:0.95rem;   /* ajuste fino do número */
+}
+  .cluster-e .point{
+    width:37px;
+    height:37px;
+    line-height:37px;
+    font-size:0.9rem;   
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+    .cluster-t .point{
+    width:35px;
+    height:35px;
+    line-height:35px;
+    font-size:0.9rem;   
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+
+  .cluster-o .point{
+    width:35px;
+    height:35px;
+    line-height:35px;
+    font-size:0.9rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+  
+  .cluster-ck .point{
+    width:34px;
+    height:34px;
+    line-height:34px;
+    font-size:0.9rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+
+
+
+  /* Posicionando as regiões de cada código*/
+.ck { top:55%; left:51%;     } 
+.e  { top:28.5%; left:46.2%; }
+.o  { top:38%; left:52.7%;   }
+.t  { top:30.5%; left:55.5%  }
+.tt { top:46%; left:45%;     }
+.nl { top:61%; left:42.5%;   }  
+.m  { top:74%; left:45.3%;   }
+.jw { top:73%; left:54%;     }
+.c  { top:79.5%; left:35.4%; }
+.lp { top:68%; left:34.5%;   }
+.n  { top:46%; left:34%;     }
+.g  { top:31.5%; left:35%;   }
+.f  { top:22%; left:36.8%;   }
+
+
+
+.cluster{ position:absolute; width:0; height:0; z-index:3; --r:56px; --rd:calc(var(--r) * 0.707); }
+.child{ position:absolute; left:0; top:0; }
+
+/* Posicionando os filhos (childs) */
+.cluster-ck .ck-1{ top: -100px; left: 85px;} 
+.cluster-ck .ck-2{ top: -60px; left: 5px;  } 
+.cluster-ck .ck-3{ top: -20px; left:-95px; } 
+.cluster-ck .ck-4{ top: 10px; left:  85px; }
+.cluster-ck .ck-5{ top: 60px; left: -48px; }
+
+.cluster-e .e-1{ top: 60px; left:   115px; } 
+.cluster-e .e-2{ top: 0px; left:    5px;   } 
+.cluster-e .e-3{ top: 30px; left: -130px;  }
+
+.cluster-o .o-1{ top: 22.5px; left: 40px;    } 
+.cluster-o .o-2{ top: 70px; left: 15px;    } 
+.cluster-o .o-3{ top:-25px; left: 15px;    }
+
+.cluster-t .t-1{ top: 35px; left: -5px;    } 
+.cluster-t .t-2{ top: 15px; left: 45px;    } 
+
+.cluster-tt .tt-1{ top:210px;  left:240px; } 
+.cluster-tt .tt-2{ top:175px;  left:360px; } 
+.cluster-tt .tt-3{ top:175px;  left:125px; }
+
+.cluster-jw .jw-1{ top: -15px; left:-280px;} 
+.cluster-jw .jw-2{ top: -145px;left:-265px;} 
+.cluster-jw .jw-3{ top: 50px; left: -360px;} 
+.cluster-jw .jw-4{ top: 130px; left:-500px;}
+.cluster-jw .jw-5{ top: 155px; left:-570px;}
+
+.cluster-nl .nl-1{ top: -35px; left:-20px; } 
+.cluster-nl .nl-2{ top: 6px; left: -1px; } 
+.cluster-nl .nl-3{ top: 50px; left: 18px;  } 
+
+.cluster-n .n-1{ top: 158px; left: 15px;} 
+.cluster-n .n-2{ top: 110px; left: -4px;} 
+.cluster-n .n-3{ top: -80px; left: 28px;} 
+.cluster-n .n-4{ top: -15px; left: 13px;}
+.cluster-n .n-5{ top: 45px; left: -6px;}
+
+.cluster-c .c-1{ top:-80px; left:140px;  }
+.cluster-c .c-2{ top:60px;  left:110px; }
+.cluster-c .c-3{ top:-20px; left:182px;   }
+.cluster-c .c-4{ top: 5px;  left:135px;  }
+.cluster-c .c-5{ top:35px;  left:195px; }
+.cluster-c .c-6{ top:-120px; left:290px;  }
+
+.cluster-m .m-1{ top:-25px; left: -15px;} 
+.cluster-m .m-2{ top:15px; left: 10px;} 
+.cluster-m .m-3{ top: 55px; left:35px;}
+
+.cluster-lp .lp-2{  top:-85px;   left: 65px; } /* Lp1 upper/Cima */
+.cluster-lp .lp-1{  top:-15px;     left: 50px; } /* Lp1 Lower/Baixo */
+.cluster-lp .lp-3{  top: -170px;  left: 130px; } /* Lp2  */ 
+.cluster-lp .lp-4{  top: -145px;  left: 275px; } /* Lp3 Upper/Cima */
+.cluster-lp .lp-5{  top: 45px;   left: 275px; } /* Lp3 Lower/Baixo */
+.cluster-lp .lp-6{  top: -80px;   left: 158px; } /* Lp4 */
+.cluster-lp .lp-7{  top: -5px;   left: 180px; } /* Lp5 */
+.cluster-lp .lp-8{  top: -65px;   left:-75px;  } /* Lp6 */
+.cluster-lp .lp-9{  top: -210px;  left:210px; } /* Lp7 */
+.cluster-lp .lp-10{ top: -185px;    left: 320px; } /* Lp8 Upper/Cima */
+.cluster-lp .lp-11{ top: 85px;  left: 320px; } /* Lp8 Lower/Baixo*/
+
+.cluster-g .g-1{ top:-25px; left: 120px; } /* G1 left/esquerdo */
+.cluster-g .g-2{ top:-25px; left:185px; } /* G1 right/direito*/
+.cluster-g .g-3{ top:8px;  left:152.5px; } /* G2 */
+
+.cluster-f .f-1{ top: 115px; left: 255px;} 
+.cluster-f .f-2{ top: 115px; left: 365px;} 
+.cluster-f .f-3{ top: 115px; left: 148px;}
+}@media (min-width:1350px) and (max-width:1400px) and (orientation: landscape) and (min-height:950px){/*Ipad pro landscape(deitado)*/
+  .cluster{ --r:48px; }
+   .point{
+  width:34px;          
+  height:34px;           
+  line-height:34px;     
+  font-size:0.93rem;       
   box-shadow:0 0 10px rgba(0,0,0,.4);  
 }
   .img-zoom{
   position:absolute; inset:0;
   background-image:url("../resources/Rosto MDCI 2024 - Oblique_V1_FINAL 1.png");
   background-size:55%;
-  background-position: 50% ;
+  background-position: 50% 100%;
   background-repeat: no-repeat;
   will-change:transform; z-index:1;
 }
+ .cluster-f .point{
+    width:40px;
+    height:40px;
+    line-height:40px;
+    font-size:1.15rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
   .img-f{
   position:absolute; inset:0;
   background-image:url("../resources/Rosto MDCI 2024 - Frontal_V5_FINAL.png");
   transition: 0.2s;
   background-size:50%;
-  background-position: 40% 20%;
+  background-position: 40% 80%;
   background-repeat: no-repeat;
   will-change:transform; z-index:1;
 }
+ .cluster-g .point{
+    width:41px;
+    height:41px;
+    line-height:41px;
+    font-size:1.05rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
 .img-g{
   position:absolute; inset:0;
   background-image:url("../resources/Rosto MDCI 2024 - Frontal_V5_FINAL.png");
   transition: 0.2s;
-  background-size:60%; 
-  background-position:35% ;
+  background-size:50%; 
+  background-position:40% 180%;
   background-repeat: no-repeat;
   will-change:transform; z-index:1;
 }
 
  .cluster-tt .point{
-    width:36px;
-    height:36px;
-    line-height:36px;
-    font-size:0.9rem;   /* ajuste fino do número */
+    width:47px;
+    height:47px;
+    line-height:47px;
+    font-size:1.2rem;   /* ajuste fino do número */
     box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
   }
 .img-tt{
@@ -1450,6 +1772,13 @@ background-position:-110% 175%;
     font-size:1.1rem;   /* ajuste fino do número */
     box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
   }
+   .cluster-lp .point{
+    width:55px;
+    height:55px;
+    line-height:55px;
+    font-size:1.3rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
 .img-lp{
   position:absolute; inset:0;
   background-image:url("../resources/Rosto Frontal C.png");
@@ -1462,10 +1791,10 @@ background-position:-110% 175%;
 
 }
 .cluster-c .point{
-    width:35px;
-    height:35px;
-    line-height:35px;
-    font-size:1rem;   /* ajuste fino do número */
+    width:43px;
+    height:43px;
+    line-height:43px;
+    font-size:1.2rem;   /* ajuste fino do número */
     box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
   }
 .img-c{
@@ -1494,17 +1823,61 @@ background-position:-110% 175%;
   will-change:transform; z-index:1;
 }
 .cluster-nl .point{
-    width:32px;
-    height:32px;
-    line-height:32px;
-    font-size:0.8rem;   /* ajuste fino do número */
+    width:38px;
+    height:38px;
+    line-height:38px;
+    font-size:1rem;   /* ajuste fino do número */
     box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
   }
   .cluster-m .point{
-    width:32px;
-    height:32px;
-    line-height:32px;
-    font-size:0.82rem;   /* ajuste fino do número */
+    width:38px;
+    height:38px;
+    line-height:38px;
+    font-size:1rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+  .cluster-n .point{
+    width:33px;
+    height:33px;
+    line-height:33px;
+    font-size:0.86rem;   /* ajuste fino do número */
+}
+  .cluster-e .point{
+    width:37px;
+    height:37px;
+    line-height:37px;
+    font-size:0.9rem;   
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+    .cluster-t .point{
+    width:37px;
+    height:37px;
+    line-height:37px;
+    font-size:1rem;   
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+
+  .cluster-o .point{
+    width:37px;
+    height:37px;
+    line-height:37px;
+    font-size:0.98rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+
+  
+  .cluster-ck .point{
+    width:37px;
+    height:37px;
+    line-height:37px;
+    font-size:0.98rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+    .cluster-jw .point{
+    width:42px;
+    height:42px;
+    line-height:42px;
+    font-size:1.1rem;   /* ajuste fino do número */
     box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
   }
   /* Posicionando as regiões de cada código*/
@@ -1516,8 +1889,8 @@ background-position:-110% 175%;
 .nl { top:58%; left:42.5%; } 
 .m  { top:71%; left:45.3%; }
 .jw { top:69%; left:54%; }
-.c  { top:76%; left:35.4%; }
-.lp { top:65%; left:34.5%; }
+.c  { top:75.5%; left:35.4%; }
+.lp { top:64%; left:34.5%; }
 .n  { top:46%; left:34%; }
 .g  { top:31.5%; left:35%; }
 .f  { top:22%; left:36.8%; }
@@ -1528,75 +1901,346 @@ background-position:-110% 175%;
 .child{ position:absolute; left:0; top:0; }
 
 /* Posicionando os filhos (childs) */
-.cluster-ck .ck-1{ top: -65px; left: 65px;} 
-.cluster-ck .ck-2{ top: -45px; left: 2px;} 
-.cluster-ck .ck-3{ top: -10px; left: -70px;} 
-.cluster-ck .ck-4{ top: 10px; left: 70px;}
-.cluster-ck .ck-5{ top: 55px; left: -35px;}
+.cluster-ck .ck-1{ top: -100px; left: 85px;} 
+.cluster-ck .ck-2{ top: -65px; left: 5px; } 
+.cluster-ck .ck-3{ top: -20px; left:-95px;} 
+.cluster-ck .ck-4{ top: 10px; left:  85px;}
+.cluster-ck .ck-5{ top: 60px; left: -48px;}
 
+.cluster-e .e-1{ top: 55px; left:   115px;} 
+.cluster-e .e-2{ top: 0px; left:    5px;} 
+.cluster-e .e-3{ top: 30px; left: -130px;}
 
-.cluster-e .e-1{ top: 50px; left:   95px;} 
-.cluster-e .e-2{ top: -1px; left:    5px;} 
-.cluster-e .e-3{ top: 20px; left: -100px;}
+.cluster-o .o-1{ top: 10px; left: 40px;} 
+.cluster-o .o-2{ top: 70px; left: 13px;} 
+.cluster-o .o-3{ top:-50px; left: 13px;}
 
-.cluster-o .o-1{ top: 12.5px; left: 35px;} 
-.cluster-o .o-2{ top: 55px; left: 13px;} 
-.cluster-o .o-3{ top:-30px; left: 13px;}
+.cluster-t .t-1{ top: 50px; left:  -5px;} 
+.cluster-t .t-2{ top: 20px; left: 45px;} 
 
-.cluster-t .t-1{ top: 35px; left:  0px;} 
-.cluster-t .t-2{ top: 15px; left: 38px;} 
+.cluster-tt .tt-1{ top:230px;  left:280px; } 
+.cluster-tt .tt-2{ top:190px;  left:420px; } 
+.cluster-tt .tt-3{ top:190px;  left:150px; }
 
-.cluster-tt .tt-1{ top:180px;  left:210px; } 
-.cluster-tt .tt-2{ top:150px;  left:315px; } 
-.cluster-tt .tt-3{ top:150px;  left:110px; }
+.cluster-jw .jw-1{ top: -15px; left:  -300px;} 
+.cluster-jw .jw-2{ top: -185px;left: -265px;} 
+.cluster-jw .jw-3{ top: 80px; left:  -410px;} 
+.cluster-jw .jw-4{ top: 195px; left: -590px;}
+.cluster-jw .jw-5{ top: 220px; left: -680px;}
 
-.cluster-jw .jw-1{ top: -5px; left:  -225px;} 
-.cluster-jw .jw-2{ top: -135px;left: -200px;} 
-.cluster-jw .jw-3{ top: 65px; left:  -310px;} 
-.cluster-jw .jw-4{ top: 150px; left: -450px;}
-.cluster-jw .jw-5{ top: 165px; left: -515px;}
+.cluster-nl .nl-1{ top: -35px; left:-25px;} 
+.cluster-nl .nl-2{ top: 6px; left: -1.5px;  } 
+.cluster-nl .nl-3{ top: 50px; left: 22px; }
 
-.cluster-nl .nl-1{ top: -20px; left:-15px;} 
-.cluster-nl .nl-2{ top: 15px; left: 5px;  } 
-.cluster-nl .nl-3{ top: 50px; left: 25px; }
+.cluster-n .n-1{ top: 150px; left: 15px;} 
+.cluster-n .n-2{ top: 108px; left: -4px;} 
+.cluster-n .n-3{ top: -117px; left: 35px;} 
+.cluster-n .n-4{ top: -45px; left: 19px;}
+.cluster-n .n-5{ top: 20px; left: -2px;}
 
-.cluster-n .n-1{ top: 120px; left: 10px;} 
-.cluster-n .n-2{ top: 80px; left: -5px;} 
-.cluster-n .n-3{ top: -85px; left: 25px;} 
-.cluster-n .n-4{ top: -25px; left: 12px;}
-.cluster-n .n-5{ top: 25px; left: -2px;}
+.cluster-c .c-1{ top:-35px; left:175px;  }
+.cluster-c .c-2{ top:140px;  left:145px; }
+.cluster-c .c-3{ top:30px; left:220px;   }
+.cluster-c .c-4{ top:60px;  left:165px;  }
+.cluster-c .c-5{ top:100px;  left:240px; }
+.cluster-c .c-6{ top:-60px; left:350px;  }
 
-.cluster-c .c-1{ top:-30px; left:130px; }
-.cluster-c .c-2{ top:100px;  left:100px; }
-.cluster-c .c-3{ top:22px; left:160px; }
-.cluster-c .c-4{ top:40px;  left:120px; }
-.cluster-c .c-5{ top:68px;  left:175px;   }
-.cluster-c .c-6{ top:-50px; left:255px;   }
+.cluster-m .m-1{ top:-50px; left: -20px;} 
+.cluster-m .m-2{ top: 0px; left: 9px;} 
+.cluster-m .m-3{ top: 50px; left:38px;}
 
-.cluster-m .m-1{ top: -25px; left: -15px;} 
-.cluster-m .m-2{ top: 10px; left: 5px;} 
-.cluster-m .m-3{ top: 45px; left: 25px;}
+.cluster-lp .lp-2{  top:-55px;   left: 85px; } /* Lp1 upper/Cima */
+.cluster-lp .lp-1{  top: 50px;     left: 60px; } /* Lp1 Lower/Baixo */
+.cluster-lp .lp-3{  top: -130px;  left: 150px; } /* Lp2  */ 
+.cluster-lp .lp-4{  top: -105px;  left: 320px; } /* Lp3 Upper/Cima */
+.cluster-lp .lp-5{  top: 115px;   left: 320px; } /* Lp3 Lower/Baixo */
+.cluster-lp .lp-6{  top: -35px;   left: 191px; } /* Lp4 */
+.cluster-lp .lp-7{  top: 40px;   left: 210px; } /* Lp5 */
+.cluster-lp .lp-8{  top: -15px;   left:-85px;  } /* Lp6 */
+.cluster-lp .lp-9{  top: -180px;  left:245px; } /* Lp7 */
+.cluster-lp .lp-10{ top: -145px;    left: 370px; } /* Lp8 Upper/Cima */
+.cluster-lp .lp-11{ top: 155px;  left: 370px; } /* Lp8 Lower/Baixo*/
 
-.cluster-lp .lp-2{  top:-45px;   left: 55px; } /* Lp1 upper/Cima */
-.cluster-lp .lp-1{  top: 20px;     left: 43px; } /* Lp1 Lower/Baixo */
-.cluster-lp .lp-3{  top: -115px;  left: 110px; } /* Lp2  */ 
-.cluster-lp .lp-4{  top: -90px;  left: 240px; } /* Lp3 Upper/Cima */
-.cluster-lp .lp-5{  top: 70px;   left: 240px; } /* Lp3 Lower/Baixo */
-.cluster-lp .lp-6{  top: -40px;   left: 140px; } /* Lp4 */
-.cluster-lp .lp-7{  top: 15px;   left: 160px; } /* Lp5 */
-.cluster-lp .lp-8{  top: -25px;   left:-70px;  } /* Lp6 */
-.cluster-lp .lp-9{  top: -150px;  left:180px; } /* Lp7 */
-.cluster-lp .lp-10{ top: -130px;    left: 280px; } /* Lp8 Upper/Cima */
-.cluster-lp .lp-11{ top: 105px;  left: 280px; } /* Lp8 Lower/Baixo*/
+.cluster-g .g-1{ top:160px; left: 145px; } /* G1 left/esquerdo */
+.cluster-g .g-2{ top:160px; left:220px; } /* G1 right/direito*/
+.cluster-g .g-3{ top:200px;  left:182.5px; } /* G2 */
 
-.cluster-g .g-1{ top:55px; left: 75px; } /* G1 left/esquerdo */
-.cluster-g .g-2{ top:55px; left:155px; } /* G1 right/direito*/
-.cluster-g .g-3{ top:85px;  left:115px; } /* G2 */
-
-.cluster-f .f-1{ top: 65px; left: 225px;} 
-.cluster-f .f-2{ top: 65px; left:  315px;} 
-.cluster-f .f-3{ top: 65px; left: 135px;}
+.cluster-f .f-1{ top: 115px; left: 295px;} 
+.cluster-f .f-2{ top: 115px; left: 420px;} 
+.cluster-f .f-3{ top: 115px; left: 175px;}
+}@media (min-width:1359px) and (max-width:1400px) and (orientation: landscape) and (max-height:950px) {  /*Tab s9+ Landscape(deitado*/
+  .cluster{ --r:48px; }
+   .point{
+  width:34px;          
+  height:34px;           
+  line-height:34px;     
+  font-size:0.93rem;       
+  box-shadow:0 0 10px rgba(0,0,0,.4);  
 }
+  .img-zoom{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto MDCI 2024 - Oblique_V1_FINAL 1.png");
+  background-size:55%;
+  background-position: 50% 70%;
+  background-repeat: no-repeat;
+  will-change:transform; z-index:1;
+}
+ .cluster-f .point{
+    width:40px;
+    height:40px;
+    line-height:40px;
+    font-size:1.15rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+  .img-f{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto MDCI 2024 - Frontal_V5_FINAL.png");
+  transition: 0.2s;
+  background-size:50%;
+  background-position: 40% 80%;
+  background-repeat: no-repeat;
+  will-change:transform; z-index:1;
+}
+ .cluster-g .point{
+    width:41px;
+    height:41px;
+    line-height:41px;
+    font-size:1.05rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+.img-g{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto MDCI 2024 - Frontal_V5_FINAL.png");
+  transition: 0.2s;
+  background-size:50%; 
+  background-position:40% 30%;
+  background-repeat: no-repeat;
+  will-change:transform; z-index:1;
+}
+
+ .cluster-tt .point{
+    width:47px;
+    height:47px;
+    line-height:47px;
+    font-size:1.2rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+.img-tt{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto MDCI 2024 - Frontal_V5_FINAL.png");
+  transition: 0.5s;
+  background-size:60%;
+  background-position: 46% 38%;
+  background-repeat: no-repeat;
+  will-change:transform; z-index:1;
+}
+   .cluster-lp .point{
+    width:55px;
+    height:55px;
+    line-height:55px;
+    font-size:1.3rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+.img-lp{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto Frontal C.png");
+  transition: 0.2s;
+  background-size:95%;
+   background-position: -35% 69.5%;
+  background-repeat: no-repeat;
+  will-change:transform; z-index:1;
+  
+
+}
+.cluster-c .point{
+    width:43px;
+    height:43px;
+    line-height:43px;
+    font-size:1.2rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+.img-c{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto Frontal C.png");
+  transition: 0.2s;
+   background-size:50%;
+  background-position: 36% 69%;
+  background-repeat: no-repeat;
+  will-change:transform; z-index:1;
+}
+.cluster-jw .point{
+    width:33px;
+    height:33px;
+    line-height:33px;
+    font-size:0.82rem;   /* ajuste fino do número */
+}
+
+.img-zoom-jw{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto MDCI 2024 - Oblique_V1_FINAL 1.png");
+  transition: 0.2s;
+ background-size:65%;
+  background-position: 50% ;
+  background-repeat: no-repeat;
+  will-change:transform; z-index:1;
+}
+.cluster-nl .point{
+    width:38px;
+    height:38px;
+    line-height:38px;
+    font-size:1rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+  .cluster-m .point{
+    width:38px;
+    height:38px;
+    line-height:38px;
+    font-size:1rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+  .cluster-n .point{
+    width:33px;
+    height:33px;
+    line-height:33px;
+    font-size:0.86rem;   /* ajuste fino do número */
+}
+  .cluster-e .point{
+    width:37px;
+    height:37px;
+    line-height:37px;
+    font-size:0.9rem;   
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+    .cluster-t .point{
+    width:37px;
+    height:37px;
+    line-height:37px;
+    font-size:1rem;   
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+
+  .cluster-o .point{
+    width:37px;
+    height:37px;
+    line-height:37px;
+    font-size:0.98rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+
+  
+  .cluster-ck .point{
+    width:37px;
+    height:37px;
+    line-height:37px;
+    font-size:0.98rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+    .cluster-jw .point{
+    width:42px;
+    height:42px;
+    line-height:42px;
+    font-size:1.1rem;   /* ajuste fino do número */
+    box-shadow:0 0 12px rgba(0,0,0,.35); /* opcional */
+  }
+  /* Posicionando as regiões de cada código*/
+.ck { top:51%; left:51%; } 
+.e  { top:23%; left:46.2%; }
+.o  { top:34%; left:52.7%; }
+.t  { top:25%; left:55.5% }
+.tt { top:42%; left:45%; }
+.nl { top:58%; left:42.5%; } 
+.m  { top:71%; left:45.3%; }
+.jw { top:69%; left:54%; }
+.c  { top:75.5%; left:35.4%; }
+.lp { top:64%; left:34.5%; }
+.n  { top:44%; left:34%; }
+.g  { top:27%; left:35%; }
+.f  { top:17%; left:36.8%; }
+
+
+
+.cluster{ position:absolute; width:0; height:0; z-index:3; --r:56px; --rd:calc(var(--r) * 0.707); }
+.child{ position:absolute; left:0; top:0; }
+
+/* Posicionando os filhos (childs) */
+.cluster-ck .ck-1{ top: -100px; left: 85px;} 
+.cluster-ck .ck-2{ top: -65px; left: 5px; } 
+.cluster-ck .ck-3{ top: -20px; left:-95px;} 
+.cluster-ck .ck-4{ top: 10px; left:  85px;}
+.cluster-ck .ck-5{ top: 60px; left: -48px;}
+
+.cluster-e .e-1{ top: 55px; left:   115px;} 
+.cluster-e .e-2{ top: 0px; left:    5px;} 
+.cluster-e .e-3{ top: 30px; left: -130px;}
+
+.cluster-o .o-1{ top: 10px; left: 40px;} 
+.cluster-o .o-2{ top: 70px; left: 13px;} 
+.cluster-o .o-3{ top:-50px; left: 13px;}
+
+.cluster-t .t-1{ top: 50px; left:  -5px;} 
+.cluster-t .t-2{ top: 20px; left: 45px;} 
+
+.cluster-tt .tt-1{ top:230px;  left:280px; } 
+.cluster-tt .tt-2{ top:190px;  left:420px; } 
+.cluster-tt .tt-3{ top:190px;  left:150px; }
+
+.cluster-jw .jw-1{ top: -15px; left:  -315px;} 
+.cluster-jw .jw-2{ top: -160px;left: -285px;} 
+.cluster-jw .jw-3{ top: 80px; left:  -415px;} 
+.cluster-jw .jw-4{ top: 185px; left: -590px;}
+.cluster-jw .jw-5{ top: 210px; left: -680px;}
+
+.cluster-nl .nl-1{ top: -45px; left:-25px;} 
+.cluster-nl .nl-2{ top: 0px; left: 0px;  } 
+.cluster-nl .nl-3{ top: 45px; left: 25px; }
+
+.cluster-n .n-1{ top: 140px; left: 15px;} 
+.cluster-n .n-2{ top: 98px; left: -4px;} 
+.cluster-n .n-3{ top: -125px; left: 35px;} 
+.cluster-n .n-4{ top: -55px; left: 19px;}
+.cluster-n .n-5{ top: 15px; left: -5px;}
+
+.cluster-c .c-1{ top:-35px; left:175px;  }
+.cluster-c .c-2{ top:140px;  left:145px; }
+.cluster-c .c-3{ top:30px; left:220px;   }
+.cluster-c .c-4{ top:60px;  left:165px;  }
+.cluster-c .c-5{ top:100px;  left:240px; }
+.cluster-c .c-6{ top:-60px; left:350px;  }
+
+.cluster-m .m-1{ top:-50px; left: -20px;} 
+.cluster-m .m-2{ top: 0px; left: 9px;} 
+.cluster-m .m-3{ top: 50px; left:38px;}
+
+.cluster-lp .lp-2{  top:-55px;   left: 85px; } /* Lp1 upper/Cima */
+.cluster-lp .lp-1{  top: 50px;     left: 60px; } /* Lp1 Lower/Baixo */
+.cluster-lp .lp-3{  top: -130px;  left: 150px; } /* Lp2  */ 
+.cluster-lp .lp-4{  top: -105px;  left: 320px; } /* Lp3 Upper/Cima */
+.cluster-lp .lp-5{  top: 115px;   left: 320px; } /* Lp3 Lower/Baixo */
+.cluster-lp .lp-6{  top: -35px;   left: 191px; } /* Lp4 */
+.cluster-lp .lp-7{  top: 40px;   left: 210px; } /* Lp5 */
+.cluster-lp .lp-8{  top: -15px;   left:-85px;  } /* Lp6 */
+.cluster-lp .lp-9{  top: -180px;  left:245px; } /* Lp7 */
+.cluster-lp .lp-10{ top: -145px;    left: 370px; } /* Lp8 Upper/Cima */
+.cluster-lp .lp-11{ top: 155px;  left: 370px; } /* Lp8 Lower/Baixo*/
+
+.cluster-g .g-1{ top:160px; left: 145px; } /* G1 left/esquerdo */
+.cluster-g .g-2{ top:160px; left:220px; } /* G1 right/direito*/
+.cluster-g .g-3{ top:200px;  left:182.5px; } /* G2 */
+
+.cluster-f .f-1{ top: 115px; left: 295px;} 
+.cluster-f .f-2{ top: 115px; left: 420px;} 
+.cluster-f .f-3{ top: 115px; left: 175px;}
+}
+
+
+  
+
+
+
+
+
+
+
 
 
 
