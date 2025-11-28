@@ -82,16 +82,13 @@ const Tab2: React.FC = () => {
         
 
         {/* Títulos */}
-        <section className="container-colums">
-          <div className="sub-container-colums-title">
-            <p>Code</p>
-            <p>Product</p>
-            <p>Right</p>
-            <p>Mid</p>
-            <p>Left</p>
-            <p></p>
-          </div>
-        </section>
+      <section className="container-colums sub-container-colums-title">
+          <p>Code</p>
+          <p>Product</p>
+          <p>Right</p>
+          <p>Mid</p>
+          <p>Left</p>
+      </section>
 
         {/* Linhas (apenas criadas quando veio ?code=...) */}
         {rows.map(row => (
