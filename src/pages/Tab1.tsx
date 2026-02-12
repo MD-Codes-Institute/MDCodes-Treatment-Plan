@@ -2,145 +2,15 @@ import { IonContent, IonPage } from "@ionic/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { SPOTS, SpotCfg } from "../Contents/ContentsTabs/ContentsTab1";
 import "./Tab1.css";
 
-type SpotCfg = {
-  id: string;
-  label: string;
-  className: string;
-  hasCluster?: boolean;
-  options?: string[];
-  zoomScale?: number;
-  zoomOriginX?: string;
-  zoomOriginY?: string;
-};
-
-const SPOTS: SpotCfg[] = [
-  {
-    id: "ck",
-    label: "Ck",
-    className: "ck",
-    hasCluster: true,
-    options: ["Ck1", "Ck2", "Ck3", "Ck4", "Ck5"],
-    zoomScale: 1.1,
-  },
-  {
-    id: "o",
-    label: "O",
-    className: "o",
-    hasCluster: true,
-    options: ["O1", "O2", "O3"],
-    zoomScale: 1.5,
-  },
-  {
-    id: "e",
-    label: "E",
-    className: "e",
-    hasCluster: true,
-    options: ["E1", "E2", "E3"],
-    zoomScale: 1.5,
-  },
-  {
-    id: "t",
-    label: "T",
-    className: "t",
-    hasCluster: true,
-    options: ["T1", "T2"],
-    zoomScale: 1.5,
-  },
-  {
-    id: "tt",
-    label: "Tt",
-    className: "tt",
-    hasCluster: true,
-    options: ["Tt1", "Tt2", "Tt3"],
-    zoomScale: 1.5,
-  },
-  {
-    id: "nl",
-    label: "NL",
-    className: "nl",
-    hasCluster: true,
-    options: ["NL1", "NL2", "NL3"],
-    zoomScale: 1.5,
-  },
-  {
-    id: "m",
-    label: "M",
-    className: "m",
-    hasCluster: true,
-    options: ["M1", "M2", "M3"],
-    zoomScale: 1.5,
-  },
-  {
-    id: "jw",
-    label: "Jw",
-    className: "jw",
-    hasCluster: true,
-    options: ["Jw1", "Jw2", "Jw3", "Jw4", "Jw5"],
-    zoomScale: 1.1,
-    zoomOriginX: "82%",
-    zoomOriginY: "68%",
-  },
-  {
-    id: "c",
-    label: "C",
-    className: "c",
-    hasCluster: true,
-    options: ["C1", "C2", "C3", "C4", "C5", "C6"],
-    zoomScale: 1.8,
-  },
-  {
-    id: "lp",
-    label: "Lp",
-    className: "lp",
-    hasCluster: true,
-    options: [
-      "Lp₁",
-      "Lp¹",
-      "Lp2",
-      "Lp³",
-      "Lp₃",
-      "Lp4",
-      "Lp5",
-      "Lp6",
-      "Lp7",
-      "Lp⁸",
-      "Lp₈",
-    ],
-    zoomScale: 1.5,
-  },
-  {
-    id: "n",
-    label: "N",
-    className: "n",
-    hasCluster: true,
-    options: ["N1", "N2", "N3", "N4", "N5"],
-    zoomScale: 1.5,
-  },
-  {
-    id: "g",
-    label: "G",
-    className: "g",
-    hasCluster: true,
-    options: ["G1", "G1", "G2"],
-    zoomScale: 1.5,
-  },
-  {
-    id: "f",
-    label: "F",
-    className: "f",
-    hasCluster: true,
-    options: ["F1", "F2", "F3"],
-    zoomScale: 1.5,
-  },
-];
-
-export default function Tab1() {
+const Tab1: React.FC = () => {
   const [openId, setOpenId] = useState<string | null>(null);
   const [origin, setOrigin] = useState({ ox: "50%", oy: "50%" });
   const [ImgZoom, setImgZoom] = useState("img-zoom");
-  const history = useHistory(); // ⬅️ add
+  const history = useHistory();
+  const codeList: string[] = [];
 
   const active = SPOTS.find((s) => s.id === openId);
   const scale = active?.zoomScale ?? 1;
@@ -174,93 +44,83 @@ export default function Tab1() {
 
   function goToInputs(code: string) {
     console.log(`Código clicado: ${code}`);
-
-    // Passo 1: Ler a lista de códigos que JÁ EXISTE no localStorage.
-    // Usamos `|| '[]'` para o caso de ser a primeira vez e a lista ainda não existir.
-    const listaSalvaString = localStorage.getItem("debugCodeList") || "[]";
-    const listaAtual: string[] = JSON.parse(listaSalvaString);
-
-    // Passo 2: Adicionar (concatenar) o NOVO código à lista que acabamos de ler.
-    const novaLista = [...listaAtual, code];
-
-    // Passo 3: Salvar a lista ATUALIZADA de volta no localStorage.
-    // Precisamos converter o array para uma string JSON para poder salvá-lo.
-    localStorage.setItem("debugCodeList", JSON.stringify(novaLista));
-
-    // Passo 4: Logar no console para vermos o resultado na hora!
-    console.log("Lista de códigos de debug atualizada:", novaLista);
+    codeList.push(code);
+    console.log(codeList);
     history.push(`/tabs/tab2?code=${encodeURIComponent(code)}`);
   }
 
   return (
-    <IonContent className="container">
-      <div
-        className="container-img"
-        onClick={() => {
-          setOpenId(null);
-          setImgZoom("img-zoom");
-        }}
-      >
-        <motion.div
-          className={ImgZoom}
-          style={{ transformOrigin: `${origin.ox} ${origin.oy}` }}
-          initial={{ opacity: 0, scale: 0.98, y: 8 }}
-          animate={{ opacity: 1, scale: openId ? scale : 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 160, damping: 20 }}
-        />
+    <IonPage>
+      <IonContent className="container">
+        <div
+          className="container-img"
+          onClick={() => {
+            setOpenId(null);
+            setImgZoom("img-zoom");
+          }}
+        >
+          <motion.div
+            className={ImgZoom}
+            style={{ transformOrigin: `${origin.ox} ${origin.oy}` }}
+            initial={{ opacity: 0, scale: 0.98, y: 8 }}
+            animate={{ opacity: 1, scale: openId ? scale : 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 160, damping: 20 }}
+          />
 
-        <div className="hotspots">
-          {SPOTS.map((spot) => {
-            const anyOpen = Boolean(openId);
-            return (
-              <AnimatePresence key={spot.id}>
-                {!anyOpen && (
-                  <motion.button
-                    className={`point ${spot.className}`}
-                    whileHover={{ scale: 1.06 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={(e) => handleSpotClick(e, spot)}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {spot.label}
-                  </motion.button>
-                )}
-              </AnimatePresence>
-            );
-          })}
+          <div className="hotspots">
+            {SPOTS.map((spot) => {
+              const anyOpen = Boolean(openId);
+              return (
+                <AnimatePresence key={spot.id}>
+                  {!anyOpen && (
+                    <motion.button
+                      className={`point ${spot.className}`}
+                      whileHover={{ scale: 1.06 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={(e) => handleSpotClick(e, spot)}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      {spot.label}
+                    </motion.button>
+                  )}
+                </AnimatePresence>
+              );
+            })}
 
-          <AnimatePresence>
-            {active?.hasCluster && (
-              <motion.div
-                className={`cluster cluster-${active.id}`}
-                style={{ left: origin.ox, top: origin.oy }}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 220, damping: 16 }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                {(active.options ?? []).map((label, i) => (
-                  <motion.button
-                    key={`${label}-${i}`}
-                    className={`point child ${active.id}-child ${active.id}-${
-                      i + 1
-                    }`}
-                    whileHover={{ scale: 1.06 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => goToInputs(label)} // ⬅️ mudou aqui
-                  >
-                    {label}
-                  </motion.button>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
+            <AnimatePresence>
+              {active?.hasCluster && (
+                <motion.div
+                  className={`cluster cluster-${active.id}`}
+                  style={{ left: origin.ox, top: origin.oy }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 220, damping: 16 }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {(active.options ?? []).map((label, i) => (
+                    <motion.button
+                      key={`${label}-${i}`}
+                      className={`point child ${active.id}-child ${active.id}-${
+                        i + 1
+                      }`}
+                      whileHover={{ scale: 1.06 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => goToInputs(label)}
+                    >
+                      {label}
+                    </motion.button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
-      </div>
-    </IonContent>
+      </IonContent>
+    </IonPage>
   );
-}
+};
+export default Tab1;

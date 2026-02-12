@@ -1,34 +1,34 @@
 // firebaseConfig.ts
 
 import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
 import {
-  Auth, 
+  Auth,
   initializeAuth,
   indexedDBLocalPersistence,
-  getAuth
+  getAuth,
 } from "firebase/auth";
-import { Capacitor } from '@capacitor/core';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCewh2jfhlFWUSjOl5ODPdg-xmFR9kVkeo",
-  authDomain: "aprendendo-firabese.firebaseapp.com",
-  projectId: "aprendendo-firabese",
-  storageBucket: "aprendendo-firabese.appspot.com",
-  messagingSenderId: "773907117909",
-  appId: "1:773907117909:web:ffded69e204df53a6b61dc"
+  apiKey: import.meta.env.VITE_APIKEY,
+  authDomain: import.meta.env.VITE_AUTHDOMAIN,
+  projectId: import.meta.env.VITE_PROJECTID,
+  storageBucket: import.meta.env.VITE_STORAGEBUCKET,
+  messagingSenderId: import.meta.env.VITE_SENDERID,
+  appId: import.meta.env.VITE_APPID,
 };
 
 const app = initializeApp(firebaseConfig);
 
-
+const db = getDatabase()
 let auth: Auth;
 
 try {
   auth = initializeAuth(app, {
-    persistence: indexedDBLocalPersistence
+    persistence: indexedDBLocalPersistence,
   });
 } catch (error) {
   auth = getAuth(app);
 }
 
-export { auth };
+export { auth, db };

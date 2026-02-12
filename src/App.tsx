@@ -1,60 +1,78 @@
 // App.tsx (Versão Final Refatorada)
 
-import {
-  IonApp,
-  IonSpinner,
-  
-} from "@ionic/react";
+import { IonApp, IonLoading, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Switch, Route, Redirect } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { onAuthStateChanged, User } from "firebase/auth";
-import { auth } from "./firebaseConfig";
-
-
-import PrivateRoutes from "./PrivateRoutes"; 
-import PrivateRoute from "./components/PrivateRoute"; 
-import SignIn from "./pages/credentials/SignIn/SignIn";
-import SignUp from "./pages/credentials/SignUp/SignUp";
+import { Redirect, Route } from "react-router-dom";
+import SignIn from "./pages/auth/SignIn";
+import SignUp from "./pages/auth/SignUp";
+import useAuth from "./pages/auth/UseAuth";
+import { ProtectedRoute } from "./ProtectedRoute";
+import Tabs from "./Tabs";
 import "./App.css";
-
+import VerifiedEmail from "./pages/auth/VerifiedEmail";
 
 const App: React.FC = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [checkingStatus, setCheckingStatus] = useState(true);
+  const { user, loading, sendVerification } = useAuth();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setCheckingStatus(false);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  if (checkingStatus) {
-    return (
-      <IonApp>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-          <IonSpinner />
-        </div>
-      </IonApp>
-    );
-  }
-
+  if (loading) return <IonLoading />;
   return (
     <IonApp>
       <IonReactRouter>
-        <Switch>
-          
-          <Route exact path="/signin" component={SignIn} />
-          <Route exact path="/signup" component={SignUp} />
-          
-          <PrivateRoute path="/tabs" component={PrivateRoutes} user={user} />
+        <IonRouterOutlet>
+          <Route
+            exact
+            path="/signin"
+            render={() =>
+              user?.emailVerified ? (
+                <Redirect to="/tabs" />
+              ) : user ? (
+                <Redirect to="/verify-email" />
+              ) : (
+                <SignIn />
+              )
+            }
+          />
+
+          <Route
+            exact
+            path="/signup"
+            render={() =>
+              user?.emailVerified ? (
+                <Redirect to="/tabs" />
+              ) : user ? (
+                <Redirect to="/verify-email" />
+              ) : (
+                <SignUp />
+              )
+            }
+          />
+
+          <Route
+            exact
+            path="/verify-email"
+            render={() =>
+              user ? <VerifiedEmail /> : <Redirect to="/signup" />
+            }
+          />
+
+          <ProtectedRoute
+            path="/tabs"
+            isAllowed={!!user}
+            isVerify={!!user?.emailVerified}
+            redirectTo="/signin"
+            component={Tabs}
+          />
 
           <Route exact path="/">
-            {user ? <Redirect to="/tabs" /> : <Redirect to="/signin" />}
+            {user?.emailVerified ? (
+              <Redirect to="/tabs" />
+            ) : (
+              <Redirect to="/signin" />
+            )}
           </Route>
-        </Switch>
+
+          <IonLoading isOpen={loading} message="Loading..." />
+        </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
   );
