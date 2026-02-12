@@ -1,10 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;700&display=swap");
-
+@import "tailwindcss";
 :root {
   --ion-background: #1c1c1c;
   --ion-background-containers: #171717;
   --ion-background-inputs: #2b2a2a;
-  --ion-background-buttons: #967F43;
+  --ion-background-buttons: #967f43;
   --font-color: #ffff;
   --ion-font-family: "Comfortaa", sans-serif;
 }
@@ -12,35 +12,72 @@ html,
 body,
 ion-app,
 ion-content {
+  width: 100vw !important;
   --background: var(--ion-background);
   font-family: var(--ion-font-family), sans-serif;
 }
 
-ion-toolbar, ion-tab-bar, ion-header{
-    --background: var(--ion-background-containers);
-    height: 5rem;
-    box-shadow: 2px 1px 10px 4px rgba(0, 0, 0, 0.2);
+ion-toolbar,
+ion-tab-bar,
+ion-header,
+ion-label {
+  --background: var(--ion-background-containers);
+  height: 5rem;
+  box-shadow: 2px 1px 10px 4px rgba(0, 0, 0, 0.2);
+  text-decoration: none !important;
 }
 
+ion-tab-button::part(native) {
+  text-decoration: none !important;
+  --background: transparent !important;
+  --background-focused: transparent !important;
+  --background-hover: transparent !important;
+  --background-focused-opacity: 0 !important;
+  --box-shadow: none !important;
+  --ripple-color: transparent !important;
+}
+ion-tab-button::part(native):focus {
+  outline: none;
+  text-decoration: none;
+  background: none !important;
+  box-shadow: none !important;
+}
 
+ion-label {
+  color: var(--font-color);
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
 
-ion-label{
+label {
+  color: var(--font-color);
+}
+p {
   color: var(--font-color);
 }
 
-label{
-  color: var(--font-color);
-}
-p{
-  color: var(--font-color);
+body,
+html {
+  width: 100vw !important;
 }
 
-.logo-header{
+.logo-header {
   margin-top: 12px;
   width: 15rem;
 }
-.icons-tabs{
-  height: 35px;
-  width: 35px;
-  margin: 5px;
+
+.custom-input {
+  color: #fff !important;
+  padding-inline: 10px;
 }
+
+.custom-input::placeholder {
+  color: #bbb;
+}
+
+.custom-input:focus {
+  border-color: #fbbe2475; /* Exemplo: amarelo */
+  outline: none;
+  box-shadow: 0px 0px 3px #fbbf24;
+}
+

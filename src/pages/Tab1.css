@@ -1,5 +1,5 @@
 .container-img{
-  position:relative; width:100%; margin:auto;
+  position:relative; width:100% !important; margin:auto;
   aspect-ratio:3/4; height: 100%; overflow:hidden;
   /* background agora fica na .img-zoom */
 }
@@ -3214,7 +3214,6 @@ background-position:-110% 175%;
 
 
   
-
 
 
 

@@ -13,6 +13,28 @@
     />
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+    default-src 'self' capacitor: data: blob: https:;
+    img-src 'self' data: blob: https:;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' capacitor: blob: https://www.gstatic.com https://apis.google.com https://*.firebaseio.com;
+    connect-src 'self' capacitor: data: blob:
+      https://identitytoolkit.googleapis.com
+      https://securetoken.googleapis.com
+      https://www.googleapis.com
+      https://firestore.googleapis.com
+      https://firebasestorage.googleapis.com
+      https://*.googleapis.com
+      https://*.gstatic.com
+      https://*.firebaseio.com
+      wss://*.firebaseio.com
+      http://localhost:* ws://localhost:*;
+    frame-src 'self' https://www.google.com https://www.recaptcha.net https://recaptcha.google.com;
+    font-src 'self' data: https://fonts.gstatic.com;
+  "
+    />
 
     <link rel="manifest" href="/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,27 +45,6 @@
     />
 
     <link rel="shortcut icon" type="image/png" href="/favicon.png" />
-
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="
-  default-src 'self' capacitor: data: blob: https:;
-  img-src 'self' data: blob: https:;
-  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-  script-src 'self' 'unsafe-inline' 'unsafe-eval' capacitor: blob: https://www.gstatic.com https://apis.google.com;
-  connect-src 'self' capacitor: data: blob:
-    https://identitytoolkit.googleapis.com
-    https://securetoken.googleapis.com
-    https://www.googleapis.com
-    https://firestore.googleapis.com
-    https://firebasestorage.googleapis.com
-    https://*.googleapis.com
-    https://*.gstatic.com
-    http://localhost:* ws://localhost:*;
-  frame-src 'self' https://www.google.com https://www.recaptcha.net https://recaptcha.google.com;
-  font-src 'self' data: https://fonts.gstatic.com;
-"
-    />
 
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Ionic App" />
