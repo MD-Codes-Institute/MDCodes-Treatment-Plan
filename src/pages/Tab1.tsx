@@ -2,7 +2,7 @@ import { IonContent, IonPage } from "@ionic/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { SPOTS, SpotCfg } from "../Contents/ContentsTabs/ContentsTab1";
+import { SPOTS, SpotCfg } from "../contents/tabs/ContentsTab1";
 import "./Tab1.css";
 
 const Tab1: React.FC = () => {

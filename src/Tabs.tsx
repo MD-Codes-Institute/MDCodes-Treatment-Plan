@@ -11,9 +11,8 @@ import { Route, Redirect } from "react-router-dom";
 import Tab1 from "./pages/Tab1";
 import Tab2 from "./pages/Tab2";
 import Tab3 from "./pages/Tab3";
-import { navigationTabs } from "./Contents/ContentsTabs/ContentsTabs";
+import { navigationTabs } from "./contents/tabs/ContentsTabs";
 import { useLocation } from "react-router-dom";
-import VerifiedEmail from "./pages/auth/VerifiedEmail";
 
 const Tabs: React.FC = () => {
   const location = useLocation();
@@ -23,7 +22,6 @@ const Tabs: React.FC = () => {
         <Route exact path="/tabs/tab1" component={Tab1} />
         <Route exact path="/tabs/tab2" component={Tab2} />
         <Route exact path="/tabs/tab3" component={Tab3} />
-        <Route exact path="/verify-email" component={VerifiedEmail} />
         <Redirect exact from="/tabs" to="/tabs/tab1" />
       </IonRouterOutlet>
 

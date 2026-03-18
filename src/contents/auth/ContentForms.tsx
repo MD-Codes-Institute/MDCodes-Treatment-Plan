@@ -1,6 +1,6 @@
 import z from "zod";
 
-/*schema para SignIn*/export const schemaSignIn = z.object({
+/*schema para SignIn*/ export const schemaSignIn = z.object({
   email: z
     .string()
     .regex(
@@ -16,7 +16,7 @@ import z from "zod";
     ),
 });
 
-/*Schema para SignUp*/export const schemaSignUp = z.object({
+/*Schema para SignUp*/ export const schemaSignUp = z.object({
   name: z.string().min(1, "Name is required"),
   email: z
     .string()
@@ -27,10 +27,7 @@ import z from "zod";
   phone: z
     .string()
     .min(11, "Invalid phone number!")
-    .regex(
-      /^[1-9]{2}9?\d{8}$/,
-      "Phone number format is invalid"
-    ),
+    .regex(/^[1-9]{2}9?\d{8}$/, "Phone number format is invalid"),
   password: z
     .string()
     .min(8, "Password must be at least 8 characters long")
@@ -59,8 +56,36 @@ import z from "zod";
   },
 ];
 
-/*Erros firebase*/
+/*content form signUp*/ export const contentFormSignIn = [
+  {
+    id: "email",
+    name: "E-mail",
+  },
+  {
+    id: "password",
+    name: "Password",
+  },
+];
 
+export const classBtn = {
+  color: "#fff",
+  border: "1px solid #fff",
+  borderRadius: "2rem",
+  height: "2.5rem",
+  width: "6.25rem",
+  background: "#967F43",
+  boxShadow: "0px 0px 7px #967F43",
+};
+
+export const classInput = {
+  borderRadius: 16,
+  color: "#fff",
+  fontSize: "0.85rem",
+  width: "70%",
+  height: "4vh",
+  background: "transparent",
+};
+/*Erros firebase*/
 export const VerifyErroCode = (errorCode: string) => {
   switch (errorCode) {
     case "auth/app-deleted":
@@ -239,14 +264,3 @@ export const VerifyErroCode = (errorCode: string) => {
       return null;
   }
 };
-
-/*content form signUp*/ export const contentFormSignIn = [
-  {
-    id: "email",
-    name: "E-mail",
-  },
-  {
-    id: "password",
-    name: "Password",
-  },
-];

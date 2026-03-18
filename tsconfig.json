@@ -15,5 +15,5 @@
     "noEmit": true,
     "types": ["@ionic/react"]
   },
-  "include": ["src"]
+  "include": ["src", "src/components/.tsx"]
 }

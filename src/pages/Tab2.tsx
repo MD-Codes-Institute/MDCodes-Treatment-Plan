@@ -2,7 +2,7 @@ import { IonContent, IonPage } from "@ionic/react";
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./Tab2.css";
-import { Row, VOLUMES } from "../Contents/ContentsTabs/ContentsTab1";
+import { Row, VOLUMES } from "../contents/tabs/ContentsTab1";
 
 function uid() {
   return Math.random().toString(36).slice(2) + Date.now().toString(36);

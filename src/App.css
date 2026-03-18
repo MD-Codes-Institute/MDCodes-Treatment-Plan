@@ -13,8 +13,9 @@ body,
 ion-app,
 ion-content {
   width: 100vw !important;
-  --background: var(--ion-background);
+  --background: var(--ion-background) !important;
   font-family: var(--ion-font-family), sans-serif;
+  color: white;
 }
 
 ion-toolbar,
@@ -55,6 +56,9 @@ label {
 p {
   color: var(--font-color);
 }
+input {
+  color: white !important;
+}
 
 body,
 html {
@@ -80,4 +84,3 @@ html {
   outline: none;
   box-shadow: 0px 0px 3px #fbbf24;
 }
-

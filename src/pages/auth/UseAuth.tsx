@@ -4,7 +4,6 @@ import {
   onAuthStateChanged,
   User,
   sendEmailVerification,
-  deleteUser,
   signOut,
 } from "firebase/auth";
 import { useHistory } from "react-router";
@@ -38,9 +37,9 @@ function useAuth() {
       unsub();
       window.clearTimeout(timeoutId);
     };
-  }, [user]);
+  }, [user, user?.email]);
 
-  // function para verificar o e-mail está verificado ou não
+  // function para verificar se o e-mail está verificado ou não ----------------- ainda falta configurar
   const actionSettings = {
     url: "https://treatment-plan-app.firebaseapp.com",
     handleCodeInApp: true,
@@ -48,27 +47,24 @@ function useAuth() {
       bundleId: "com.mdcodes.treatmentplan",
     },
   };
+
+  // function para verificar se o e-mail está verificado
+
   const sendVerification = async () => {
-    try {
-      if (auth.currentUser) {
-        auth.currentUser.reload();
-      }
-      if (user) {
-        await sendEmailVerification(user, actionSettings);
-        console.log("Email enviado com sucesso");
-      }
-    } catch (err) {
-      console.log(`Erro ao verificar e-mail: ${err}`);
+    if (user) {
+      console.log("Enviando e-mail");
+      await sendEmailVerification(user);
     }
   };
-//function para remover usuário
+
+  //function para remover usuário
   const signOutUser = async () => {
     try {
       if (auth.currentUser) {
         const unsubUser = await signOut(auth);
         console.log(unsubUser);
       }
-      history.push("/signup");
+      history.push("/signin");
     } catch (err) {
       alert("Erro ao tentar retornar, volte mais tarde");
       console.log(err);
