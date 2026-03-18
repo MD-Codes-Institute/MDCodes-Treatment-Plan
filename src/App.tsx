@@ -1,18 +1,19 @@
-// App.tsx (Versão Final Refatorada)
-
 import { IonApp, IonLoading, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
-import SignIn from "./pages/auth/SignIn";
-import SignUp from "./pages/auth/SignUp";
-import useAuth from "./pages/auth/UseAuth";
+import SignIn from "./pages/auth/sign-in/SignIn";
+import SignUp from "./pages/auth/sign-up/SignUp";
+import useAuth from "./pages/auth/useAuth";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Tabs from "./Tabs";
 import "./App.css";
 import VerifiedEmail from "./pages/auth/VerifiedEmail";
+import reauthenticateUser from "./pages/auth/ReauthForm";
+import EditProfileInfo from "./components/tab3/EditProfile";
+
 
 const App: React.FC = () => {
-  const { user, loading, sendVerification } = useAuth();
+  const { user, loading } = useAuth();
 
   if (loading) return <IonLoading />;
   return (
@@ -71,6 +72,9 @@ const App: React.FC = () => {
             )}
           </Route>
 
+          <Route path="/re-authenticate" component={reauthenticateUser} />
+          <Route exact path="/verify-email" component={VerifiedEmail} />
+          <Route path="/edit-profile" component={EditProfileInfo} />
           <IonLoading isOpen={loading} message="Loading..." />
         </IonRouterOutlet>
       </IonReactRouter>
