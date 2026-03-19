@@ -29,7 +29,7 @@ const ForgetPassword: React.FC<Props> = ({ setShowForgot }) => {
     } catch (error: any) {
       if (error instanceof z.ZodError) {
         console.log(error.issues);
-        alert("Error changing email, invalid parameters.");
+        alert("Error changing password, invalid parameters.");
         return;
       } else if (error.code === "auth/user-not-found") {
         alert("No accounts were found with that email address.");
