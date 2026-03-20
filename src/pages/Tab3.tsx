@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import BtnsFirebase from "../components/tab3/BtnsFirebase";
 import useUserInfo from "../services/crud-auth/getUserInfo";
 import useUpdateUserInfo from "../services/crud-auth/updateUserInfo";
+import ActionsContainer from "../components/tab3/inputs-preferences/ActionsContainer";
+import { classInputs } from "../contents/tabs/ContentsTab3";
 
 const Tab3: React.FC = () => {
   const { user } = useAuth();
@@ -13,7 +15,6 @@ const Tab3: React.FC = () => {
 
   useEffect(() => {
     if (!user) return;
-
     getCredentialUser(user.uid).then(() => {
       console.log("dados do usuário obtidos");
       const authEmail = user.email ?? undefined;
@@ -28,8 +29,8 @@ const Tab3: React.FC = () => {
 
   return (
     <IonPage>
-      <IonContent className="ion-padding center min-h-full">
-        <section className="flex flex-col justify-center items-center gap-10">
+      <IonContent className="ion-padding min-h-full">
+        <section className="flex flex-col justify-center items-center h-full pb-10 gap-10">
           <h1 className="text-white text-5xl text-center pt-25">
             Profile Info
           </h1>
@@ -39,7 +40,10 @@ const Tab3: React.FC = () => {
             {userInfo.map((v, i) => (
               <div className="flex flex-row" key={i}>
                 <span className="text-white text-xl mx-2">{v.id}: </span>
-                <span className="bg-(--ion-background-inputs) px-7 py-2 -mt-1 rounded-md text-start shadow-2xs h-10 text-white w-full">
+                <span
+                  className="px-7 flex items-center -mt-1 text-start h-10 w-full"
+                  style={classInputs}
+                >
                   {v.info}
                 </span>
               </div>
@@ -49,7 +53,7 @@ const Tab3: React.FC = () => {
           <div>
             <p className="text-white text-[20px]">Planning preferences</p>
           </div>
-          {/* container preferencias user */}
+          <ActionsContainer />
           <div>
             <BtnsFirebase />
           </div>
