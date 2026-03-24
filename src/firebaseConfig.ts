@@ -2,12 +2,8 @@
 
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
-import {
-  Auth,
-  initializeAuth,
-  indexedDBLocalPersistence,
-  getAuth,
-} from "firebase/auth";
+import { Auth, initializeAuth, indexedDBLocalPersistence, getAuth } from "firebase/auth";
+import { ref } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APIKEY,
@@ -20,8 +16,15 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-const db = getDatabase()
+const db = getDatabase();
 let auth: Auth;
+
+const preferencesDb = (uid: string, location: string) => {
+  return ref(db, `/preferences/user-${uid}/${location}`);
+};
+const settingsProfile = (uid: string) => {
+  return ref(db, `/users/user-${uid}`);
+};
 
 try {
   auth = initializeAuth(app, {
@@ -31,4 +34,4 @@ try {
   auth = getAuth(app);
 }
 
-export { auth, db };
+export { auth, db, preferencesDb, settingsProfile };

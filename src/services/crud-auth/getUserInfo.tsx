@@ -1,5 +1,5 @@
-import { db } from "../../firebaseConfig";
-import { get, child, ref } from "firebase/database";
+import { settingsProfile } from "../../firebaseConfig";
+import { get } from "firebase/database";
 import { useState } from "react";
 
 export type UserInfoItem = {
@@ -19,11 +19,10 @@ const useUserInfo = () => {
     { id: "Phone", info: phone },
   ];
 
-  /* function para obter dados do usuário*/
+  /* function para obter dados do usuário crud*/
   const getCredentialUser = async (uid: string) => {
     try {
-      const database = ref(db);
-      const snapshot = await get(child(database, `/users/user-${uid}`));
+      const snapshot = await get(settingsProfile(uid));
       if (snapshot.exists()) {
         const data = snapshot.val();
         setName(data?.user_name ?? "");
