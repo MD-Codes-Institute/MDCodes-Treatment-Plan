@@ -4,8 +4,7 @@ import {
   EmailAuthProvider,
   updatePassword,
 } from "firebase/auth";
-import { ref, child, push, update } from "firebase/database";
-import { VerifyErroCode } from "../../contents/auth/ContentForms";
+import { update, DatabaseReference } from "firebase/database";
 import { useHistory } from "react-router";
 import useAuth from "../../pages/auth/useAuth";
 
@@ -56,13 +55,8 @@ const useUpdateUserInfo = () => {
     }
   };
   // atualizando o realtime database
-  const updateFirebase = async (newData: {
-    user_name?: string;
-    user_email?: string;
-    user_phone?: string;
-  }) => {
-    const database = ref(db, `/users/user-${uid}`);
-    await update(database, newData);
+  const updateFirebase = async (newData: { user_name?: string; user_email?: string; user_phone?: string;}, referenceDb: DatabaseReference) => {
+    await update(referenceDb, newData);
     await user?.reload();
   };
 

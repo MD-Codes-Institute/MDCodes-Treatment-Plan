@@ -7,35 +7,35 @@ import useUserInfo from "../services/crud-auth/getUserInfo";
 import useUpdateUserInfo from "../services/crud-auth/updateUserInfo";
 import ActionsContainer from "../components/tab3/inputs-preferences/ActionsContainer";
 import { classInputs } from "../contents/tabs/ContentsTab3";
+import { getProfilePreferences } from "../services/database/preferencesProfile";
+import { preferencesDb, settingsProfile } from "../firebaseConfig";
 
 const Tab3: React.FC = () => {
   const { user } = useAuth();
   const { updateFirebase } = useUpdateUserInfo();
   const { getCredentialUser, userInfo } = useUserInfo();
+  const [preferences, setPreferences] = useState<boolean>();
 
   useEffect(() => {
     if (!user) return;
     getCredentialUser(user.uid).then(() => {
-      console.log("dados do usuário obtidos");
       const authEmail = user.email ?? undefined;
       const dbEmail = userInfo.find((v) => v.info == authEmail);
       if (authEmail && dbEmail?.info !== authEmail) {
-        updateFirebase({ user_email: authEmail }).then(() => {
+        updateFirebase({ user_email: authEmail }, settingsProfile(user.uid)).then(() => {
           console.log("E-mail atualizado no database");
         });
       }
     });
-  }, [user, userInfo, getCredentialUser, updateFirebase]);
+    getProfilePreferences(user.uid).then((v) => { setPreferences(v?.state) });
+  }, [user, userInfo, getCredentialUser, updateFirebase, getProfilePreferences]);
 
   return (
     <IonPage>
       <IonContent className="ion-padding min-h-full">
         <section className="flex flex-col justify-center items-center h-full pb-10 gap-10">
-          <h1 className="text-white text-5xl text-center pt-25">
-            Profile Info
-          </h1>
+          <h1 className="text-white text-5xl text-center pt-25">Profile Info</h1>
           {/* container com info user */}
-
           <div className="w-full mt-5 gap-5 flex flex-col">
             {userInfo.map((v, i) => (
               <div className="flex flex-row" key={i}>
@@ -53,7 +53,7 @@ const Tab3: React.FC = () => {
           <div>
             <p className="text-white text-[20px]">Planning preferences</p>
           </div>
-          <ActionsContainer />
+          {user && <ActionsContainer user={user} preferences={preferences}/>}
           <div>
             <BtnsFirebase />
           </div>

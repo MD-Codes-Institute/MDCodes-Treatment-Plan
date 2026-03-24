@@ -5,15 +5,15 @@ import {
 } from "../../../contents/tabs/ContentsTab3";
 import { useState } from "react";
 
-const ActionButtons: React.FC<ModalProps> = ({dataType, doYouNeedHelp, saveDb, editDb, needHelp, closeModal,}) => {
+const ActionButtons: React.FC<ModalProps> = ({ doYouNeedHelp, needHelp, closeModal, toggleInput}) => {
   const [helpModal, setHelpModal] = useState<boolean>(false);
 
   return (
-    <div className="absolute bottom-5 px-5 w-full grid grid-flow-col grid-row-1 gap-5 mt-4">
+    <div className="px-5 w-full grid grid-flow-col grid-row-1 gap-5 mt-10">
       <button onClick={() => {closeModal(), doYouNeedHelp(false)}} className="text-white" style={classInputs}>
         Back
       </button>
-      <button onClick={() => closeModal()} className="text-white" style={classInputs}>
+      <button onClick={(e) => toggleInput(e)} className="text-white" style={classInputs}>
         Edit
       </button>
       {needHelp && (
@@ -21,9 +21,9 @@ const ActionButtons: React.FC<ModalProps> = ({dataType, doYouNeedHelp, saveDb, e
           Do you need help?
         </button>
       )}
-      <button onClick={() => closeModal()} className="text-white" style={classInputs}>
-        Save
-      </button>
+      <input type="submit" className="text-white" style={classInputs} value={"Save"}/> 
+        
+
 
       {helpModal && (
         <div>

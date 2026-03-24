@@ -3,6 +3,8 @@ import { classBtn } from "../../../contents/auth/ContentForms";
 import { useState } from "react";
 import useUpdateUserInfo from "../../../services/crud-auth/updateUserInfo";
 import { z, ZodError } from "zod";
+import useAuth from "../../../pages/auth/useAuth";
+import { settingsProfile } from "../../../firebaseConfig";
 
 const schemaPhone = z.object({
   user_phone: z
@@ -12,13 +14,15 @@ const schemaPhone = z.object({
 });
 
 const InputPhone: React.FC<InputField> = ({ setEditField, setRefresh }) => {
+  const { user } = useAuth();
   const [newPhone, setNewPhone] = useState<string>("");
   const { updateFirebase } = useUpdateUserInfo();
   const handleClick = (e: any) => {
     e.preventDefault();
     try {
+      if (!user) throw Error("User not authenticate");
       schemaPhone.parse({ user_phone: newPhone });
-      updateFirebase({ user_phone: newPhone }).then(() => {
+      updateFirebase({ user_phone: newPhone }, settingsProfile(user.uid)).then(() => {
         console.log("Numero de telefone alterado com sucesso!");
         setRefresh((prev) => prev + 1);
         setEditField("");
@@ -27,6 +31,9 @@ const InputPhone: React.FC<InputField> = ({ setEditField, setRefresh }) => {
       if (error instanceof z.ZodError) {
         console.log(error.issues);
         alert("Error changing phone number");
+      } else {
+        console.log(error);
+        alert((error as Error).message);
       }
     }
   };
@@ -43,12 +50,7 @@ const InputPhone: React.FC<InputField> = ({ setEditField, setRefresh }) => {
             onChange={(e) => setNewPhone(e.target.value)}
             className="border border-amber-50 rounded-2xl w-70 h-10 custom-input placeholder:px-1"
           />
-          <input
-            type="submit"
-            value="Submit"
-            onClick={handleClick}
-            style={classBtn}
-          />
+          <input type="submit" value="Submit" onClick={handleClick} style={classBtn} />
         </div>
       </form>
       <button className="text-white mt-5" onClick={() => setEditField("")}>
