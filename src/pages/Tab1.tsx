@@ -8,18 +8,17 @@ import "./Tab1.css";
 const Tab1: React.FC = () => {
   const [openId, setOpenId] = useState<string | null>(null);
   const [origin, setOrigin] = useState({ ox: "50%", oy: "50%" });
-  const [ImgZoom, setImgZoom] = useState("img-zoom");
+  const [imgZoom, setImgZoom] = useState("img-zoom");
   const history = useHistory();
   const codeList: string[] = [];
+  
 
-  const active = SPOTS.find((s) => s.id === openId);
-  const scale = active?.zoomScale ?? 1;
+  const activeList = SPOTS.find((v) => v.id === openId);
+  const zoomScale = activeList?.zoomScale ?? 1;
 
-  function handleSpotClick(
-    e: React.MouseEvent<HTMLButtonElement>,
-    spot: SpotCfg
-  ) {
+  const handleSpotClick = (e: React.MouseEvent<HTMLButtonElement>, spot: SpotCfg) => {
     e.stopPropagation();
+    spot.hasCluster && setOpenId((v) => (v === spot.id ? null : spot.id));
     const cs = getComputedStyle(e.currentTarget);
     const varOx = cs.getPropertyValue("--ox").trim();
     const varOy = cs.getPropertyValue("--oy").trim();
@@ -38,17 +37,13 @@ const Tab1: React.FC = () => {
     else if (spot.id === "tt") setImgZoom("img-tt");
     else if (spot.id === "lp") setImgZoom("img-lp");
     else setImgZoom("img-zoom");
+  };
 
-    if (spot.hasCluster) setOpenId((v) => (v === spot.id ? null : spot.id));
-  }
-
-  function goToInputs(code: string) {
-    console.log(`Código clicado: ${code}`);
+  const goToInputs = (code: string) => {
     codeList.push(code);
-    console.log(codeList);
-    history.push(`/tabs/tab2?code=${encodeURIComponent(code)}`);
-  }
-
+    console.log(codeList)
+    // history.push(`/tabs/tab2?code=${encodeURIComponent(code)}`);
+  };
   return (
     <IonPage>
       <IonContent className="container">
@@ -60,14 +55,15 @@ const Tab1: React.FC = () => {
           }}
         >
           <motion.div
-            className={ImgZoom}
+            className={imgZoom}
             style={{ transformOrigin: `${origin.ox} ${origin.oy}` }}
             initial={{ opacity: 0, scale: 0.98, y: 8 }}
-            animate={{ opacity: 1, scale: openId ? scale : 1, y: 0 }}
+            animate={{ opacity: 1, scale: openId ? zoomScale : 1, y: 0 }}
             transition={{ type: "spring", stiffness: 160, damping: 20 }}
           />
 
           <div className="hotspots">
+            {/* Botões principais */}
             {SPOTS.map((spot) => {
               const anyOpen = Boolean(openId);
               return (
@@ -91,9 +87,10 @@ const Tab1: React.FC = () => {
             })}
 
             <AnimatePresence>
-              {active?.hasCluster && (
+              {/* Botões secundarios de cada código */}
+              {activeList?.hasCluster && (
                 <motion.div
-                  className={`cluster cluster-${active.id}`}
+                  className={`cluster cluster-${activeList.id}`}
                   style={{ left: origin.ox, top: origin.oy }}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -101,12 +98,10 @@ const Tab1: React.FC = () => {
                   transition={{ type: "spring", stiffness: 220, damping: 16 }}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {(active.options ?? []).map((label, i) => (
+                  {(activeList.options ?? []).map((label, i) => (
                     <motion.button
                       key={`${label}-${i}`}
-                      className={`point child ${active.id}-child ${active.id}-${
-                        i + 1
-                      }`}
+                      className={`point child ${activeList.id}-child ${activeList.id}-${i + 1}`}
                       whileHover={{ scale: 1.06 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => goToInputs(label)}

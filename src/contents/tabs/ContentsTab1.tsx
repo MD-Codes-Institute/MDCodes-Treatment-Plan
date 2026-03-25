@@ -4,6 +4,7 @@ export type SpotCfg = {
   id: string;
   label: string;
   className: string;
+  region: string;
   hasCluster?: boolean;
   options?: string[];
   zoomScale?: number;
@@ -16,6 +17,7 @@ export const SPOTS: SpotCfg[] = [
     id: "ck",
     label: "Ck",
     className: "ck",
+    region: "Cheek",
     hasCluster: true,
     options: ["Ck1", "Ck2", "Ck3", "Ck4", "Ck5"],
     zoomScale: 1.1,
@@ -24,6 +26,7 @@ export const SPOTS: SpotCfg[] = [
     id: "o",
     label: "O",
     className: "o",
+    region: "Orbital",
     hasCluster: true,
     options: ["O1", "O2", "O3"],
     zoomScale: 1.5,
@@ -32,6 +35,7 @@ export const SPOTS: SpotCfg[] = [
     id: "e",
     label: "E",
     className: "e",
+    region: "Eyebrows",
     hasCluster: true,
     options: ["E1", "E2", "E3"],
     zoomScale: 1.5,
@@ -40,6 +44,7 @@ export const SPOTS: SpotCfg[] = [
     id: "t",
     label: "T",
     className: "t",
+    region: "Temple",
     hasCluster: true,
     options: ["T1", "T2"],
     zoomScale: 1.5,
@@ -48,6 +53,7 @@ export const SPOTS: SpotCfg[] = [
     id: "tt",
     label: "Tt",
     className: "tt",
+    region: "Tear trough",
     hasCluster: true,
     options: ["Tt1", "Tt2", "Tt3"],
     zoomScale: 1.5,
@@ -56,6 +62,7 @@ export const SPOTS: SpotCfg[] = [
     id: "nl",
     label: "NL",
     className: "nl",
+    region: "Nasolabial folds",
     hasCluster: true,
     options: ["NL1", "NL2", "NL3"],
     zoomScale: 1.5,
@@ -64,6 +71,7 @@ export const SPOTS: SpotCfg[] = [
     id: "m",
     label: "M",
     className: "m",
+    region: "Marionette lines",
     hasCluster: true,
     options: ["M1", "M2", "M3"],
     zoomScale: 1.5,
@@ -72,6 +80,7 @@ export const SPOTS: SpotCfg[] = [
     id: "jw",
     label: "Jw",
     className: "jw",
+    region: "Jawline",
     hasCluster: true,
     options: ["Jw1", "Jw2", "Jw3", "Jw4", "Jw5"],
     zoomScale: 1.1,
@@ -82,6 +91,7 @@ export const SPOTS: SpotCfg[] = [
     id: "c",
     label: "C",
     className: "c",
+    region: "Chin",
     hasCluster: true,
     options: ["C1", "C2", "C3", "C4", "C5", "C6"],
     zoomScale: 1.8,
@@ -90,6 +100,7 @@ export const SPOTS: SpotCfg[] = [
     id: "lp",
     label: "Lp",
     className: "lp",
+    region: "Lip",
     hasCluster: true,
     options: [
       "Lp₁",
@@ -110,6 +121,7 @@ export const SPOTS: SpotCfg[] = [
     id: "n",
     label: "N",
     className: "n",
+    region: "Nose",
     hasCluster: true,
     options: ["N1", "N2", "N3", "N4", "N5"],
     zoomScale: 1.5,
@@ -118,6 +130,7 @@ export const SPOTS: SpotCfg[] = [
     id: "g",
     label: "G",
     className: "g",
+    region: "Glabella",
     hasCluster: true,
     options: ["G1", "G1", "G2"],
     zoomScale: 1.5,
@@ -126,6 +139,7 @@ export const SPOTS: SpotCfg[] = [
     id: "f",
     label: "F",
     className: "f",
+    region: "Forehead",
     hasCluster: true,
     options: ["F1", "F2", "F3"],
     zoomScale: 1.5,
