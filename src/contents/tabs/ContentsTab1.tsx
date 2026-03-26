@@ -1,4 +1,10 @@
 // conteudos da tab1 => criação dos pontos dos codigos
+export interface LocalData {
+  region: string,
+  code: string
+}
+
+
 
 export type SpotCfg = {
   id: string;
