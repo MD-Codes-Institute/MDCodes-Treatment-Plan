@@ -33,9 +33,9 @@ const Tab1: React.FC = () => {
           }}
         >
           {/* container button para abrir modal da lista */}
-          <div className="fixed bottom-[7%] right-[7%] bg-black w-14 h-14 z-99 rounded-[50%!important]">
+          <div className="fixed bottom-[7%] right-[7%] bg-(--ion-background-containers) w-14 h-14 z-99 rounded-[50%!important] shadow-[0px_0px_10px_#000]">
             <img src={iconList} onClick={toggleModal} className="relative p-2 w-full h-full" />
-            <p className="relative left-[50%] -mt-3 w-[40%] h-[40%] text-center bg-red-600 rounded-[50%!important] font-bold">
+            <p className="relative left-[50%] -mt-3 p-[0.8px] w-[45%] h-[45%] text-center bg-red-600 rounded-[50%!important] font-bold">
               {cartList.length}
             </p>
           </div>

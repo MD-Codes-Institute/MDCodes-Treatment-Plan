@@ -1,11 +1,27 @@
 // conteudos da tab1 => criação dos pontos dos codigos
 export interface LocalData {
-  region: string,
-  code: string
+  region: string;
+  code: string;
 }
 
-
-
+export const styleInputs: React.CSSProperties = {
+  color: "#FFF",
+  borderRadius: "0.5rem",
+  boxShadow: "0px 0px 2px #000",
+  background: "var(--ion-background-inputs)",
+  height: "2.5rem",
+  textAlign: "center",
+  width: "7rem",
+};
+export const styleBtn: React.CSSProperties = {
+  color: "#FFF",
+  borderRadius: "0.5rem",
+  boxShadow: "0px 0px 2px #000",
+  background: "var(--ion-background-inputs)",
+  height: "2.5rem",
+  width: "8rem",
+  fontSize: "13px"
+}
 export type SpotCfg = {
   id: string;
   label: string;
@@ -108,19 +124,7 @@ export const SPOTS: SpotCfg[] = [
     className: "lp",
     region: "Lip",
     hasCluster: true,
-    options: [
-      "Lp₁",
-      "Lp¹",
-      "Lp2",
-      "Lp³",
-      "Lp₃",
-      "Lp4",
-      "Lp5",
-      "Lp6",
-      "Lp7",
-      "Lp⁸",
-      "Lp₈",
-    ],
+    options: ["Lp₁", "Lp¹", "Lp2", "Lp³", "Lp₃", "Lp4", "Lp5", "Lp6", "Lp7", "Lp⁸", "Lp₈"],
     zoomScale: 1.5,
   },
   {
@@ -152,9 +156,7 @@ export const SPOTS: SpotCfg[] = [
   },
 ];
 
-
 // fim dos conteudos da tab1 => criação dos pontos dos codigos
-
 
 // conteudos da tab2 => criação da planilha de códigos
 export type Row = {
@@ -166,19 +168,6 @@ export type Row = {
   left: string;
 };
 
-
-export const VOLUMES = [
-  "0",
-  "0.1",
-  "0.2",
-  "0.3",
-  "0.4",
-  "0.5",
-  "0.6",
-  "0.7",
-  "0.8",
-  "0.9",
-  "1",
-];
+export const VOLUMES = ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1"];
 
 // fim dos conteudos da tab2 => criação da planilha de códigos
