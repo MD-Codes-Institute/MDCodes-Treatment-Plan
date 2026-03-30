@@ -1,53 +1,26 @@
 import { IonContent, IonPage } from "@ionic/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { SPOTS, SpotCfg } from "../contents/tabs/ContentsTab1";
+import { SPOTS } from "../contents/tabs/ContentsTab1";
+import useTab1Handlers from "../components/hooks/useTab1Handlers";
 import "./Tab1.css";
-
+import ModalCardCode from "../components/tab1/ModalCardCode";
+import iconList from "../../public/resources/cardList.png";
 const Tab1: React.FC = () => {
-  const [openId, setOpenId] = useState<string | null>(null);
-  const [origin, setOrigin] = useState({ ox: "50%", oy: "50%" });
-  const [ImgZoom, setImgZoom] = useState("img-zoom");
-  const history = useHistory();
-  const codeList: string[] = [];
-
-  const active = SPOTS.find((s) => s.id === openId);
-  const scale = active?.zoomScale ?? 1;
-
-  function handleSpotClick(
-    e: React.MouseEvent<HTMLButtonElement>,
-    spot: SpotCfg
-  ) {
-    e.stopPropagation();
-    const cs = getComputedStyle(e.currentTarget);
-    const varOx = cs.getPropertyValue("--ox").trim();
-    const varOy = cs.getPropertyValue("--oy").trim();
-    const left = cs.getPropertyValue("left").trim();
-    const top = cs.getPropertyValue("top").trim();
-
-    setOrigin({
-      ox: spot.zoomOriginX ?? (varOx || left || "50%"),
-      oy: spot.zoomOriginY ?? (varOy || top || "50%"),
-    });
-
-    if (spot.id === "jw") setImgZoom("img-zoom-jw");
-    else if (spot.id === "c") setImgZoom("img-c");
-    else if (spot.id === "g") setImgZoom("img-g");
-    else if (spot.id === "f") setImgZoom("img-f");
-    else if (spot.id === "tt") setImgZoom("img-tt");
-    else if (spot.id === "lp") setImgZoom("img-lp");
-    else setImgZoom("img-zoom");
-
-    if (spot.hasCluster) setOpenId((v) => (v === spot.id ? null : spot.id));
-  }
-
-  function goToInputs(code: string) {
-    console.log(`Código clicado: ${code}`);
-    codeList.push(code);
-    console.log(codeList);
-    history.push(`/tabs/tab2?code=${encodeURIComponent(code)}`);
-  }
+  const {
+    cartModal,
+    imgZoom,
+    setImgZoom,
+    openId,
+    setOpenId,
+    handleSpotClick,
+    zoomScale,
+    origin,
+    activeList,
+    toggleModal,
+    modal,
+    cartList,
+    deleteItemList,
+  } = useTab1Handlers();
 
   return (
     <IonPage>
@@ -59,41 +32,57 @@ const Tab1: React.FC = () => {
             setImgZoom("img-zoom");
           }}
         >
+          {/* container button para abrir modal da lista */}
+          <div className="fixed bottom-[7%] right-[7%] bg-(--ion-background-containers) w-14 h-14 z-99 rounded-[50%!important] shadow-[0px_0px_10px_#000]">
+            <img src={iconList} onClick={toggleModal} className="relative p-2 w-full h-full" />
+            <p className="relative left-[50%] -mt-3 p-[0.8px] w-[45%] h-[45%] text-center bg-red-600 rounded-[50%!important] font-bold">
+              {cartList.length}
+            </p>
+          </div>
+          {/*fim container button para abrir modal da lista */}
+          <AnimatePresence>
+            {modal && (
+              <ModalCardCode
+                toggleModal={toggleModal}
+                cartList={cartList}
+                deleteItemList={deleteItemList}
+              />
+            )}
+          </AnimatePresence>
+
           <motion.div
-            className={ImgZoom}
+            className={imgZoom}
             style={{ transformOrigin: `${origin.ox} ${origin.oy}` }}
             initial={{ opacity: 0, scale: 0.98, y: 8 }}
-            animate={{ opacity: 1, scale: openId ? scale : 1, y: 0 }}
+            animate={{ opacity: 1, scale: openId ? zoomScale : 1, y: 0 }}
             transition={{ type: "spring", stiffness: 160, damping: 20 }}
           />
 
           <div className="hotspots">
-            {SPOTS.map((spot) => {
-              const anyOpen = Boolean(openId);
-              return (
-                <AnimatePresence key={spot.id}>
-                  {!anyOpen && (
-                    <motion.button
-                      className={`point ${spot.className}`}
-                      whileHover={{ scale: 1.06 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={(e) => handleSpotClick(e, spot)}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      {spot.label}
-                    </motion.button>
-                  )}
-                </AnimatePresence>
-              );
-            })}
+            {/* Botões principais */}
+            {SPOTS.map((spot) => (
+              <AnimatePresence key={spot.id}>
+                {!Boolean(openId) && (
+                  <motion.button
+                    className={`point ${spot.className}`}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={(e) => handleSpotClick(e, spot)}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {spot.label}
+                  </motion.button>
+                )}
+              </AnimatePresence>
+            ))}
 
             <AnimatePresence>
-              {active?.hasCluster && (
+              {/* Botões secundarios de cada código */}
+              {activeList?.hasCluster && (
                 <motion.div
-                  className={`cluster cluster-${active.id}`}
+                  className={`cluster cluster-${activeList.id}`}
                   style={{ left: origin.ox, top: origin.oy }}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -101,15 +90,13 @@ const Tab1: React.FC = () => {
                   transition={{ type: "spring", stiffness: 220, damping: 16 }}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {(active.options ?? []).map((label, i) => (
+                  {(activeList.options ?? []).map((label, i) => (
                     <motion.button
                       key={`${label}-${i}`}
-                      className={`point child ${active.id}-child ${active.id}-${
-                        i + 1
-                      }`}
+                      className={`point child ${activeList.id}-child ${activeList.id}-${i + 1}`}
                       whileHover={{ scale: 1.06 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => goToInputs(label)}
+                      onClick={() => cartModal(label, activeList.region)}
                     >
                       {label}
                     </motion.button>
