@@ -1,4 +1,4 @@
-import { IonPage, IonContent } from "@ionic/react";
+import { IonPage, IonContent, IonSpinner } from "@ionic/react";
 import "./Tab3.css";
 import useAuth from "./auth/useAuth";
 import { useEffect, useState } from "react";
@@ -15,7 +15,7 @@ const Tab3: React.FC = () => {
   const { updateFirebase } = useUpdateUserInfo();
   const { getCredentialUser, userInfo } = useUserInfo();
   const [preferences, setPreferences] = useState<boolean>();
-
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     if (!user) return;
     getCredentialUser(user.uid).then(() => {
@@ -27,8 +27,21 @@ const Tab3: React.FC = () => {
         });
       }
     });
-    getProfilePreferences(user.uid).then((v) => { setPreferences(v?.state) });
+    getProfilePreferences(user.uid).then((v) => {
+      setPreferences(v?.state);
+    });
+    setTimeout(() => {
+    setLoading(false);
+  }, 1000);
   }, [user, userInfo, getCredentialUser, updateFirebase, getProfilePreferences]);
+  
+  if (loading) {
+    return (
+      <div className="w-screen h-screen bg-(--ion-background-containers) fixed z-999">
+        <IonSpinner name="circular" className="fixed z-999 h-full left-1/2 top[50%]"></IonSpinner>
+      </div>
+    );
+  }
 
   return (
     <IonPage>
@@ -50,10 +63,11 @@ const Tab3: React.FC = () => {
             ))}
           </div>
           {/* fim  container com info user */}
+          {/* container preferencias user */}
           <div>
             <p className="text-white text-[20px]">Planning preferences</p>
           </div>
-          {user && <ActionsContainer user={user} preferences={preferences}/>}
+          {user && <ActionsContainer user={user} preferences={preferences} />}
           <div>
             <BtnsFirebase />
           </div>
