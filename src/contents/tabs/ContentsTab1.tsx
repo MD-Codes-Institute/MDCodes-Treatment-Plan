@@ -6,12 +6,16 @@ export interface LocalData {
 
 export const styleInputs: React.CSSProperties = {
   color: "#FFF",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   borderRadius: "0.5rem",
   boxShadow: "0px 0px 2px #000",
   background: "var(--ion-background-inputs)",
   height: "2.5rem",
   textAlign: "center",
   width: "7rem",
+  fontSize: "17px",
 };
 export const styleBtn: React.CSSProperties = {
   color: "#FFF",
@@ -20,8 +24,8 @@ export const styleBtn: React.CSSProperties = {
   background: "var(--ion-background-inputs)",
   height: "2.5rem",
   width: "8rem",
-  fontSize: "13px"
-}
+  fontSize: "12px",
+};
 export type SpotCfg = {
   id: string;
   label: string;

@@ -30,16 +30,14 @@ const ModalCardCode: React.FC<PropsModal> = ({ toggleModal, cartList, deleteItem
           </div>
           {cartList.map((item: any, i: any) => (
             <div
-              className="grid grid-cols-3 grid-flow-row gap-10 px-3 md:px-5 w-full mx-2"
+              className="grid grid-cols-3 grid-flow-row gap-10 px-3 md:px-5 w-full mx-2 items-center"
               key={i}
             >
-              <p className="text-white font-medium text-start">{item.region}:</p>
-              <input
-                value={item.code}
+              <p className="text-white font-medium text-start text-sm">{item.region}:</p>
+              <p
                 style={styleInputs}
                 className="row-span-1 text-center justify-self-center"
-                disabled
-              />
+              >{item.code}</p>
               <button className="flex justify-end" onClick={() => deleteItemList(i)}>
                 <img src={deleteIcon} className="w-8 h-8" alt="Icon delete row" />
               </button>
