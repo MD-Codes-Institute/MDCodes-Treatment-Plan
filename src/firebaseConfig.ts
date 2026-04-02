@@ -26,6 +26,9 @@ const settingsProfile = (uid: string) => {
   return ref(db, `/users/user-${uid}`);
 };
 
+const patientsDb = (uid: string) => {
+  return ref(db, `/patients/user-${uid}`)
+}
 try {
   auth = initializeAuth(app, {
     persistence: indexedDBLocalPersistence,
@@ -34,4 +37,4 @@ try {
   auth = getAuth(app);
 }
 
-export { auth, db, preferencesDb, settingsProfile };
+export { auth, db, preferencesDb, settingsProfile, patientsDb};

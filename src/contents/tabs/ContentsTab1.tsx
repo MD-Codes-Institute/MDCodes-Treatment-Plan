@@ -162,16 +162,4 @@ export const SPOTS: SpotCfg[] = [
 
 // fim dos conteudos da tab1 => criação dos pontos dos codigos
 
-// conteudos da tab2 => criação da planilha de códigos
-export type Row = {
-  id: string;
-  code: string;
-  product: string;
-  right: string;
-  mid: string;
-  left: string;
-};
 
-export const VOLUMES = ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1"];
-
-// fim dos conteudos da tab2 => criação da planilha de códigos
