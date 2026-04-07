@@ -5,14 +5,14 @@ interface PropsFilterPatient {
   filterPatient: string;
 }
 
-const FilterPatient: React.FC<PropsFilterPatient> = ({
+const SearchPatient: React.FC<PropsFilterPatient> = ({
   handleSearch,
   handleClear,
   filterPatient,
   setFilterPatient,
 }) => {
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-7">
       <div className="flex flex-row justify-between items-center">
         <label htmlFor="searchPatient">Search your patient:</label>
         <input
@@ -35,4 +35,4 @@ const FilterPatient: React.FC<PropsFilterPatient> = ({
   );
 };
 
-export default FilterPatient;
+export default SearchPatient;

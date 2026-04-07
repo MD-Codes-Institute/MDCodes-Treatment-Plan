@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 import { products, volumes } from "../../contents/tabs/ContentsTab2";
+import { useState } from "react";
+import useTab2Handlers from "../hooks/useTab2Handlers";
 
 interface PropsForm {
   codeList: string[];
@@ -20,8 +22,11 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
       })),
     },
   });
+  const { handleSavePatient } = useTab2Handlers();
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    handleSavePatient(data).then((v) => {
+      console.log(v?.message, v?.status);
+    });
   });
 
   return (
@@ -32,14 +37,14 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
         id="form-treatment-plan"
       >
         {/* inputs infos patients */}
-        <div className="flex flex-col px-8 gap-4 mb-4 w-full">
+        <div className="flex flex-col gap-4 mb-4 w-full">
           <div className="flex flex-row justify-between items-center">
             <label htmlFor="patient-age">Patient's age: </label>
             <input
               {...register("patientAge", { required: true })}
               className="input-info-patient age w-12"
             />
-            <input {...register("dateTreatment")} readOnly className="text-end" />
+            <input {...register("dateTreatment")} disabled className="text-end" />
           </div>
           <label htmlFor="name-patient">Patient's name:</label>
           <input
