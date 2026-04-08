@@ -43,6 +43,9 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
             <input
               {...register("patientAge", { required: true })}
               className="input-info-patient age w-12"
+              type="number"
+              inputMode="numeric"
+              max="110"
             />
             <input {...register("dateTreatment")} disabled className="text-end" />
           </div>
@@ -51,6 +54,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
             {...register("namePatient", { required: true })}
             placeholder="Write patient's name"
             className="input-info-patient"
+            type="text"
           />
         </div>
         {/* Header */}
