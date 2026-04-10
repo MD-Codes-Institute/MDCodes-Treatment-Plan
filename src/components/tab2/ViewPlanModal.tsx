@@ -1,53 +1,24 @@
-import { useState, useEffect } from "react";
-import { PropsPlanModal, Patients, dragConstraints } from "../../contents/tabs/ContentsTab2";
+import { PropsPlanModal, dragConstraints } from "../../contents/tabs/ContentsTab2";
 import ExpandableDetails from "./ExpandableDetails";
 import { AnimatePresence, motion } from "framer-motion";
 import SearchPatient from "./SearchPatient";
 import BtnOption from "./BtnOption";
+import useViewPlanModal from "../hooks/useViewPlanModal";
 
-const ViewPlanModal: React.FC<PropsPlanModal> = ({ patients }) => {
-  const [openDetails, setOpenDetails] = useState<boolean>(false);
-  const [listPatient, setListPatient] = useState<Patients[]>(patients);
-  const [filterPatient, setFilterPatient] = useState<string>("");
-  const [selectId, setSelectId] = useState<any>("");
-  const [openBtnOptionId, setOpenBtnOptionId] = useState<string | null>(null);
-
-  const handleSearch = () => {
-    filterPatient === "" && alert("Please enter valid data for the search.");
-    const results = patients.filter((v: any) =>
-      v.namePatient.toLowerCase().includes(filterPatient.trim().toLowerCase())
-    );
-    results.length > 0 ? setListPatient(results) : alert("No patients were found.");
-  };
-  const handleClear = () => {
-    setFilterPatient(""), setListPatient(patients);
-  };
-  const handleOpenDetails = (id: string) => {
-    setOpenDetails(true);
-    setSelectId(id);
-  };
-  const handleCloseDetails = () => setOpenDetails(false);
-
-  const onDrag = (event: any, info: any, id: string) => {
-    const dragX = info.offset.x;
-    if (dragX < -200) {
-      setOpenBtnOptionId(id);
-    }
-  };
-  const handleCancelOption = () => {
-    setOpenBtnOptionId(null);
-  };
-  useEffect(() => {
-    filterPatient === "" && setListPatient(patients);
-  }, [patients, filterPatient]);
+const ViewPlanModal: React.FC<PropsPlanModal> =  ({ patients }) => {
+  const {
+    handleSearch, handleClearSearch, handleOpenDetails, handleCloseDetails,
+    handleCancelOptions, handlePressStart, handlePressEnd, onDragOptions, openDetails, 
+    listPatient, selectId, openBtnOptionId,filterPatient,setFilterPatient,isLongPressRef
+  } =  useViewPlanModal(patients);
 
   return (
-    <section className="flex flex-col gap-5 w-full mb-30 overflow-y-auto">
-      <SearchPatient
-        handleClear={handleClear}
-        handleSearch={handleSearch}
-        filterPatient={filterPatient}
-        setFilterPatient={setFilterPatient}
+    <section className="flex flex-col gap-5 w-full mb-30 overflow-y-auto overflow-x-hidden">
+      <SearchPatient 
+      handleClear={handleClearSearch} 
+      handleSearch={handleSearch}
+      filterPatient={filterPatient}
+      setFilterPatient={setFilterPatient}
       />
 
       {listPatient.map((v: any, i: any) => (
@@ -55,28 +26,34 @@ const ViewPlanModal: React.FC<PropsPlanModal> = ({ patients }) => {
           <div
             className={`w-full input-info-patient flex flex-col justify-center cursor-pointer 
               ${openDetails && selectId === v.id ? "open" : ""}`}
-            onClick={() =>
-              openDetails && selectId === v.id ? handleCloseDetails() : handleOpenDetails(v.id)
-            }
+            onClick={() => {
+              if (isLongPressRef.current) return;
+              openDetails && selectId === v.id ? handleCloseDetails() : handleOpenDetails(v.id);
+            }}
           >
             {/* container header */}
             <motion.div
-              className="flex flex-row justify-between items-center overflow-x-hidden"
+              className="flex flex-row items-center"
               drag="x"
-              dragSnapToOrigin={true}
-              onDrag={(event, info) => onDrag(event, info, v.id)}
+              onPointerDown={() => handlePressStart(v.id)}
+              onPointerUp={handlePressEnd}
+              onPointerLeave={handlePressEnd}
+              onDrag={(event, info) => onDragOptions(event, info, v.id)}
               dragConstraints={dragConstraints}
+              dragSnapToOrigin={true}
+              style={{ userSelect: "none", touchAction: "none" }}
             >
-              <p className="text-white text-md text-start">{v.namePatient} - Age: {v.patientAge}</p>
-              <p className="text-white text-[12px] md:text-[15px]">Save: {v.dateTreatment}</p>
+              <p className="text-white text-md text-start">
+                {v.namePatient} - Age: {v.patientAge}
+              </p>
+              {openBtnOptionId !== v.id && (
+                <p className="text-white text-[12px] md:text-[15px] absolute right-10">Save: {v.dateTreatment}</p>
+              )}
 
               <AnimatePresence>
+                {/* buttons para deletar plano de tratamento */}
                 {openBtnOptionId === v.id && (
-                  <BtnOption
-                    handleCancelOption={handleCancelOption}
-                    id={v.id}
-                    patients={patients}
-                  />
+                  <BtnOption handleCancelOption={handleCancelOptions} id={v.id} />
                 )}
               </AnimatePresence>
             </motion.div>
