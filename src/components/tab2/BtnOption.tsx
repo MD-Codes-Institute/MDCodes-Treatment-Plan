@@ -1,53 +1,86 @@
-import { PropsPlanModal } from "../../contents/tabs/ContentsTab2";
+import { containerVariants, itemVariants } from "../../contents/tabs/ContentsTab2";
 import { motion } from "framer-motion";
-interface PropsBtnOption extends PropsPlanModal {
+import useTab2Handlers from "../hooks/useTab2Handlers";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { useLocation } from "react-router";
+interface PropsBtnOption {
   handleCancelOption: () => void;
   id: string;
 }
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-  exit: { opacity: 0, x: 100, transition: { duration: 0.3} },
-};
-
-const itemVariants = {
-  hidden: {
-    x: 100,
-    opacity: 0,
-  },
-  visible: {
-    x: 0,
-    opacity: 1,
-  },
-};
-
-const BtnOption: React.FC<PropsBtnOption> = ({ handleCancelOption, patients, id }) => {
+const BtnOption: React.FC<PropsBtnOption> = ({ handleCancelOption, id }) => {
+  const { handleDeletePatient } = useTab2Handlers();
+  const [modalComfirm, setModalComfirm] = useState<boolean>(false);
+  const [comfirmDel, setComfirmDel] = useState<boolean>(false);
+  const location = useLocation();
+  useEffect(() => {
+    if (comfirmDel) {
+      handleDeletePatient(id).then((v) => {
+        console.log(v?.message, v?.status);
+        window.location.reload();
+      });
+    }
+    setModalComfirm(false);
+  }, [comfirmDel, location.pathname]);
   return (
     <motion.div
       variants={containerVariants}
       initial="hidden"
       animate="visible"
       exit="exit"
-      className="flex flex-row gap-5 items-center justify-center"
+      className="flex flex-row gap-3 absolute right-8"
     >
       <motion.button
         variants={itemVariants}
         onClick={(e: any) => {
           e.stopPropagation(), handleCancelOption();
         }}
-        className="text-white"
+        className="btns-options text-white"
       >
         Cancel
       </motion.button>
-      <motion.button variants={itemVariants} className="text-red-600 font-extrabold">
+      <motion.button
+        variants={itemVariants}
+        className="text-red-500 btns-options "
+        onClick={(e: any) => {
+          e.stopPropagation(), setModalComfirm(true);
+        }}
+      >
         Delete
       </motion.button>
+
+      {modalComfirm &&
+        createPortal(
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[30vh] bg-(--ion-background-containers) z-999 rounded-2xl flex flex-col gap-5 items-center justify-center overflow-y-hidden shadow-[0_10px_40px_rgba(0,0,0,4.5)]"
+          >
+            <p className="text-center text-white px-5">
+              Are you sure about these changes? This action is permanent!
+            </p>
+            <div className="flex flex-row gap-5 w-full justify-center">
+              <button
+                className="text-white"
+                onClick={(e) => {
+                  e.stopPropagation(), setModalComfirm(false);
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                className="text-red-600 font-extrabold"
+                onClick={(e) => {
+                  e.stopPropagation(), setComfirmDel(true);
+                }}
+              >
+                I'm sure
+              </button>
+            </div>
+          </motion.div>,
+          document.body
+        )}
     </motion.div>
   );
 };
