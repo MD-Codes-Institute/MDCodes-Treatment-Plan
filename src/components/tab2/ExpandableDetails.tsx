@@ -1,15 +1,16 @@
 import { PropsPlanModal, variantsDetails, classBtnPrice } from "../../contents/tabs/ContentsTab2";
-import { motion, AnimatePresence } from "framer-motion";
-import { classBtn } from "../../contents/auth/ContentForms";
-
+import { motion } from "framer-motion";
+import useTab2Handlers from "../hooks/useTab2Handlers";
+import useUserInfo from "../../services/crud-auth/getUserInfo";
 interface PropsDetails extends PropsPlanModal {
   id: string;
   handleCloseDetails: () => void;
 }
 
 const ExpandableDetails: React.FC<PropsDetails> = ({ patients, id, handleCloseDetails }) => {
-  const patient = patients.filter((v) => v.id === id);
+  const { handlePriceTreatment } = useTab2Handlers();
 
+  const patient = patients.filter((v) => v.id === id);
   return (
     patient.length > 0 && (
       <motion.div
@@ -30,7 +31,10 @@ const ExpandableDetails: React.FC<PropsDetails> = ({ patients, id, handleCloseDe
               <p>Left</p>
             </div>
             {v.treatmentPlan.map((item: any, i) => (
-              <div className="grid grid-cols-5 grid-flow-row items-center justify-center w-full text-center text-white font-extrabold gap-5" key={i}>
+              <div
+                className="grid grid-cols-5 grid-flow-row items-center justify-center w-full text-center text-white font-extrabold gap-5"
+                key={i}
+              >
                 <p className="input-patient-plan">{item.code}</p>
                 <p className="input-patient-plan">{item.product}</p>
                 <p className="input-patient-plan">{item.left}</p>
@@ -44,7 +48,11 @@ const ExpandableDetails: React.FC<PropsDetails> = ({ patients, id, handleCloseDe
           <button onClick={() => handleCloseDetails()} className="text-white input-patient-plan">
             Close
           </button>
-          <button onClick={() => handleCloseDetails()} className="text-white" style={classBtnPrice}>
+          <button
+            onClick={() => handlePriceTreatment(patient[0])}
+            className="text-white"
+            style={classBtnPrice}
+          >
             Price
           </button>
         </div>
