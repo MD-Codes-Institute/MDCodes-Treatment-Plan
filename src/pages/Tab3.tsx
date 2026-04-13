@@ -9,6 +9,7 @@ import ActionsContainer from "../components/tab3/inputs-preferences/ActionsConta
 import { classInputs } from "../contents/tabs/ContentsTab3";
 import { getProfilePreferences } from "../services/database/preferencesProfile";
 import { preferencesDb, settingsProfile } from "../firebaseConfig";
+import Loader from "../components/Loader";
 
 const Tab3: React.FC = () => {
   const { user } = useAuth();
@@ -37,9 +38,7 @@ const Tab3: React.FC = () => {
   
   if (loading) {
     return (
-      <div className="w-screen h-screen bg-(--ion-background-containers) fixed z-999">
-        <IonSpinner name="circular" className="fixed z-999 h-full left-1/2 top[50%]"></IonSpinner>
-      </div>
+      <Loader />
     );
   }
 

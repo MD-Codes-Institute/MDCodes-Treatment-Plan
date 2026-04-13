@@ -1,119 +1,122 @@
-.container-header{
-  margin-left: 20px;
-  margin-top: 55px;
+.input-search {
+  background-image: url("/resources/search-icon.svg");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px;
+  padding-right: 2.5rem;
 }
 
-.container-input {
-  display: flex;
-  flex-direction: column;
-  width: 90%;
+.btn-search {
+  background-color: var(--ion-background-inputs);
+  height: 2.5rem;
+  width: 40%;
+  border-radius: 10px;
+  box-shadow: 0px 2px 2px #000;
+  font-size: 13px;
 }
-.container-age {
+
+.input-info-patient {
+  background-color: var(--ion-background-inputs);
+  height: 3rem;
+  padding-inline: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px #151515;
+  text-align: start;
+}
+
+.input-info-patient.open {
+  border-radius: 10px 10px 0 0;
+}
+
+.input-patient-plan {
+  background-color: var(--ion-background-inputs);
+  height: 2.5rem;
+  padding-inline: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px #040404;
+  text-align: center;
   display: flex;
-  flex-direction: row;
   align-items: center;
+  justify-content: center;
 }
-.container-age input {
+.modal-details-patient {
+  background-color: var(--ion-background-inputs);
+  width: 100% !important;
+  box-shadow: 0px 10px 5px #0000007e;
+  border-radius: 0px 0px 10px 10px;
+
+  padding-top: 20px;
+  padding-inline: 10px;
+}
+.input-info-patient.age {
+  height: 2rem;
+  margin-left: 5px !important;
+}
+.list-colums {
   background: var(--ion-background-inputs);
   border: none;
-  width: 30%;
-  height: 35px;
-  border-radius: 5px;
-  margin-left: 10px;
-  box-shadow: 2px 1px 10px 4px rgba(0, 0, 0, 0.2);
+  height: 3rem;
   color: var(--font-color);
+  margin: 0 8px;
+  text-align: center;
+}
+.list-colums option {
+  margin: 10px;
+  border: 1px solid red;
+  padding: 200px;
 }
 
-.container-name {
-  display: flex;
-  flex-direction: row;
+/* ===== Modal Grid (AddInfoModal) ===== */
+.modal-grid {
+  display: grid;
+  grid-template-columns: 50px 72px 56px 56px 56px;
+  gap: 15px;
   align-items: center;
-  color: var(--font-color);
-}
-
-.container-name input {
-  background: var(--ion-background-inputs);
-  border: none;
+  justify-content: center;
   width: 100%;
-  height: 35px;
-  border-radius: 5px;
-  margin-left: 10px;
-  box-shadow: 2px 1px 10px 4px rgba(0, 0, 0, 0.2);
-}
-
-.container-age .date-container {
-  position: absolute;
-  left: 75%;
-}
-
-/* Fim dos estilos do cabecalho */
-
-/* Comeco dos estilos dos inputs codigos */
-.container-colums {
-  display: grid;                    
-  grid-template-columns: 64px 64px 64px 64px 64px; /* 5 colunas: Code, Product, Right, Mid, Left */
-  column-gap: 12px;                                 /* ESPAÇAMENTO horizontal entre cada coluna */
+  max-width: 360px;
   margin: 0 auto;
-         /* centraliza o grid dentro do container */
-  width: 386px;
-  padding-bottom: 1rem;
 }
 
-.sub-container-colums-title {
-  display: flex;
-  flex-direction: row;
-  padding: 0;
+.modal-grid-header {
+  padding: 0 0 8px 0;
+  margin-bottom: 4px;
 }
 
-.sub-container-colums-title p {
-  padding: 10px;  
-  white-space: nowrap; /*não deixa quebra linha*/
- width: 200px;
-} 
-/* 1º: Code */
-.sub-container-colums-title p:nth-child(1) {
-  /* ajustes só do "Code" */
-  padding-left:20px;
+.modal-grid-header span {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--font-color, #fff);
 }
 
-/* 2º: Product */
-.sub-container-colums-title p:nth-child(2) {
-  /* ajustes só do "Product" */
-  padding-right: 3px;
+.modal-cell {
+  background: var(--ion-background-inputs, #1e1e2e);
+  border: none;
+  height: 2.2rem;
+  border-radius: 6px;
+  box-shadow: 1px 1px 6px 2px rgba(0, 0, 0, 0.25);
+  color: var(--font-color, #fff);
+  text-align: center !important;
+  font-size: 0.8rem;
+  width: 100%;
+  padding: 0 10px;
+  appearance: auto;
 }
 
-/* 3º: Right */
-.sub-container-colums-title p:nth-child(3) {
-  /* ajustes só do "Right" */
-    padding-left: 2px;
+.modal-cell-input {
+  cursor: default;
+  font-weight: 500;
 }
 
-/* 4º: Mid */
-.sub-container-colums-title p:nth-child(4) {
-  /* ajustes só do "Mid" */
-    padding-left: 2px;
+.modal-cell:focus {
+  outline: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* 5º: Left */
-.sub-container-colums-title p:nth-child(5) {
-  /* ajustes só do "Left" */
-    padding-left: 2px;
-}
-
-/* Eu não consegui terminar os intervalos, acho que achei o jeito de se fazer, tem algun comentarios exxplicando o que cada coisa faz*/
-.list-colums{
-    background: var(--ion-background-inputs);
-    border: none;
-    height: 3rem;
-    width: 4rem;
-    border-radius: 5px;
-    box-shadow: 2px 1px 10px 4px rgba(0, 0, 0, 0.2);
-    color: var(--font-color);
-    margin: 0 8px;
-    text-align: center;
-}
-.list-colums option{
-    margin: 10px;
-    border: 1px solid red;
-    padding: 200px;
+.btns-options {
+  background: var(--ion-background-inputs);
+  padding: 5px;
+  font-size: 15px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px #000;
 }
