@@ -6,6 +6,7 @@ import { patientsDb } from "../../firebaseConfig";
 import { push, set, remove, child } from "firebase/database";
 import { regions } from "../../contents/tabs/ContentsTab2";
 import { getProfilePreferences } from "../../services/database/preferencesProfile";
+import getValueForCode from "../../contents/tabs/getValueForCode";
 
 const useTab2Handlers = () => {
   const { user } = useAuth();
@@ -86,6 +87,13 @@ const useTab2Handlers = () => {
     });
   };
 
+  const fillVolumeCodeApply = (i: number, code: string, setValue: any) => {
+    const res = getValueForCode(code);
+    setValue(`treatmentPlan.${i}.right`, res.right);
+    setValue(`treatmentPlan.${i}.mid`, res.mid);
+    setValue(`treatmentPlan.${i}.left`, res.left);
+    setValue(`treatmentPlan.${i}.product`, res.product);
+  };
   return {
     username,
     user,
@@ -94,6 +102,7 @@ const useTab2Handlers = () => {
     handleSavePatient,
     handleDeletePatient,
     handlePriceTreatment,
+    fillVolumeCodeApply,
   };
 };
 
