@@ -44,7 +44,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
       >
         {/* inputs infos patients */}
         <div className="flex flex-col gap-4 mb-4 w-full">
-          <div className="flex flex-row justify-between items-center">
+          <div className="flex flex-row justify-between items-center px-5">
             <label htmlFor="patient-age">Patient's age: </label>
             <input
               {...register("patientAge", { required: true })}
@@ -55,13 +55,22 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
             />
             <input {...register("dateTreatment")} disabled className="text-end" />
           </div>
-          <label htmlFor="name-patient">Patient's name:</label>
-          <input
-            {...register("namePatient", { required: true })}
-            placeholder="Write patient's name"
-            className="input-info-patient"
-            type="text"
-          />
+          <div className="flex flex-wrap gap-3 px-5 items-center justify-start">
+            <label htmlFor="name-patient">Patient's name:</label>
+            <input
+              {...register("namePatient", { required: true })}
+              placeholder="Write patient's name"
+              className="input-info-patient "
+              type="text"
+            />
+            <label htmlFor="patient-birth">Patient's birth:</label>
+            <input
+              {...register("dateBirth", { required: true })}
+              placeholder="Write patient's name"
+              className="input-info-patient"
+              type="date"
+            />
+          </div>
         </div>
         {/* Header */}
         <div className="modal-grid modal-grid-header">
@@ -71,7 +80,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
           <span>Mid</span>
           <span>Left</span>
 
-        {/* Rows */}
+          {/* Rows */}
         </div>
         {codeList.map((code, i) => (
           <div className="modal-grid" key={i}>
