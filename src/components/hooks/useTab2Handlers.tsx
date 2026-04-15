@@ -82,7 +82,7 @@ const useTab2Handlers = () => {
         await set(newPatient, { ...data, treatmentPlan: { 0: data.treatmentPlan } });
         localStorage.removeItem("codeList");
         alert("Treatment plan created for new patient.");
-        // window.location.reload();
+        window.location.reload();
         return { message: "New patient created successfully", status: 201 };
       } else {
         return { message: "User reviewing changes", status: 204 };
@@ -125,10 +125,10 @@ const useTab2Handlers = () => {
 
   const fillVolumeCodeApply = (i: number, code: string, setValue: any) => {
     const res = getValueForCode(code);
-    setValue(`treatmentPlan.${i}.right`, res.right);
-    setValue(`treatmentPlan.${i}.mid`, res.mid);
-    setValue(`treatmentPlan.${i}.left`, res.left);
-    setValue(`treatmentPlan.${i}.product`, res.product);
+    setValue(`treatmentPlan.rows.${i}.right`, res.right);
+    setValue(`treatmentPlan.rows.${i}.mid`, res.mid);
+    setValue(`treatmentPlan.rows.${i}.left`, res.left);
+    setValue(`treatmentPlan.rows.${i}.product`, res.product);
   };
   return {
     username,

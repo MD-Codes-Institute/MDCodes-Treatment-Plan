@@ -11,16 +11,18 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: {
       patientAge: "",
-      dateTreatment: date,
       namePatient: "",
       dateBirth: "",
-      treatmentPlan: codeList.map((code) => ({
-        code,
-        product: products[0],
-        left: volumes[0],
-        mid: volumes[0],
-        right: volumes[0],
-      })),
+      treatmentPlan: {
+        dateTreatment: date,
+        rows: codeList.map((code) => ({
+          code,
+          product: products[0],
+          left: volumes[0],
+          mid: volumes[0],
+          right: volumes[0],
+        })),
+      },
     },
   });
   const { handleSavePatient, fillVolumeCodeApply } = useTab2Handlers();
@@ -53,7 +55,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
               inputMode="numeric"
               max="110"
             />
-            <input {...register("dateTreatment")} disabled className="text-end" />
+            <input {...register("treatmentPlan.dateTreatment")} disabled className="text-end" />
           </div>
           <div className="flex flex-wrap gap-3 px-5 items-center justify-start">
             <label htmlFor="name-patient">Patient's name:</label>
@@ -85,12 +87,12 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
         {codeList.map((code, i) => (
           <div className="modal-grid" key={i}>
             <input
-              {...register(`treatmentPlan.${i}.code`)}
+              {...register(`treatmentPlan.rows.${i}.code`)}
               readOnly
               className="modal-cell modal-cell-input"
             />
             <select
-              {...register(`treatmentPlan.${i}.product`, { required: true })}
+              {...register(`treatmentPlan.rows.${i}.product`, { required: true })}
               className="modal-cell"
             >
               {products.map((p) => (
@@ -100,7 +102,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
               ))}
             </select>
             <select
-              {...register(`treatmentPlan.${i}.right`, { required: true })}
+              {...register(`treatmentPlan.rows.${i}.right`, { required: true })}
               className="modal-cell"
             >
               {volumes.map((v) => (
@@ -110,7 +112,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
               ))}
             </select>
             <select
-              {...register(`treatmentPlan.${i}.mid`, { required: true })}
+              {...register(`treatmentPlan.rows.${i}.mid`, { required: true })}
               className="modal-cell"
             >
               {volumes.map((v) => (
@@ -120,7 +122,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
               ))}
             </select>
             <select
-              {...register(`treatmentPlan.${i}.left`, { required: true })}
+              {...register(`treatmentPlan.rows.${i}.left`, { required: true })}
               className="modal-cell"
             >
               {volumes.map((v) => (
