@@ -7,16 +7,18 @@ import { useLocation } from "react-router";
 interface PropsBtnOption {
   handleCancelOption: () => void;
   id: string;
+  indice?: number;
+  handleCloseDeleteList?: () => void;
 }
 
-const BtnOption: React.FC<PropsBtnOption> = ({ handleCancelOption, id }) => {
+const BtnOption: React.FC<PropsBtnOption> = ({ handleCancelOption, id, indice, handleCloseDeleteList }) => {
   const { handleDeletePatient } = useTab2Handlers();
   const [modalComfirm, setModalComfirm] = useState<boolean>(false);
   const [comfirmDel, setComfirmDel] = useState<boolean>(false);
   const location = useLocation();
   useEffect(() => {
     if (comfirmDel) {
-      handleDeletePatient(id).then((v) => {
+      handleDeletePatient(id, indice).then((v) => {
         console.log(v?.message, v?.status);
         window.location.reload();
       });
@@ -34,7 +36,10 @@ const BtnOption: React.FC<PropsBtnOption> = ({ handleCancelOption, id }) => {
       <motion.button
         variants={itemVariants}
         onClick={(e: any) => {
-          e.stopPropagation(), handleCancelOption();
+          e.stopPropagation(),
+            indice !== undefined && handleCloseDeleteList
+              ? handleCloseDeleteList()
+              : handleCancelOption();
         }}
         className="btns-options text-white"
       >
