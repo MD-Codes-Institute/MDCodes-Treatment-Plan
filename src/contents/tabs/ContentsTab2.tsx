@@ -81,10 +81,9 @@ export interface TreatmentItem {
 }
 export interface Patients {
   id: string;
-  dateTreatment: string;
   namePatient: string;
   patientAge: string;
-  treatmentPlan: TreatmentItem[];
+  treatmentPlan: [{ dateTreatment: string; rows: TreatmentItem[] }];
 }
 export interface PropsPlanModal {
   patients: Patients[];
@@ -144,4 +143,14 @@ export const itemVariants = {
     x: 0,
     opacity: 1,
   },
+};
+export const variantsViewPlaModal: Variants = {
+  hidden: { opacity: 0, y: -100, transition: { duration: 0.5, ease: "easeInOut" } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeInOut" } },
+};
+
+export const variantsBtnArrow: Variants = {
+  initial: { rotateX: 0 },
+  animate: { rotateX: 0, transition: { duration: 0.7, ease: "easeInOut" } },
+  hidden: { rotateX: 180, transition: { duration: 0.7, ease: "easeInOut" } },
 };
