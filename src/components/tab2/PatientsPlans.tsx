@@ -1,7 +1,7 @@
 import useViewPlanModal from "../hooks/useViewPlanModal";
 import { PropsPlanModal, TreatmentItem, variantsBtnArrow } from "../../contents/tabs/ContentsTab2";
 import SearchPatient from "./SearchPatient";
-import { useState } from "react";
+import { useState} from "react";
 import ExpandableDetails from "./ExpandableDetails";
 import ViewPlanModal from "./ViewPlanModal";
 import { AnimatePresence, motion } from "framer-motion";
@@ -9,23 +9,11 @@ import BtnOption from "./BtnOption";
 
 const PatientsPlans = ({ patients }: PropsPlanModal) => {
   const {
-    handleSearch,
-    handleClearSearch,
-    handleOpenPlans,
-    handleClosePlans,
-    handleCancelBtnsOptions,
-    handlePressStart,
-    handlePressEnd,
-    openPlan,
-    listPatient,
-    openBtnOptionId,
-    setFilterPatient,
-    filterPatient,
-    isLongPressRef,
+    handleSearch, handleClearSearch, handleOpenPlans, handleClosePlans, handleCancelBtnsOptions, handlePressStart, 
+    handlePressEnd, openPlan, listPatient, openBtnOptionId, setFilterPatient, filterPatient, isLongPressRef 
   } = useViewPlanModal(patients);
-  const [treatmentPlan, setTreatmentPlan] = useState<
-    { dateTreatment: string; rows: TreatmentItem[] }[] | null
-  >(null);
+
+  const [treatmentPlan, setTreatmentPlan] = useState<{ dateTreatment: string; rows: TreatmentItem[] }[] | null >(null);
   const [namePatient, setNamePatient] = useState<string>("");
   const [patientAge, setPatientAge] = useState<string>("");
   const [patientId, setPatientId] = useState<string>("");
@@ -55,14 +43,14 @@ const PatientsPlans = ({ patients }: PropsPlanModal) => {
                 className="text-white w-full px-2 flex flex-nowrap justify-between items-center"
                 onClick={() => {
                   setTreatmentPlan(v.treatmentPlan),
-                    setNamePatient(v.namePatient),
-                    setPatientAge(v.patientAge);
+                  setNamePatient(v.namePatient),
+                  setPatientAge(v.patientAge);
                   setPatientId(v.id);
                   if (isLongPressRef.current) return;
                   openPlan && v.id === patientId ? handleClosePlans() : handleOpenPlans();
                 }}
               >
-                Patient: {v.namePatient} - Age: {v.patientAge}
+                {v.namePatient} - Age: {v.patientAge}
                 {v.treatmentPlan.length > 1 && openBtnOptionId !== v.id && (
                   <motion.img
                     src="/resources/icon-arrow.png"
@@ -71,14 +59,13 @@ const PatientsPlans = ({ patients }: PropsPlanModal) => {
                     animate={openPlan && v.id === patientId ? "hidden" : "animate"}
                   />
                 )}
-                
                 {v.treatmentPlan.length === 1 && openBtnOptionId !== v.id && (
                   <span>Save: {v.treatmentPlan[0].dateTreatment}</span>
                 )}
               </p>
               {openBtnOptionId === v.id && (
-                  <BtnOption id={openBtnOptionId} handleCancelOption={handleCancelBtnsOptions} />
-                )}
+                <BtnOption id={openBtnOptionId} handleCancelOption={handleCancelBtnsOptions} />
+              )}
             </motion.div>
             <AnimatePresence>
               {openPlan && treatmentPlan && treatmentPlan.length > 1 && v.id === patientId && (
@@ -87,6 +74,9 @@ const PatientsPlans = ({ patients }: PropsPlanModal) => {
                   treatmentPlan={treatmentPlan}
                   namePatient={namePatient}
                   patientAge={patientAge}
+                  patientId={patientId}
+                  openBtnOptionId={openBtnOptionId}
+                  handleCancelBtnsOptions={handleCancelBtnsOptions}
                 />
               )}
             </AnimatePresence>

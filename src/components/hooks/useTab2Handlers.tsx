@@ -3,16 +3,7 @@ import useAuth from "../../pages/auth/useAuth";
 import { useState } from "react";
 import { useEffect } from "react";
 import { patientsDb } from "../../firebaseConfig";
-import {
-  push,
-  set,
-  remove,
-  child,
-  query,
-  orderByChild,
-  get,
-  equalTo,
-} from "firebase/database";
+import { push, set, remove, child, query, orderByChild, get, equalTo } from "firebase/database";
 import { regions } from "../../contents/tabs/ContentsTab2";
 import { getProfilePreferences } from "../../services/database/preferencesProfile";
 import getValueForCode from "../../contents/tabs/getValueForCode";
@@ -54,7 +45,7 @@ const useTab2Handlers = () => {
       if (confirmChanges) {
         const ref = patientsDb(user.uid);
         // Search for existing patient by name and date of birth
-        const consultation = query(ref, orderByChild("namePatient"), equalTo(data.namePatient));
+        const consultation = query(ref, orderByChild("namePatient".trim()), equalTo(data.namePatient));
         const snapshot = await get(consultation);
         if (snapshot.exists()) {
           // Check among results if any has the same dateBirth
@@ -93,12 +84,17 @@ const useTab2Handlers = () => {
     }
   };
 
-  const handleDeletePatient = async (id: string) => {
+  const handleDeletePatient = async (id: string, indice?: number) => {
     try {
       if (!user) return null;
       const db = patientsDb(user.uid);
-      const patientRef = child(db, id);
-      await remove(patientRef);
+      if (indice !== null && indice !== undefined) {
+        const referenceList = child(db, `${id}/treatmentPlan/${indice}`);
+        await remove(referenceList);
+      } else {
+        const patientRef = child(db, id);
+        await remove(patientRef);
+      }
       return { message: "Sucess", status: 200 };
     } catch (err) {
       console.log("error to delete patient", err);

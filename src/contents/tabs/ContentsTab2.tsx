@@ -1,4 +1,5 @@
-import { scale, stagger, type Variants } from "framer-motion";
+import { type Variants } from "framer-motion";
+import z from "zod";
 
 export const volumes = [
   "0",
@@ -88,6 +89,26 @@ export interface Patients {
 export interface PropsPlanModal {
   patients: Patients[];
 }
+
+const treatmentRowSchema = z.object({
+  code: z.string().trim().min(1, "Code is required"),
+  product: z.string().trim().min(1, "Product is required"),
+  right: z.string().trim().min(1, "Right volume is required"),
+  mid: z.string().trim().min(1, "Mid volume is required"),
+  left: z.string().trim().min(1, "Left volume is required"),
+});
+
+export const patientFormSchema = z.object({
+  patientAge: z.string().trim().min(1, "Patient age is required"),
+  namePatient: z.string().trim().min(1, "Patient name is required"),
+  dateBirth: z.string().trim().min(1, "Birth date is required"),
+  treatmentPlan: z.object({
+    dateTreatment: z.string().trim().min(1, "Treatment date is required"),
+    rows: z.array(treatmentRowSchema).min(1, "At least one treatment row is required"),
+  }),
+});
+
+export type PatientFormData = z.infer<typeof patientFormSchema>;
 
 export const variantsDetails: Variants = {
   hidden: { opacity: 0 },

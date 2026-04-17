@@ -1,14 +1,16 @@
 import { useForm } from "react-hook-form";
-import { products, volumes } from "../../contents/tabs/ContentsTab2";
-import { useEffect, useState } from "react";
+import { patientFormSchema, PatientFormData, products, volumes } from "../../contents/tabs/ContentsTab2";
+import { useEffect } from "react";
 import useTab2Handlers from "../hooks/useTab2Handlers";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface PropsForm {
   codeList: string[];
   date: string;
 }
 const PatientForm = ({ codeList, date }: PropsForm) => {
-  const { register, handleSubmit, setValue } = useForm({
+  const { register, handleSubmit, setValue } = useForm<PatientFormData>({
+    resolver: zodResolver(patientFormSchema),
     defaultValues: {
       patientAge: "",
       namePatient: "",
@@ -49,7 +51,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
           <div className="flex flex-row justify-between items-center px-5">
             <label htmlFor="patient-age">Patient's age: </label>
             <input
-              {...register("patientAge", { required: true })}
+              {...register("patientAge")}
               className="input-info-patient age w-12"
               type="number"
               inputMode="numeric"
@@ -60,14 +62,14 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
           <div className="flex flex-wrap gap-3 px-5 items-center justify-start">
             <label htmlFor="name-patient">Patient's name:</label>
             <input
-              {...register("namePatient", { required: true })}
+              {...register("namePatient")}
               placeholder="Write patient's name"
               className="input-info-patient "
               type="text"
             />
             <label htmlFor="patient-birth">Patient's birth:</label>
             <input
-              {...register("dateBirth", { required: true })}
+              {...register("dateBirth")}
               placeholder="Write patient's name"
               className="input-info-patient"
               type="date"
@@ -92,7 +94,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
               className="modal-cell modal-cell-input"
             />
             <select
-              {...register(`treatmentPlan.rows.${i}.product`, { required: true })}
+              {...register(`treatmentPlan.rows.${i}.product`)}
               className="modal-cell"
             >
               {products.map((p) => (
@@ -102,7 +104,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
               ))}
             </select>
             <select
-              {...register(`treatmentPlan.rows.${i}.right`, { required: true })}
+              {...register(`treatmentPlan.rows.${i}.right`)}
               className="modal-cell"
             >
               {volumes.map((v) => (
@@ -112,7 +114,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
               ))}
             </select>
             <select
-              {...register(`treatmentPlan.rows.${i}.mid`, { required: true })}
+              {...register(`treatmentPlan.rows.${i}.mid`)}
               className="modal-cell"
             >
               {volumes.map((v) => (
@@ -122,7 +124,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
               ))}
             </select>
             <select
-              {...register(`treatmentPlan.rows.${i}.left`, { required: true })}
+              {...register(`treatmentPlan.rows.${i}.left`)}
               className="modal-cell"
             >
               {volumes.map((v) => (
