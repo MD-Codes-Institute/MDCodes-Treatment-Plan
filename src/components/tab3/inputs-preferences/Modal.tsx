@@ -84,6 +84,7 @@ const ModalPreferences: React.FC<ModalProps> = ({
         ))}
 
         <ActionButtons
+        disabledInput={disabledInput}
           dataType={dataType}
           doYouNeedHelp={doYouNeedHelp}
           saveOrUpdateDb={saveOrUpdateDb}

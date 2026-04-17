@@ -44,11 +44,13 @@ const ActionsContainer: React.FC<UserProps> = ({ user, preferences }) => {
     if (preferences === true) {
       update(preferencesDb(user.uid, action), newData).then(() => {
         console.log("dados atualizados");
+        window.location.reload()
         setModal(false);
       });
     } else {
       set(preferencesDb(user.uid, action), newData).then(() => {
         console.log("dados adicionados");
+        window.location.reload()
         setModal(false);
       });
     }
