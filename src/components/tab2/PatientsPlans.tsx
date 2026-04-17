@@ -71,13 +71,14 @@ const PatientsPlans = ({ patients }: PropsPlanModal) => {
                     animate={openPlan && v.id === patientId ? "hidden" : "animate"}
                   />
                 )}
-                {openBtnOptionId === v.id && (
-                  <BtnOption id={openBtnOptionId} handleCancelOption={handleCancelBtnsOptions} />
-                )}
+                
                 {v.treatmentPlan.length === 1 && openBtnOptionId !== v.id && (
                   <span>Save: {v.treatmentPlan[0].dateTreatment}</span>
                 )}
               </p>
+              {openBtnOptionId === v.id && (
+                  <BtnOption id={openBtnOptionId} handleCancelOption={handleCancelBtnsOptions} />
+                )}
             </motion.div>
             <AnimatePresence>
               {openPlan && treatmentPlan && treatmentPlan.length > 1 && v.id === patientId && (

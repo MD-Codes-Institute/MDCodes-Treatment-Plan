@@ -29,7 +29,7 @@ const BtnOption: React.FC<PropsBtnOption> = ({ handleCancelOption, id }) => {
       initial="hidden"
       animate="visible"
       exit="exit"
-      className="flex flex-row w-[40%] gap-5"
+      className="flex flex-row w-[40%] gap-5 pr-5 items-center"
     >
       <motion.button
         variants={itemVariants}
