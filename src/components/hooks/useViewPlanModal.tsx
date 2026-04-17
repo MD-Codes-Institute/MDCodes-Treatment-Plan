@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { Patients } from "../../contents/tabs/ContentsTab2";
 
 const useViewPlanModal = (patients: Patients[]) => {
-  const [openDetails, setOpenDetails] = useState<boolean>(false);
+  const [openPlan, setOpenPlan] = useState<boolean>(false);
   const [listPatient, setListPatient] = useState<Patients[]>(patients);
   const [filterPatient, setFilterPatient] = useState<string>("");
   const [selectId, setSelectId] = useState<any>("");
@@ -26,14 +26,13 @@ const useViewPlanModal = (patients: Patients[]) => {
     setFilterPatient(""), setListPatient(patients);
   };
 
-  const handleOpenDetails = (id: string) => {
-    setOpenDetails(true);
-    setSelectId(id);
+  const handleOpenPlans = () => {
+    setOpenPlan(true);
   };
 
-  const handleCloseDetails = () => setOpenDetails(false);
+  const handleClosePlans = () => setOpenPlan(false);
 
-  const handleCancelOptions = () => {
+  const handleCancelBtnsOptions = () => {
     setOpenBtnOptionId(null);
   };
 
@@ -52,25 +51,17 @@ const useViewPlanModal = (patients: Patients[]) => {
     }
   }, []);
 
-  const onDragOptions = (event: any, info: any, id: string) => {
-    const dragX = info.offset.x;
-    if (dragX < -150) {
-      setOpenBtnOptionId(id);
-    } else if (dragX > 150) {
-      setOpenBtnOptionId(null);
-    }
-  };
 
   return {
     handleSearch,
     handleClearSearch,
-    handleOpenDetails,
-    handleCloseDetails,
-    handleCancelOptions,
+    handleOpenPlans,
+    handleClosePlans,
+    handleCancelBtnsOptions ,
     handlePressStart,
     handlePressEnd,
-    onDragOptions,
-    openDetails,
+    openPlan,
+    setOpenPlan,
     listPatient,
     selectId,
     openBtnOptionId,

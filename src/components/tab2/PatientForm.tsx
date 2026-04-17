@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { products, volumes } from "../../contents/tabs/ContentsTab2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useTab2Handlers from "../hooks/useTab2Handlers";
 
 interface PropsForm {
@@ -8,21 +8,29 @@ interface PropsForm {
   date: string;
 }
 const PatientForm = ({ codeList, date }: PropsForm) => {
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     defaultValues: {
       patientAge: "",
-      dateTreatment: date,
       namePatient: "",
-      treatmentPlan: codeList.map((code) => ({
-        code,
-        product: products[0],
-        left: volumes[0],
-        mid: volumes[0],
-        right: volumes[0],
-      })),
+      dateBirth: "",
+      treatmentPlan: {
+        dateTreatment: date,
+        rows: codeList.map((code) => ({
+          code,
+          product: products[0],
+          left: volumes[0],
+          mid: volumes[0],
+          right: volumes[0],
+        })),
+      },
     },
   });
-  const { handleSavePatient } = useTab2Handlers();
+  const { handleSavePatient, fillVolumeCodeApply } = useTab2Handlers();
+  useEffect(() => {
+    codeList.map((code: string, i: number) => {
+      fillVolumeCodeApply(i, code, setValue);
+    });
+  }, []);
   const onSubmit = handleSubmit((data) => {
     handleSavePatient(data).then((v) => {
       console.log(v?.message, v?.status);
@@ -38,7 +46,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
       >
         {/* inputs infos patients */}
         <div className="flex flex-col gap-4 mb-4 w-full">
-          <div className="flex flex-row justify-between items-center">
+          <div className="flex flex-row justify-between items-center px-5">
             <label htmlFor="patient-age">Patient's age: </label>
             <input
               {...register("patientAge", { required: true })}
@@ -47,35 +55,44 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
               inputMode="numeric"
               max="110"
             />
-            <input {...register("dateTreatment")} disabled className="text-end" />
+            <input {...register("treatmentPlan.dateTreatment")} disabled className="text-end" />
           </div>
-          <label htmlFor="name-patient">Patient's name:</label>
-          <input
-            {...register("namePatient", { required: true })}
-            placeholder="Write patient's name"
-            className="input-info-patient"
-            type="text"
-          />
+          <div className="flex flex-wrap gap-3 px-5 items-center justify-start">
+            <label htmlFor="name-patient">Patient's name:</label>
+            <input
+              {...register("namePatient", { required: true })}
+              placeholder="Write patient's name"
+              className="input-info-patient "
+              type="text"
+            />
+            <label htmlFor="patient-birth">Patient's birth:</label>
+            <input
+              {...register("dateBirth", { required: true })}
+              placeholder="Write patient's name"
+              className="input-info-patient"
+              type="date"
+            />
+          </div>
         </div>
         {/* Header */}
         <div className="modal-grid modal-grid-header">
           <span>Codes</span>
           <span>Products</span>
-          <span>Left</span>
-          <span>Mid</span>
           <span>Right</span>
-        </div>
+          <span>Mid</span>
+          <span>Left</span>
 
-        {/* Rows */}
+          {/* Rows */}
+        </div>
         {codeList.map((code, i) => (
           <div className="modal-grid" key={i}>
             <input
-              {...register(`treatmentPlan.${i}.code`)}
+              {...register(`treatmentPlan.rows.${i}.code`)}
               readOnly
               className="modal-cell modal-cell-input"
             />
             <select
-              {...register(`treatmentPlan.${i}.product`, { required: true })}
+              {...register(`treatmentPlan.rows.${i}.product`, { required: true })}
               className="modal-cell"
             >
               {products.map((p) => (
@@ -85,7 +102,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
               ))}
             </select>
             <select
-              {...register(`treatmentPlan.${i}.left`, { required: true })}
+              {...register(`treatmentPlan.rows.${i}.right`, { required: true })}
               className="modal-cell"
             >
               {volumes.map((v) => (
@@ -95,7 +112,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
               ))}
             </select>
             <select
-              {...register(`treatmentPlan.${i}.mid`, { required: true })}
+              {...register(`treatmentPlan.rows.${i}.mid`, { required: true })}
               className="modal-cell"
             >
               {volumes.map((v) => (
@@ -105,7 +122,7 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
               ))}
             </select>
             <select
-              {...register(`treatmentPlan.${i}.right`, { required: true })}
+              {...register(`treatmentPlan.rows.${i}.left`, { required: true })}
               className="modal-cell"
             >
               {volumes.map((v) => (

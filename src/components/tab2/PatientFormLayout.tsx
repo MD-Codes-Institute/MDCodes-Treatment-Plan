@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import PatientForm from "./PatientForm";
 import "../../pages/Tab2.css";
 
-const AddInfoModal = ({ codeList }: PropsModal) => {
+const PatientFormLayout = ({ codeList }: PropsModal) => {
   const { handleDeleteLocalDb, handleSavePatient, user } = useTab2Handlers();
   const history = useHistory();
   const [localDb] = useState<InfosCodeList[]>(codeList);
@@ -41,4 +41,4 @@ const AddInfoModal = ({ codeList }: PropsModal) => {
     </section>
   );
 };
-export default AddInfoModal;
+export default PatientFormLayout;

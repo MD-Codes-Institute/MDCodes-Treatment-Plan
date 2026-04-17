@@ -66,7 +66,7 @@
   padding: 200px;
 }
 
-/* ===== Modal Grid (AddInfoModal) ===== */
+/* ===== Modal Grid (PatientFormLayout) ===== */
 .modal-grid {
   display: grid;
   grid-template-columns: 50px 72px 56px 56px 56px;
@@ -119,4 +119,44 @@
   font-size: 15px;
   border-radius: 5px;
   box-shadow: 0px 0px 5px #000;
+}
+
+.view-plan-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  background: var(--ion-background-containers);
+  height: 100%;
+  width: 100vw !important;
+}
+
+.view-plan-modal .scroll-content {
+  flex: 2;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-top: 100px;
+  padding-inline: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+.view-plan-modal .footer-close {
+  padding: 15px;
+  display: flex;
+  justify-content: start;
+  background: var(--ion-background-containers);
+}
+
+.view-plan-modal .btn-close {
+  background: var(--ion-background-inputs);
+  height: 40px;
+  width: 30%;
+  font-size: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px #4e4e4e;
 }

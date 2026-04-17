@@ -1,7 +1,22 @@
 import { scale, stagger, type Variants } from "framer-motion";
 
-export const volumes = ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1"];
-export const products = ["VM", "VX", "VL", "VB", "BTX", "HACA", "SKV"];
+export const volumes = [
+  "0",
+  "0.05",
+  "0.1",
+  "0.15",
+  "0.2",
+  "0.25",
+  "0.3",
+  "0.4",
+  "0.5",
+  "0.6",
+  "0.7",
+  "0.8",
+  "0.9",
+  "1",
+];
+export const products = ["VM", "VX", "VL", "VB", "BTX", "HACA", "SKV", "VT"];
 export const regions = [
   {
     area: "counter_lower",
@@ -66,10 +81,9 @@ export interface TreatmentItem {
 }
 export interface Patients {
   id: string;
-  dateTreatment: string;
   namePatient: string;
   patientAge: string;
-  treatmentPlan: TreatmentItem[];
+  treatmentPlan: [{ dateTreatment: string; rows: TreatmentItem[] }];
 }
 export interface PropsPlanModal {
   patients: Patients[];
@@ -129,4 +143,14 @@ export const itemVariants = {
     x: 0,
     opacity: 1,
   },
+};
+export const variantsViewPlaModal: Variants = {
+  hidden: { opacity: 0, y: -100, transition: { duration: 0.5, ease: "easeInOut" } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeInOut" } },
+};
+
+export const variantsBtnArrow: Variants = {
+  initial: { rotateX: 0 },
+  animate: { rotateX: 0, transition: { duration: 0.7, ease: "easeInOut" } },
+  hidden: { rotateX: 180, transition: { duration: 0.7, ease: "easeInOut" } },
 };

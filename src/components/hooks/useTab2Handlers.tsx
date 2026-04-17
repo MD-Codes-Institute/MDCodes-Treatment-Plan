@@ -3,9 +3,19 @@ import useAuth from "../../pages/auth/useAuth";
 import { useState } from "react";
 import { useEffect } from "react";
 import { patientsDb } from "../../firebaseConfig";
-import { push, set, remove, child } from "firebase/database";
+import {
+  push,
+  set,
+  remove,
+  child,
+  query,
+  orderByChild,
+  get,
+  equalTo,
+} from "firebase/database";
 import { regions } from "../../contents/tabs/ContentsTab2";
 import { getProfilePreferences } from "../../services/database/preferencesProfile";
+import getValueForCode from "../../contents/tabs/getValueForCode";
 
 const useTab2Handlers = () => {
   const { user } = useAuth();
@@ -42,17 +52,44 @@ const useTab2Handlers = () => {
         "Are you sure about these changes? Because, after this action, it will not be possible to alter the patient's treatment plan. Please review the treatment plan."
       );
       if (confirmChanges) {
-        const newPatient = push(patientsDb(user.uid));
-        const response = await set(newPatient, data);
+        const ref = patientsDb(user.uid);
+        // Search for existing patient by name and date of birth
+        const consultation = query(ref, orderByChild("namePatient"), equalTo(data.namePatient));
+        const snapshot = await get(consultation);
+        if (snapshot.exists()) {
+          // Check among results if any has the same dateBirth
+          let existingPatientKey: string | null = null;
+          snapshot.forEach((childSnapshot) => {
+            if (childSnapshot.val().dateBirth === data.dateBirth) {
+              existingPatientKey = childSnapshot.key;
+            }
+          });
+          if (existingPatientKey) {
+            const existingTreatments =
+              snapshot.child(existingPatientKey).val()?.treatmentPlan || {};
+            const nextIndex = Object.keys(existingTreatments).length; // 0 se vazio
+            const targetRef = child(ref, `${existingPatientKey}/treatmentPlan/${nextIndex}`);
+            await set(targetRef, data.treatmentPlan);
+            localStorage.removeItem("codeList");
+            alert("Treatment plan added to existing patient.");
+            window.location.reload();
+            return { message: "Treatment plan added to existing patient", status: 200 };
+          }
+        }
+
+        // Patient does not exist → create a new folder for them
+        const newPatient = push(ref);
+        await set(newPatient, { ...data, treatmentPlan: { 0: data.treatmentPlan } });
         localStorage.removeItem("codeList");
-        alert("Treatment plan created");
+        alert("Treatment plan created for new patient.");
         window.location.reload();
-        return { message: "Sucesso ao cadastrar novo paciente", status: 201 };
+        return { message: "New patient created successfully", status: 201 };
       } else {
-        return { message: "Usuário revisando alterações", status: 204 };
+        return { message: "User reviewing changes", status: 204 };
       }
     } catch (err) {
-      return { message: "Error ao cadastrar novo paciente", status: 400 };
+      console.log(err);
+      return { message: "Error saving patient", status: 400 };
     }
   };
 
@@ -86,6 +123,13 @@ const useTab2Handlers = () => {
     });
   };
 
+  const fillVolumeCodeApply = (i: number, code: string, setValue: any) => {
+    const res = getValueForCode(code);
+    setValue(`treatmentPlan.rows.${i}.right`, res.right);
+    setValue(`treatmentPlan.rows.${i}.mid`, res.mid);
+    setValue(`treatmentPlan.rows.${i}.left`, res.left);
+    setValue(`treatmentPlan.rows.${i}.product`, res.product);
+  };
   return {
     username,
     user,
@@ -94,6 +138,7 @@ const useTab2Handlers = () => {
     handleSavePatient,
     handleDeletePatient,
     handlePriceTreatment,
+    fillVolumeCodeApply,
   };
 };
 
