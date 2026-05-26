@@ -52,6 +52,15 @@ const classInputs = {
   height: "2.5rem",
 };
 
+const classInputDisabled = {
+  color: "#ccc",
+  opacity: 0.7,
+  borderRadius: "0.5rem",
+  boxShadow: "0px 0px 2px #000",
+  background: "var(--ion-background-inputs)",
+  height: "2.5rem",
+}
+
 type TextItem = { id: string; value: string };
 
 export interface PreferencesData {
@@ -83,4 +92,4 @@ export interface Inputs {
   product_value?: string[];
   profit_margin?: string[];
 }
-export { localCurrency, codeValue, productValue, productsProfit, classInputs};
+export { localCurrency, codeValue, productValue, productsProfit, classInputs, classInputDisabled};

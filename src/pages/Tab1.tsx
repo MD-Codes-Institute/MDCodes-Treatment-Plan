@@ -46,7 +46,7 @@ const Tab1: React.FC = () => {
                 toggleModal={toggleModal}
                 cartList={cartList}
                 deleteItemList={deleteItemList}
-              />
+              />    
             )}
           </AnimatePresence>
 

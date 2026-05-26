@@ -1,7 +1,8 @@
 import {
   ModalProps,
   PreferencesData,
-  classInputs
+  classInputs,
+  classInputDisabled
 } from "../../../contents/tabs/ContentsTab3";
 import { useState } from "react";
 
@@ -21,7 +22,7 @@ const ActionButtons: React.FC<ModalProps> = ({ doYouNeedHelp, needHelp, closeMod
           Do you need help?
         </button>
       )}
-      <input type="submit" style={classInputs} value={"Save"} disabled={disabledInput} /> 
+      <input type="submit" style={disabledInput ? classInputDisabled : classInputs} value={"Save"} disabled={disabledInput} /> 
         
 
 
