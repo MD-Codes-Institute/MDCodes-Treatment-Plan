@@ -1,9 +1,9 @@
 import { InputField } from "./InputName";
 import { classBtn } from "../../../contents/auth/ContentForms";
 import { useState } from "react";
-import useUpdateUserInfo from "../../../services/crud-auth/updateUserInfo";
+import useUpdateUserInfo from "../../../api/auth/updateUserInfo";
 import { z, ZodError } from "zod";
-import useAuth from "../../../pages/auth/useAuth";
+import { useAuth } from "../../../contexts/AuthContext";
 import { settingsProfile } from "../../../firebaseConfig";
 
 const schemaPhone = z.object({

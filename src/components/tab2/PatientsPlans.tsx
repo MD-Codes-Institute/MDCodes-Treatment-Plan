@@ -1,4 +1,4 @@
-import useViewPlanModal from "../hooks/useViewPlanModal";
+import useViewPlanModal from "../../hooks/useViewPlanModal";
 import { PropsPlanModal, TreatmentItem, variantsBtnArrow } from "../../contents/tabs/ContentsTab2";
 import SearchPatient from "./SearchPatient";
 import { useState} from "react";

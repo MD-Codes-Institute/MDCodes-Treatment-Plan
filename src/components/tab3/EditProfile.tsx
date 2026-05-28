@@ -1,8 +1,8 @@
 import { IonContent, IonPage } from "@ionic/react";
 import { useHistory } from "react-router";
-import useUserInfo from "../../services/crud-auth/getUserInfo";
+import useUserInfo from "../../api/auth/getUserInfo";
 import { useEffect } from "react";
-import useAuth from "../../pages/auth/useAuth";
+import { useAuth } from "../../contexts/AuthContext";
 import editICon from "../../../resources/edit-icon.png";
 import InputName from "./inputs-edit/InputName";
 import InputPhone from "./inputs-edit/InputPhone";
@@ -29,9 +29,7 @@ const EditProfileInfo = () => {
     <IonPage>
       <IonContent>
         <div className="flex flex-col justify-center items-center h-full">
-          <h1 className="text-center text-white absolute top-30">
-            Edit Profile
-          </h1>
+          <h1 className="text-center text-white absolute top-30">Edit Profile</h1>
           {editField === "Name" && (
             <InputName setEditField={setEditField} setRefresh={setRefresh} />
           )}
@@ -51,27 +49,16 @@ const EditProfileInfo = () => {
                     disabled
                     value={v.info}
                   />
-                  <img
-                    className="w-8 h-8"
-                    src={editICon}
-                    onClick={() => setEditField(v.id)}
-                  />
+                  <img className="w-8 h-8" src={editICon} onClick={() => setEditField(v.id)} />
                 </div>
               ))}
               <div className="flex w-full justify-center pl-10">
                 <span className="bg-(--ion-background-inputs) px-7 py-2 rounded-md text-center shadow-2xs h-10 text-red-600 w-[40%]">
                   Password
                 </span>
-                <img
-                  className="w-8 h-8"
-                  src={editICon}
-                  onClick={() => setEditField("password")}
-                />
+                <img className="w-8 h-8" src={editICon} onClick={() => setEditField("password")} />
               </div>
-              <button
-                onClick={() => history.push("/tabs/tab3")}
-                className="text-white mt-5"
-              >
+              <button onClick={() => history.push("/tabs/tab3")} className="text-white mt-5">
                 Back
               </button>
             </div>

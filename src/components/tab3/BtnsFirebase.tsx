@@ -1,10 +1,9 @@
 import { useHistory } from "react-router";
-import deleteAccount from "../../services/crud-auth/deleteAccount";
-import useAuth from "../../pages/auth/useAuth";
 import { useState } from "react";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-
+import { useAuth } from "../../contexts/AuthContext";
+import deleteAccount from "../../api/auth/deleteAccount";
 const classBtns = {
   borderRadius: "5px",
   boxShadow: "0px 0px 3px #000",

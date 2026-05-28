@@ -1,7 +1,12 @@
 import { useForm } from "react-hook-form";
-import { patientFormSchema, PatientFormData, products, volumes } from "../../contents/tabs/ContentsTab2";
+import {
+  patientFormSchema,
+  PatientFormData,
+  products,
+  volumes,
+} from "../../contents/tabs/ContentsTab2";
 import { useEffect } from "react";
-import useTab2Handlers from "../hooks/useTab2Handlers";
+import useTab2Handlers from "../../hooks/useTab2Handlers";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 interface PropsForm {
@@ -93,40 +98,28 @@ const PatientForm = ({ codeList, date }: PropsForm) => {
               readOnly
               className="modal-cell modal-cell-input"
             />
-            <select
-              {...register(`treatmentPlan.rows.${i}.product`)}
-              className="modal-cell"
-            >
+            <select {...register(`treatmentPlan.rows.${i}.product`)} className="modal-cell">
               {products.map((p) => (
                 <option key={p} value={p}>
                   {p}
                 </option>
               ))}
             </select>
-            <select
-              {...register(`treatmentPlan.rows.${i}.right`)}
-              className="modal-cell"
-            >
+            <select {...register(`treatmentPlan.rows.${i}.right`)} className="modal-cell">
               {volumes.map((v) => (
                 <option key={v} value={v}>
                   {v}
                 </option>
               ))}
             </select>
-            <select
-              {...register(`treatmentPlan.rows.${i}.mid`)}
-              className="modal-cell"
-            >
+            <select {...register(`treatmentPlan.rows.${i}.mid`)} className="modal-cell">
               {volumes.map((v) => (
                 <option key={v} value={v}>
                   {v}
                 </option>
               ))}
             </select>
-            <select
-              {...register(`treatmentPlan.rows.${i}.left`)}
-              className="modal-cell"
-            >
+            <select {...register(`treatmentPlan.rows.${i}.left`)} className="modal-cell">
               {volumes.map((v) => (
                 <option key={v} value={v}>
                   {v}

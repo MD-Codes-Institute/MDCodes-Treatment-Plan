@@ -1,6 +1,6 @@
 import { containerVariants, itemVariants } from "../../contents/tabs/ContentsTab2";
 import { motion } from "framer-motion";
-import useTab2Handlers from "../hooks/useTab2Handlers";
+import useTab2Handlers from "../../hooks/useTab2Handlers";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "react-router";

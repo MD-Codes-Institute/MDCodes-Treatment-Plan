@@ -1,6 +1,6 @@
 import { z, ZodError } from "zod";
 import { classBtn } from "../../../contents/auth/ContentForms";
-import useUpdateUserInfo from "../../../services/crud-auth/updateUserInfo";
+import useUpdateUserInfo from "../../../api/auth/updateUserInfo";
 import { useState } from "react";
 
 const schemaPassword = z.object({

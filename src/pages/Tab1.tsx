@@ -1,10 +1,11 @@
 import { IonContent, IonPage } from "@ionic/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SPOTS } from "../contents/tabs/ContentsTab1";
-import useTab1Handlers from "../components/hooks/useTab1Handlers";
+import useTab1Handlers from "../hooks/useTab1Handlers";
 import "./Tab1.css";
 import ModalCardCode from "../components/tab1/ModalCardCode";
 import iconList from "../../public/resources/cardList.png";
+import { useAuth } from "../contexts/AuthContext";
 const Tab1: React.FC = () => {
   const {
     cartModal,
@@ -46,7 +47,7 @@ const Tab1: React.FC = () => {
                 toggleModal={toggleModal}
                 cartList={cartList}
                 deleteItemList={deleteItemList}
-              />    
+              />
             )}
           </AnimatePresence>
 

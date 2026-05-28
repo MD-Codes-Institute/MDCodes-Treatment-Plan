@@ -1,5 +1,5 @@
 import { IonPage, IonContent } from "@ionic/react";
-import useAuth from "./useAuth";
+import { useAuth } from "../../contexts/AuthContext";
 import { auth } from "../../firebaseConfig";
 import { Redirect } from "react-router";
 import { classBtn } from "../../contents/auth/ContentForms";

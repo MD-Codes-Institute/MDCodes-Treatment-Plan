@@ -1,15 +1,15 @@
 import { IonPage, IonContent, IonSpinner } from "@ionic/react";
 import "./Tab3.css";
-import useAuth from "./auth/useAuth";
 import { useEffect, useState } from "react";
 import BtnsFirebase from "../components/tab3/BtnsFirebase";
-import useUserInfo from "../services/crud-auth/getUserInfo";
-import useUpdateUserInfo from "../services/crud-auth/updateUserInfo";
+import useUserInfo from "../api/auth/getUserInfo";
+import useUpdateUserInfo from "../api/auth/updateUserInfo";
 import ActionsContainer from "../components/tab3/inputs-preferences/ActionsContainer";
 import { classInputs } from "../contents/tabs/ContentsTab3";
 import { getProfilePreferences } from "../services/database/preferencesProfile";
 import { preferencesDb, settingsProfile } from "../firebaseConfig";
 import Loader from "../components/Loader";
+import { useAuth } from "../contexts/AuthContext";
 
 const Tab3: React.FC = () => {
   const { user } = useAuth();
@@ -32,14 +32,12 @@ const Tab3: React.FC = () => {
       setPreferences(v?.state);
     });
     setTimeout(() => {
-    setLoading(false);
-  }, 1000);
+      setLoading(false);
+    }, 1000);
   }, [user, userInfo, getCredentialUser, updateFirebase, getProfilePreferences]);
-  
+
   if (loading) {
-    return (
-      <Loader />
-    );
+    return <Loader />;
   }
 
   return (

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { classBtn } from "../../../contents/auth/ContentForms";
-import useUpdateUserInfo from "../../../services/crud-auth/updateUserInfo";
+import useUpdateUserInfo from "../../../api/auth/updateUserInfo";
 import { settingsProfile } from "../../../firebaseConfig";
-import useAuth from "../../../pages/auth/useAuth";
+import { useAuth } from "../../../contexts/AuthContext";
 
 export type InputField = {
   setEditField: React.Dispatch<React.SetStateAction<string>>;
@@ -15,7 +15,7 @@ const InputName: React.FC<InputField> = ({ setEditField, setRefresh }) => {
 
   const handleClick = (e: any) => {
     e.preventDefault();
-    if(!user) return
+    if (!user) return;
     updateFirebase({ user_name: newName }, settingsProfile(user.uid)).then(() => {
       console.log("Name atualizado!");
       setEditField("");

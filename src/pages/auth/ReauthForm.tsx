@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schemaSignIn } from "../../contents/auth/ContentForms";
-import updateUserInfo from "../../services/crud-auth/updateUserInfo";
+import updateUserInfo from "../../api/auth/updateUserInfo";
 import { useHistory } from "react-router";
 import { IonContent, IonPage } from "@ionic/react";
 
@@ -51,20 +51,13 @@ const reauthenticateUser: React.FC = () => {
           {errors && <span>{errors.email?.message}</span>}
 
           <label htmlFor="password">Password</label>
-          <input
-            style={classInputs}
-            type="password"
-            {...register("password")}
-          />
+          <input style={classInputs} type="password" {...register("password")} />
           {errors && <span>{errors.password?.message}</span>}
 
           <button onClick={handleSubmit(onSubmit)} style={classBtnSubmit}>
             Submit
           </button>
-          <button
-            className="text-white"
-            onClick={() => history.push("/tabs/tab3")}
-          >
+          <button className="text-white" onClick={() => history.push("/tabs/tab3")}>
             Cancel
           </button>
         </div>

@@ -3,18 +3,16 @@ import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
 import SignIn from "./pages/auth/sign-in/SignIn";
 import SignUp from "./pages/auth/sign-up/SignUp";
-import useAuth from "./pages/auth/useAuth";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Tabs from "./Tabs";
 import "./App.css";
 import VerifiedEmail from "./pages/auth/VerifiedEmail";
 import reauthenticateUser from "./pages/auth/ReauthForm";
 import EditProfileInfo from "./components/tab3/EditProfile";
+import AuthProvider, { useAuth } from "./contexts/AuthContext";
 
-
-const App: React.FC = () => {
-  const { user, loading } = useAuth();
-
+const AppContents: React.FC = () => {
+  const { loading, user } = useAuth();
   if (loading) return <IonLoading />;
   return (
     <IonApp>
@@ -51,9 +49,7 @@ const App: React.FC = () => {
           <Route
             exact
             path="/verify-email"
-            render={() =>
-              user ? <VerifiedEmail /> : <Redirect to="/signup" />
-            }
+            render={() => (user ? <VerifiedEmail /> : <Redirect to="/signup" />)}
           />
 
           <ProtectedRoute
@@ -65,11 +61,7 @@ const App: React.FC = () => {
           />
 
           <Route exact path="/">
-            {user?.emailVerified ? (
-              <Redirect to="/tabs" />
-            ) : (
-              <Redirect to="/signin" />
-            )}
+            {user?.emailVerified ? <Redirect to="/tabs" /> : <Redirect to="/signin" />}
           </Route>
 
           <Route path="/re-authenticate" component={reauthenticateUser} />
@@ -79,6 +71,14 @@ const App: React.FC = () => {
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <AppContents />
+    </AuthProvider>
   );
 };
 

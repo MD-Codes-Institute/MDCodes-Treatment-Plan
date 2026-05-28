@@ -1,11 +1,11 @@
 import { VerifyErroCode } from "../../../contents/auth/ContentForms";
 import { useState } from "react";
-import useAuth from "../useAuth";
+import { useAuth } from "../../../contexts/AuthContext";
 import { schemaSignUp } from "../../../contents/auth/ContentForms";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import createUser from "../../../services/crud-auth/createUser";
+import createUser from "../../../api/auth/createUser";
 
 export type formDataSchema = z.infer<typeof schemaSignUp>;
 
@@ -33,8 +33,7 @@ const useSignUp = () => {
         setErr(msg);
         console.log(error, msg);
       } else {
-        msg =
-          "Error creating user; we are experiencing an error on our servers.";
+        msg = "Error creating user; we are experiencing an error on our servers.";
         setErr(msg);
         alert(msg);
       }
