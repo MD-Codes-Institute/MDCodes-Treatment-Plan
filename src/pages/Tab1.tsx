@@ -1,27 +1,23 @@
 import { IonContent, IonPage } from "@ionic/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SPOTS } from "../contents/tabs/ContentsTab1";
+import { Modal } from "../components/modal";
+import { useCart, CartItem } from "../contexts/CartContext";
+import { useState } from "react";
+import { useHistory } from "react-router";
 import useTab1Handlers from "../hooks/useTab1Handlers";
 import "./Tab1.css";
-import ModalCardCode from "../components/tab1/ModalCardCode";
 import iconList from "../../public/resources/cardList.png";
-import { useAuth } from "../contexts/AuthContext";
+import iconDelete from "/resources/delete-left-solid-full.svg";
+import ActionButton from "../components/button/ActionButton";
+
 const Tab1: React.FC = () => {
-  const {
-    cartModal,
-    imgZoom,
-    setImgZoom,
-    openId,
-    setOpenId,
-    handleSpotClick,
-    zoomScale,
-    origin,
-    activeList,
-    toggleModal,
-    modal,
-    cartList,
-    deleteItemList,
-  } = useTab1Handlers();
+  const { imgZoom, setImgZoom, openId, setOpenId, handleSpotClick, zoomScale, origin, activeList } =
+    useTab1Handlers(); // Function necessárias para animação de posição dos icones
+  const { cart, removeItemCart, addToCart } = useCart(); // functions vindo do Context Cart
+  const [modal, setModal] = useState<boolean>(false);
+  const history = useHistory();
+  const toggleModal = (): void => setModal(!modal);
 
   return (
     <IonPage>
@@ -33,24 +29,6 @@ const Tab1: React.FC = () => {
             setImgZoom("img-zoom");
           }}
         >
-          {/* container button para abrir modal da lista */}
-          <div className="fixed bottom-[7%] right-[7%] bg-(--ion-background-containers) w-14 h-14 z-99 rounded-[50%!important] shadow-[0px_0px_10px_#000]">
-            <img src={iconList} onClick={toggleModal} className="relative p-2 w-full h-full" />
-            <p className="relative left-[50%] -mt-3 p-[0.8px] w-[45%] h-[45%] text-center bg-red-600 rounded-[50%!important] font-bold">
-              {cartList.length}
-            </p>
-          </div>
-          {/*fim container button para abrir modal da lista */}
-          <AnimatePresence>
-            {modal && (
-              <ModalCardCode
-                toggleModal={toggleModal}
-                cartList={cartList}
-                deleteItemList={deleteItemList}
-              />
-            )}
-          </AnimatePresence>
-
           <motion.div
             className={imgZoom}
             style={{ transformOrigin: `${origin.ox} ${origin.oy}` }}
@@ -63,7 +41,7 @@ const Tab1: React.FC = () => {
             {/* Botões principais */}
             {SPOTS.map((spot) => (
               <AnimatePresence key={spot.id}>
-                {!Boolean(openId) && (
+                {!openId && (
                   <motion.button
                     className={`point ${spot.className}`}
                     whileTap={{ scale: 0.95 }}
@@ -97,7 +75,7 @@ const Tab1: React.FC = () => {
                       className={`point child ${activeList.id}-child ${activeList.id}-${i + 1}`}
                       whileHover={{ scale: 1.06 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => cartModal(label, activeList.region)}
+                      onClick={() => addToCart(label, activeList.region)}
                     >
                       {label}
                     </motion.button>
@@ -107,6 +85,61 @@ const Tab1: React.FC = () => {
             </AnimatePresence>
           </div>
         </div>
+
+        {/* container button para abrir modal da lista */}
+        <div className="fixed bottom-[7%] right-[7%] bg-(--ion-background-containers) w-14 h-14 z-99 rounded-[50%!important] shadow-[0px_0px_10px_#000]">
+          <img src={iconList} onClick={toggleModal} className="relative p-2 w-full h-full" />
+          <p className="relative left-[50%] -mt-3 p-[0.8px] w-[45%] h-[45%] text-center bg-red-600 rounded-[50%!important] font-bold">
+            {cart.length}
+          </p>
+        </div>
+
+        {/* Modal para apresentar itens que estão sendo salvos até o momento */}
+        <AnimatePresence>
+          {modal && (
+            <Modal.Root className="w-[90vw] h-[85vh]">
+              <Modal.Header>
+                <Modal.Title className="text-center text-2xl font-extrabold! whitespace-normal">
+                  Treatment Plan Planning
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Content className="px-5 flex flex-col gap-5 justify-start overflow-x-hidden mt-5">
+                <div className="grid grid-cols-3 grid-flow-row gap-10 px-3 md:px-5 w-full mx-2 ">
+                  <p className="text-start font-bold text-xl">Region</p>
+                  <p className="text-center font-bold text-xl">Code</p>
+                  <p className="text-end font-bold text-xl">Delete</p>
+                </div>
+                {/* Lógica para verificar se tem itens a serem observados e caso não há, passar essa resposta ao usuário */}
+                {cart.length === 0 && ( 
+                  <h1 className="text-white text-center">Add the codes and you'll see them here in this section.</h1>
+                )}
+                {cart.map((item: CartItem, i: number) => (
+                  <div key={i} className="grid grid-cols-3 grid-flow-row gap-10 w-[90%]">
+                    <p className="text-start py-1 text-[15px] flex items-center ">{item.region}</p>
+                    <p className="h-10 w-20 text-center justify-self-center bg-(--ion-background-inputs) flex justify-center items-center rounded-md shadow-xl!">
+                      {item.code}
+                    </p>
+                    <button className="flex justify-end" onClick={() => removeItemCart(i)}>
+                      <img src={iconDelete} className="w-8 h-8" alt="Icon delete row" />
+                    </button>
+                  </div>
+                ))}
+              </Modal.Content>
+              <Modal.Actions>
+                <ActionButton className="h-10 rounded-md! w-25" onClick={toggleModal} type="button">
+                  Select More
+                </ActionButton>
+                <ActionButton
+                  className="h-10 rounded-md! w-30"
+                  onClick={() => history.push("/tabs/tab2")}
+                  type="button"
+                >
+                  Go to Flip Chart
+                </ActionButton>
+              </Modal.Actions>
+            </Modal.Root>
+          )}
+        </AnimatePresence>
       </IonContent>
     </IonPage>
   );

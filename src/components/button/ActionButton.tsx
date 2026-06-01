@@ -16,7 +16,7 @@ const ActionButton: React.FC<ButtonProps> = ({
       onClick={onClick}
       className={`${btnColor} ${
         color !== "gold" &&
-        "bg-(--ion-background-inputs) border border-white shadow-[0px_0px_7px_#000]"
+        "bg-(--ion-background-inputs) shadow-[0px_0px_7px_#000]"
       } ${className} whitespace-nowrap text-[12px] md:[14px]`}
       disabled={disabled}
     >

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
-interface CartItem {
+export interface CartItem {
   code: string;
   region: string;
 }
