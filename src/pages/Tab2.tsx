@@ -11,9 +11,10 @@ import { useHistory } from "react-router";
 import ActionButton from "../components/button/ActionButton";
 import PatientsPlans from "../components/tab2/PatientsPlans";
 import iconPlus from "/resources/plus-icon.svg";
-
+import { useCart } from "../contexts/CartContext";
 const Tab2: React.FC = () => {
   const { username, loading, user } = useTab2Handlers();
+  const { uid } = useCart();
   const [hasPatient, setHasPatient] = useState<boolean>();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [patients, setPatients] = useState<any>();
@@ -22,7 +23,8 @@ const Tab2: React.FC = () => {
   const localDb = JSON.parse(localStorage.getItem("codeList") || "[]");
   useEffect(() => {
     if (!user) return;
-    hasPatientData(user.uid).then((v) => {        
+    console.log(uid);
+    hasPatientData(user.uid).then((v) => {
       setHasPatient(v.state);
       if (v.state) setPatients(v.dataPatients || "[]");
     });

@@ -4,7 +4,7 @@ import { useState } from "react";
 import useUpdateUserInfo from "../../../api/auth/updateUserInfo";
 import { z, ZodError } from "zod";
 import { useAuth } from "../../../contexts/AuthContext";
-import { settingsProfile } from "../../../firebaseConfig";
+import { profileSettings } from "../../../api/routes/profile";
 
 const schemaPhone = z.object({
   user_phone: z
@@ -22,7 +22,7 @@ const InputPhone: React.FC<InputField> = ({ setEditField, setRefresh }) => {
     try {
       if (!user) throw Error("User not authenticate");
       schemaPhone.parse({ user_phone: newPhone });
-      updateFirebase({ user_phone: newPhone }, settingsProfile(user.uid)).then(() => {
+      updateFirebase({ user_phone: newPhone }, profileSettings(user.uid)).then(() => {
         console.log("Numero de telefone alterado com sucesso!");
         setRefresh((prev) => prev + 1);
         setEditField("");

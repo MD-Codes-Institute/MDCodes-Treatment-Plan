@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { classBtn } from "../../../contents/auth/ContentForms";
 import useUpdateUserInfo from "../../../api/auth/updateUserInfo";
-import { settingsProfile } from "../../../firebaseConfig";
+import { profileSettings } from "../../../api/routes/profile";
 import { useAuth } from "../../../contexts/AuthContext";
 
 export type InputField = {
@@ -16,7 +16,7 @@ const InputName: React.FC<InputField> = ({ setEditField, setRefresh }) => {
   const handleClick = (e: any) => {
     e.preventDefault();
     if (!user) return;
-    updateFirebase({ user_name: newName }, settingsProfile(user.uid)).then(() => {
+    updateFirebase({ user_name: newName }, profileSettings(user.uid)).then(() => {
       console.log("Name atualizado!");
       setEditField("");
       setRefresh((prev) => prev + 1);

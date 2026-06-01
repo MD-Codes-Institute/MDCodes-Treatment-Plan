@@ -1,8 +1,8 @@
-import { patientsDb } from "../../firebaseConfig";
+import { patientsDatabase } from "../../api/routes/patients";
 import { get } from "firebase/database";
 
 const hasPatientData = async (uid: string) => {
-  const database = patientsDb(uid);
+  const database = patientsDatabase(uid);
   const snapshot = await get(database);
   if (snapshot.exists()) {
     const rawData = snapshot.val();

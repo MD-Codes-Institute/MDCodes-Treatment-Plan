@@ -7,7 +7,7 @@ import useUpdateUserInfo from "../api/auth/updateUserInfo";
 import ActionsContainer from "../components/tab3/inputs-preferences/ActionsContainer";
 import { classInputs } from "../contents/tabs/ContentsTab3";
 import { getProfilePreferences } from "../services/database/preferencesProfile";
-import { preferencesDb, settingsProfile } from "../firebaseConfig";
+import { profileSettings, profilePreferences } from "../api/routes/profile";
 import Loader from "../components/Loader";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -23,7 +23,7 @@ const Tab3: React.FC = () => {
       const authEmail = user.email ?? undefined;
       const dbEmail = userInfo.find((v) => v.info == authEmail);
       if (authEmail && dbEmail?.info !== authEmail) {
-        updateFirebase({ user_email: authEmail }, settingsProfile(user.uid)).then(() => {
+        updateFirebase({ user_email: authEmail }, profileSettings(user.uid)).then(() => {
           console.log("E-mail atualizado no database");
         });
       }

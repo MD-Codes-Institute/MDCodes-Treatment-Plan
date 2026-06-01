@@ -10,7 +10,7 @@ import {
 import { useState } from "react";
 import ModalPreferences from "./Modal";
 import { set, update } from "firebase/database";
-import { preferencesDb } from "../../../firebaseConfig";
+import { profilePreferences } from "../../../api/routes/profile";
 
 const ActionsContainer: React.FC<UserProps> = ({ user, preferences }) => {
   const [modal, setModal] = useState<boolean>(false);
@@ -42,13 +42,13 @@ const ActionsContainer: React.FC<UserProps> = ({ user, preferences }) => {
     }, action: string
   ) => {
     if (preferences === true) {
-      update(preferencesDb(user.uid, action), newData).then(() => {
+      update(profilePreferences(user.uid, action), newData).then(() => {
         console.log("dados atualizados");
         window.location.reload()
         setModal(false);
       });
     } else {
-      set(preferencesDb(user.uid, action), newData).then(() => {
+      set(profilePreferences(user.uid, action), newData).then(() => {
         console.log("dados adicionados");
         window.location.reload()
         setModal(false);

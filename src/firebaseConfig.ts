@@ -3,7 +3,6 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 import { Auth, initializeAuth, indexedDBLocalPersistence, getAuth } from "firebase/auth";
-import { ref } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APIKEY,
@@ -19,22 +18,13 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase();
 let auth: Auth;
 
-const preferencesDb = (uid: string, location: string) => {
-  return ref(db, `/preferences/user-${uid}/${location}`);
-};
-const settingsProfile = (uid: string) => {
-  return ref(db, `/users/user-${uid}`);
-};
-
-const patientsDb = (uid: string) => {
-  return ref(db, `/patients/user-${uid}`)
-}
 try {
   auth = initializeAuth(app, {
     persistence: indexedDBLocalPersistence,
   });
 } catch (error) {
+  console.log(error)
   auth = getAuth(app);
 }
 
-export { auth, db, preferencesDb, settingsProfile, patientsDb};
+export { auth, db};
