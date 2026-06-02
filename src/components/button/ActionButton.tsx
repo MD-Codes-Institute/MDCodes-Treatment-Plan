@@ -8,12 +8,14 @@ const ActionButton: React.FC<ButtonProps> = ({
   children,
   className,
   disabled = false,
+  id
 }) => {
   const btnColor = buttonColor[color];
   return (
     <button
       type={type}
       onClick={onClick}
+      id={id}
       className={`${btnColor} ${
         color !== "gold" &&
         "bg-(--ion-background-inputs) shadow-[0px_0px_7px_#000]"
