@@ -13,8 +13,8 @@ import ActionButton from "../components/button/ActionButton";
 
 const Tab1: React.FC = () => {
   const { imgZoom, setImgZoom, openId, setOpenId, handleSpotClick, zoomScale, origin, activeList } =
-    useTab1Handlers(); // Function necessárias para animação de posição dos icones
-  const { cart, removeItemCart, addToCart } = useCart(); // functions vindo do Context Cart
+    useTab1Handlers(); 
+  const { cart, removeItemCart, addToCart } = useCart();
   const [modal, setModal] = useState<boolean>(false);
   const history = useHistory();
   const toggleModal = (): void => setModal(!modal);
