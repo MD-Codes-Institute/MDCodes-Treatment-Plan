@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import { Patients } from "../../contents/tabs/ContentsTab2";
+import { Patients } from "../contents/tabs/ContentsTab2";
 
 const useViewPlanModal = (patients: Patients[]) => {
   const [openPlan, setOpenPlan] = useState<boolean>(false);
@@ -51,13 +51,12 @@ const useViewPlanModal = (patients: Patients[]) => {
     }
   }, []);
 
-
   return {
     handleSearch,
     handleClearSearch,
     handleOpenPlans,
     handleClosePlans,
-    handleCancelBtnsOptions ,
+    handleCancelBtnsOptions,
     handlePressStart,
     handlePressEnd,
     openPlan,

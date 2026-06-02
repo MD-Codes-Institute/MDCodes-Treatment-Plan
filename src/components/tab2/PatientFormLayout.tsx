@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
-import useTab2Handlers from "../hooks/useTab2Handlers";
+import useTab2Handlers from "../../hooks/useTab2Handlers";
 import { styleBtn } from "../../contents/tabs/ContentsTab1";
 import { PropsModal, InfosCodeList, products, volumes } from "../../contents/tabs/ContentsTab2";
 import { useForm } from "react-hook-form";

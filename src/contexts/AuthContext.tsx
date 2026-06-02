@@ -1,21 +1,24 @@
-import { auth } from "../../firebaseConfig";
-import { useEffect, useState } from "react";
-import {
-  onAuthStateChanged,
-  User,
-  sendEmailVerification,
-  signOut,
-} from "firebase/auth";
+import { createContext, useContext, useState, useEffect } from "react";
+import { User, onAuthStateChanged, sendEmailVerification, signOut } from "firebase/auth";
+import { auth } from "../firebaseConfig";
 import { useHistory } from "react-router";
 
-function useAuth() {
-  const history = useHistory();
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+interface ContextProps {
+  user: User | null;
+  loading: boolean;
+  sendVerification: () => void;
+  signOutUser: () => void;
+}
 
-  // function que verifica se possui usuário e monitora
+const AuthContext = createContext<ContextProps | undefined>(undefined);
+
+export default function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const history = useHistory();
+
   useEffect(() => {
-    let timeoutId = window.setTimeout(() => {
+    const timeoutId = window.setTimeout(() => {
       setLoading(false);
     }, 6000);
 
@@ -39,17 +42,6 @@ function useAuth() {
     };
   }, [user, user?.email]);
 
-  // function para verificar se o e-mail está verificado ou não ----------------- ainda falta configurar
-  const actionSettings = {
-    url: "https://treatment-plan-app.firebaseapp.com",
-    handleCodeInApp: true,
-    iOS: {
-      bundleId: "com.mdcodes.treatmentplan",
-    },
-  };
-
-  // function para verificar se o e-mail está verificado
-
   const sendVerification = async () => {
     if (user) {
       console.log("Enviando e-mail");
@@ -70,7 +62,18 @@ function useAuth() {
       console.log(err);
     }
   };
-  return { user, loading, sendVerification, signOutUser };
+
+  return (
+    <AuthContext.Provider value={{ user, loading, sendVerification, signOutUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
-export default useAuth;
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("O useAuth deve ser usado dentro de um AuthProvider");
+  }
+  return context;
+};

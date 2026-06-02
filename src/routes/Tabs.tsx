@@ -1,26 +1,22 @@
 import React from "react";
-import {
-  IonTabs,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonImg,
-  IonLabel,
-} from "@ionic/react";
+import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonImg, IonLabel } from "@ionic/react";
 import { Route, Redirect } from "react-router-dom";
-import Tab1 from "./pages/Tab1";
-import Tab2 from "./pages/Tab2";
-import Tab3 from "./pages/Tab3";
-import { navigationTabs } from "./contents/tabs/ContentsTabs";
+import Tab1 from "../pages/Tab1";
+import Tab2 from "../pages/Tab2";
+import Tab3 from "../pages/Tab3";
+import { navigationTabs } from "../contents/tabs/ContentsTabs";
 import { useLocation } from "react-router-dom";
+import CartProvider from "../contexts/CartContext";
 
 const Tabs: React.FC = () => {
   const location = useLocation();
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Route exact path="/tabs/tab1" component={Tab1} />
-        <Route exact path="/tabs/tab2" component={Tab2} />
+        <CartProvider>
+          <Route exact path="/tabs/tab1" component={Tab1} />
+          <Route exact path="/tabs/tab2" component={Tab2} />
+        </CartProvider>
         <Route exact path="/tabs/tab3" component={Tab3} />
         <Redirect exact from="/tabs" to="/tabs/tab1" />
       </IonRouterOutlet>
@@ -38,11 +34,7 @@ const Tabs: React.FC = () => {
           >
             <IonImg
               src={v.imgUrl}
-              className={`h-8 ${
-                v.path === location.pathname
-                  ? "brightness-100"
-                  : "brightness-75"
-              }`}
+              className={`h-8 ${v.path === location.pathname ? "brightness-100" : "brightness-75"}`}
             />
             <IonLabel
               className={`text-[14px] sm:text-xl pt-1 whitespace-nowrap ${

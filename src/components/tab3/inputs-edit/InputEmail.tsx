@@ -2,16 +2,13 @@ import { useState } from "react";
 import { classBtn } from "../../../contents/auth/ContentForms";
 import { z, ZodError } from "zod";
 import { verifyBeforeUpdateEmail } from "firebase/auth";
-import useUpdateUserInfo from "../../../services/crud-auth/updateUserInfo";
-import useAuth from "../../../pages/auth/useAuth";
+import useUpdateUserInfo from "../../../api/auth/updateUserInfo";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const schemaEmail = z.object({
   user_email: z
     .string()
-    .regex(
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Invalid email address"
-    ),
+    .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email address"),
 });
 
 const InputEmail: React.FC = () => {
@@ -62,18 +59,10 @@ const InputEmail: React.FC = () => {
             onChange={(e) => setNewEmail(e.target.value)}
             className="border border-amber-50 rounded-2xl w-70 h-10 custom-input placeholder:px-1"
           />
-          <input
-            type="submit"
-            value="Submit"
-            onClick={handleClick}
-            style={classBtn}
-          />
+          <input type="submit" value="Submit" onClick={handleClick} style={classBtn} />
         </div>
       </form>
-      <button
-        className="text-white mt-5"
-        onClick={() => history.push("/tabs/tab3")}
-      >
+      <button className="text-white mt-5" onClick={() => history.push("/tabs/tab3")}>
         Cancel
       </button>
     </div>

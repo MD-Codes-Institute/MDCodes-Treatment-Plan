@@ -1,6 +1,6 @@
 import { variantsDetails, classBtnPrice, TreatmentItem } from "../../contents/tabs/ContentsTab2";
 import { motion } from "framer-motion";
-import useTab2Handlers from "../hooks/useTab2Handlers";
+import useTab2Handlers from "../../hooks/useTab2Handlers";
 interface PropsDetails {
   treatmentPlan: { dateTreatment: string; rows: TreatmentItem[] }[];
   isViewPlanModal?: boolean;

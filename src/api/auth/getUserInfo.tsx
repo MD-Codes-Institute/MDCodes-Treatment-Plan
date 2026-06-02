@@ -1,4 +1,4 @@
-import { settingsProfile } from "../../firebaseConfig";
+import { profileSettings } from "../routes/profile";
 import { get } from "firebase/database";
 import { useState } from "react";
 
@@ -22,7 +22,7 @@ const useUserInfo = () => {
   /* function para obter dados do usuário crud*/
   const getCredentialUser = async (uid: string) => {
     try {
-      const snapshot = await get(settingsProfile(uid));
+      const snapshot = await get(profileSettings(uid));
       if (snapshot.exists()) {
         const data = snapshot.val();
         setName(data?.user_name ?? "");

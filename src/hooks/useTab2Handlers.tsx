@@ -1,12 +1,12 @@
-import useUserInfo from "../../services/crud-auth/getUserInfo";
-import useAuth from "../../pages/auth/useAuth";
+import useUserInfo from "../api/auth/getUserInfo";
+import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
 import { useEffect } from "react";
-import { patientsDb } from "../../firebaseConfig";
+import { patientsDatabase } from "../api/routes/patients";
 import { push, set, remove, child, query, orderByChild, get, equalTo } from "firebase/database";
-import { regions } from "../../contents/tabs/ContentsTab2";
-import { getProfilePreferences } from "../../services/database/preferencesProfile";
-import getValueForCode from "../../contents/tabs/getValueForCode";
+import { regions } from "../contents/tabs/ContentsTab2";
+import { getProfilePreferences } from "../services/database/preferencesProfile";
+import getValueForCode from "../contents/tabs/getValueForCode";
 
 const useTab2Handlers = () => {
   const { user } = useAuth();
@@ -43,9 +43,13 @@ const useTab2Handlers = () => {
         "Are you sure about these changes? Because, after this action, it will not be possible to alter the patient's treatment plan. Please review the treatment plan."
       );
       if (confirmChanges) {
-        const ref = patientsDb(user.uid);
+        const ref = patientsDatabase(user.uid);
         // Search for existing patient by name and date of birth
-        const consultation = query(ref, orderByChild("namePatient".trim()), equalTo(data.namePatient));
+        const consultation = query(
+          ref,
+          orderByChild("namePatient".trim()),
+          equalTo(data.namePatient)
+        );
         const snapshot = await get(consultation);
         if (snapshot.exists()) {
           // Check among results if any has the same dateBirth
@@ -87,7 +91,7 @@ const useTab2Handlers = () => {
   const handleDeletePatient = async (id: string, indice?: number) => {
     try {
       if (!user) return null;
-      const db = patientsDb(user.uid);
+      const db = patientsDatabase(user.uid);
       if (indice !== null && indice !== undefined) {
         const referenceList = child(db, `${id}/treatmentPlan/${indice}`);
         await remove(referenceList);

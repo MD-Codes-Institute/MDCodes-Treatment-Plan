@@ -6,7 +6,7 @@ import {
 } from "firebase/auth";
 import { update, DatabaseReference } from "firebase/database";
 import { useHistory } from "react-router";
-import useAuth from "../../pages/auth/useAuth";
+import { useAuth } from "../../contexts/AuthContext";
 
 const useUpdateUserInfo = () => {
   const uid = auth.currentUser?.uid;
