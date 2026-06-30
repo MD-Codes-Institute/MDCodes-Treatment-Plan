@@ -2,7 +2,7 @@ import { IonPage, IonContent } from "@ionic/react";
 import { useAuth } from "../../contexts/AuthContext";
 import { auth } from "../../firebaseConfig";
 import { Redirect } from "react-router";
-import { classBtn } from "../../contents/auth/ContentForms";
+import { classBtn } from "../../data/auth/ContentForms";
 
 const VerifiedEmail: React.FC = () => {
   console.log("Página recarregada");
@@ -15,8 +15,7 @@ const VerifiedEmail: React.FC = () => {
           <div className="flex flex-col items-center justify-center gap-30 h-screen">
             <h1 className="text-center text-white">Email verification</h1>
             <p className="text-center px-10">
-              This email is not verified. Please click on "Send Verification"
-              and check your email.
+              This email is not verified. Please click on "Send Verification" and check your email.
             </p>
             <div className="flex flex-wrap justify-center w-[70vw] md:w-[20vw] gap-7">
               <button

@@ -1,9 +1,5 @@
 import { IonContent, IonPage } from "@ionic/react";
-import {
-  classBtn,
-  contentFormSignIn,
-  classInput,
-} from "../../../contents/auth/ContentForms";
+import { classBtn, contentFormSignIn, classInput } from "../../../data/auth/ContentForms";
 import { formSchema } from "./useSignIn";
 import useSignIn from "./useSignIn";
 import ForgetPassword from "../ForgetPassword";
@@ -24,9 +20,7 @@ const SignIn: React.FC = () => {
       <IonContent>
         <div className="flex flex-col h-screen justify-center items-center">
           <h1 className="text-white h-[15vh] flex items-center">Sign In</h1>
-          {err && (
-            <span className="text-red-400 mb-2 px-10 text-center">{err}</span>
-          )}
+          {err && <span className="text-red-400 mb-2 px-10 text-center">{err}</span>}
           {!showForgot && (
             <form
               onSubmit={handleSubmit(onSubmit)}
@@ -61,10 +55,7 @@ const SignIn: React.FC = () => {
                   Forgot your password?
                   <span style={{ color: "#8686fd" }}>Click here.</span>
                 </button>
-                <button
-                  onClick={() => history.push("/signup")}
-                  style={classInput}
-                >
+                <button onClick={() => history.push("/signup")} style={classInput}>
                   Don't have an account?
                   <span style={{ color: "#8686fd" }}>Sign Up.</span>
                 </button>

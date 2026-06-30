@@ -3,7 +3,7 @@ import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
 import SignIn from "../pages/auth/sign-in/SignIn";
 import SignUp from "../pages/auth/sign-up/SignUp";
-import { ProtectedRoute } from "../ProtectedRoute";
+import { ProtectedRoute } from "./ProtectedRoute";
 import Tabs from "./Tabs";
 import "../App.css";
 import VerifiedEmail from "../pages/auth/VerifiedEmail";

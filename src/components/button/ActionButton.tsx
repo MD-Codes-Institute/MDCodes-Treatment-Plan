@@ -8,7 +8,8 @@ const ActionButton: React.FC<ButtonProps> = ({
   children,
   className,
   disabled = false,
-  id
+  id,
+  form,
 }) => {
   const btnColor = buttonColor[color];
   return (
@@ -16,9 +17,9 @@ const ActionButton: React.FC<ButtonProps> = ({
       type={type}
       onClick={onClick}
       id={id}
+      form={form}
       className={`${btnColor} ${
-        color !== "gold" &&
-        "bg-(--ion-background-inputs) shadow-[0px_0px_7px_#000]"
+        color !== "gold" && "bg-(--ion-background-inputs) shadow-[0px_0px_7px_#000]"
       } ${className} whitespace-nowrap text-[12px] md:[14px]`}
       disabled={disabled}
     >

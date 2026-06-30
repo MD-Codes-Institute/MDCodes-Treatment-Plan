@@ -5,7 +5,7 @@ interface ProductInfo {
   mid: string;
 }
 
-const getValueForCode = (code: string): ProductInfo => {
+export const getValueForCode = (code: string): ProductInfo => {
   switch (code) {
     // Cheek (Ck)
     case "Ck1":
@@ -133,5 +133,3 @@ const getValueForCode = (code: string): ProductInfo => {
       return { right: "0", mid: "0", left: "0", product: "VM" };
   }
 };
-
-export default getValueForCode;

@@ -1,19 +1,19 @@
 import { IonContent, IonPage } from "@ionic/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { SPOTS } from "../contents/tabs/ContentsTab1";
+import { SPOTS } from "../data/tabs/ContentsTab1";
 import { Modal } from "../components/modal";
 import { useCart, CartItem } from "../contexts/CartContext";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import useTab1Handlers from "../hooks/useTab1Handlers";
 import "./Tab1.css";
-import iconList from "../../public/resources/cardList.png";
+import iconList from "/resources/cardList.png";
 import iconDelete from "/resources/delete-left-solid-full.svg";
 import ActionButton from "../components/button/ActionButton";
 
 const Tab1: React.FC = () => {
   const { imgZoom, setImgZoom, openId, setOpenId, handleSpotClick, zoomScale, origin, activeList } =
-    useTab1Handlers(); 
+    useTab1Handlers();
   const { cart, removeItemCart, addToCart } = useCart();
   const [modal, setModal] = useState<boolean>(false);
   const history = useHistory();
@@ -97,21 +97,23 @@ const Tab1: React.FC = () => {
         {/* Modal para apresentar itens que estão sendo salvos até o momento */}
         <AnimatePresence>
           {modal && (
-            <Modal.Root className="w-[90vw] h-[85vh]">
+            <Modal.Root className="w-[90vw] h-[70vh]">
               <Modal.Header>
-                <Modal.Title className="text-center text-2xl font-extrabold! whitespace-normal">
+                <Modal.Title className="text-center text-xl font-extrabold! whitespace-normal">
                   Treatment Plan Planning
                 </Modal.Title>
               </Modal.Header>
               <Modal.Content className="px-5 flex flex-col gap-5 justify-start overflow-x-hidden mt-5">
                 <div className="grid grid-cols-3 grid-flow-row gap-10 px-3 md:px-5 w-full mx-2 ">
-                  <p className="text-start font-bold text-xl">Region</p>
-                  <p className="text-center font-bold text-xl">Code</p>
-                  <p className="text-end font-bold text-xl">Delete</p>
+                  <p className="text-start font-bold text-lg whitespace-nowrap">Region</p>
+                  <p className="text-center font-bold text-lg whitespace-nowrap">Code</p>
+                  <p className="text-end font-bold text-lg whitespace-nowrap">Delete</p>
                 </div>
                 {/* Lógica para verificar se tem itens a serem observados e caso não há, passar essa resposta ao usuário */}
-                {cart.length === 0 && ( 
-                  <h1 className="text-white text-center">Add the codes and you'll see them here in this section.</h1>
+                {cart.length === 0 && (
+                  <h1 className="text-white text-center">
+                    Add the codes and you'll see them here in this section.
+                  </h1>
                 )}
                 {cart.map((item: CartItem, i: number) => (
                   <div key={i} className="grid grid-cols-3 grid-flow-row gap-10 w-[90%]">

@@ -6,7 +6,7 @@ import {
   classInputs,
   PreferencesData,
   UserProps,
-} from "../../../contents/tabs/ContentsTab3";
+} from "../../../data/tabs/ContentsTab3";
 import { useState } from "react";
 import ModalPreferences from "./Modal";
 import { set, update } from "firebase/database";
@@ -30,7 +30,7 @@ const ActionsContainer: React.FC<UserProps> = ({ user, preferences }) => {
     setData(null);
   };
   const toggleInput = (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
     setDisabledInput(!disabledInput);
   };
   const saveOrUpdateDb = async (
@@ -39,18 +39,19 @@ const ActionsContainer: React.FC<UserProps> = ({ user, preferences }) => {
       code_value?: string[];
       product_value?: string[];
       profit_margin?: string[];
-    }, action: string
+    },
+    action: string
   ) => {
     if (preferences === true) {
       update(profilePreferences(user.uid, action), newData).then(() => {
         console.log("dados atualizados");
-        window.location.reload()
+        window.location.reload();
         setModal(false);
       });
     } else {
       set(profilePreferences(user.uid, action), newData).then(() => {
         console.log("dados adicionados");
-        window.location.reload()
+        window.location.reload();
         setModal(false);
       });
     }

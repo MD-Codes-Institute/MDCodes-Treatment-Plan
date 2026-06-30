@@ -1,4 +1,4 @@
-import { productValue } from "../../contents/tabs/ContentsTab3";
+import { productValue } from "../../data/tabs/ContentsTab3";
 import { preferencesDb, db, auth } from "../../firebaseConfig";
 import { get, ref } from "firebase/database";
 
@@ -14,7 +14,7 @@ const getProfilePreferences = async (uid: string) => {
         local_currency: snapshot.val().local_currency,
         code_value: snapshot.val().code_value,
         profit_margin: snapshot.val().profit_margin,
-        product_value: snapshot.val().product_value
+        product_value: snapshot.val().product_value,
       };
     }
   } catch (err) {

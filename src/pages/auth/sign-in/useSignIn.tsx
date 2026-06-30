@@ -1,15 +1,9 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-} from "firebase/auth";
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../../../firebaseConfig";
 import z from "zod";
-import {
-  schemaSignIn,
-  VerifyErroCode,
-} from "../../../contents/auth/ContentForms";
+import { schemaSignIn, VerifyErroCode } from "../../../data/auth/ContentForms";
 import { useState } from "react";
 
 export type formSchema = z.infer<typeof schemaSignIn>;
@@ -26,11 +20,7 @@ const useSignIn = () => {
   const onSubmit = async (data: formSchema) => {
     try {
       console.log("Tentando conectar usuário");
-      const user = await signInWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
+      const user = await signInWithEmailAndPassword(auth, data.email, data.password);
       console.log("Conexão feita");
     } catch (error: any) {
       let msg: string = "";
@@ -39,8 +29,7 @@ const useSignIn = () => {
         setErr(msg);
         console.log(error, msg);
       } else {
-        msg =
-          "Error connecting user, we are experiencing an error on our servers.";
+        msg = "Error connecting user, we are experiencing an error on our servers.";
         setErr(msg);
         alert(msg);
       }
