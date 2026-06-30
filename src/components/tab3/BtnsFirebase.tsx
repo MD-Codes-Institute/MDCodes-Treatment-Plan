@@ -76,16 +76,10 @@ const BtnsFirebase = () => {
             Do you confirm the account deletion? This action is permanent.
           </h3>
           <div className="flex flex-row w-[90%] justify-center gap-7">
-            <button
-              className="text-red-600 mt-5"
-              onClick={() => setConfirmDelete(true)}
-            >
+            <button className="text-red-600 mt-5" onClick={() => setConfirmDelete(true)}>
               Confirm
             </button>
-            <button
-              className="text-white mt-5"
-              onClick={() => setModal(!modal)}
-            >
+            <button className="text-white mt-5" onClick={() => setModal(!modal)}>
               Cancel
             </button>
           </div>

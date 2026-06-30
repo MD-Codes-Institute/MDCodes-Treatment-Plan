@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { schemaSignIn } from "../../contents/auth/ContentForms";
+import { schemaSignIn } from "../../data/auth/ContentForms";
 import updateUserInfo from "../../api/auth/updateUserInfo";
 import { useHistory } from "react-router";
 import { IonContent, IonPage } from "@ionic/react";

@@ -134,3 +134,5 @@ export const IonReactRouter = ({ children, ...props }: any) => (
     {children}
   </div>
 );
+export const IonSpinner = ({ ...props }: any) => <div data-testid="ion-spinner" {...props} />;
+export const IonImg = ({ ...props }: any) => <img data-testid="ion-img" {...props} />;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SpotCfg, SPOTS } from "../contents/tabs/ContentsTab1";
+import { SpotCfg, SPOTS } from "../data/tabs/ContentsTab1";
 
 const useTab1Handlers = () => {
   const [openId, setOpenId] = useState<string | null>(null);

@@ -1,12 +1,14 @@
-import React from "react";
 import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonImg, IonLabel } from "@ionic/react";
 import { Route, Redirect } from "react-router-dom";
+import { navigationTabs } from "../data/tabs/ContentsTabs";
+import { useLocation } from "react-router-dom";
 import Tab1 from "../pages/Tab1";
 import Tab2 from "../pages/Tab2";
 import Tab3 from "../pages/Tab3";
-import { navigationTabs } from "../contents/tabs/ContentsTabs";
-import { useLocation } from "react-router-dom";
+import SaveTreatmentPlan from "../pages/TreatmentPlanForm";
+import React from "react";
 import CartProvider from "../contexts/CartContext";
+import { PatientProvider } from "../contexts/PatientsContext";
 
 const Tabs: React.FC = () => {
   const location = useLocation();
@@ -15,7 +17,10 @@ const Tabs: React.FC = () => {
       <IonRouterOutlet>
         <CartProvider>
           <Route exact path="/tabs/tab1" component={Tab1} />
-          <Route exact path="/tabs/tab2" component={Tab2} />
+          <PatientProvider>
+            <Route exact path="/tabs/tab2" component={Tab2} />
+            <Route path="/tabs/tab2/save-treatmentplan" component={SaveTreatmentPlan} />
+          </PatientProvider>
         </CartProvider>
         <Route exact path="/tabs/tab3" component={Tab3} />
         <Redirect exact from="/tabs" to="/tabs/tab1" />
@@ -25,7 +30,7 @@ const Tabs: React.FC = () => {
         slot="bottom"
         className="bg-(--ion-background-containers) flex flex-row justify-between items-center px-7"
       >
-        {navigationTabs.map((v, _) => (
+        {navigationTabs.map((v) => (
           <IonTabButton
             key={v.id}
             tab={`tab${v.id}`}

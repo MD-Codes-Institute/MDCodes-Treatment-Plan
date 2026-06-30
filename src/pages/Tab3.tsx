@@ -1,11 +1,10 @@
 import { IonPage, IonContent, IonSpinner } from "@ionic/react";
-import "./Tab3.css";
 import { useEffect, useState } from "react";
 import BtnsFirebase from "../components/tab3/BtnsFirebase";
 import useUserInfo from "../api/auth/getUserInfo";
 import useUpdateUserInfo from "../api/auth/updateUserInfo";
 import ActionsContainer from "../components/tab3/inputs-preferences/ActionsContainer";
-import { classInputs } from "../contents/tabs/ContentsTab3";
+import { classInputs } from "../data/tabs/ContentsTab3";
 import { getProfilePreferences } from "../services/database/preferencesProfile";
 import { profileSettings, profilePreferences } from "../api/routes/profile";
 import Loader from "../components/Loader";

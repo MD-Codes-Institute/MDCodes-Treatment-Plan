@@ -9,7 +9,7 @@ interface CartContextValue {
   setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
   addToCart: (code: string, region: string) => void;
   removeItemCart: (indice: number) => void;
-  deleteCart: () => void
+  deleteCart: () => void;
 }
 
 const CartContext = createContext<CartContextValue | undefined>(undefined);
@@ -29,16 +29,16 @@ export default function CartProvider({ children }: { children: React.ReactNode }
   };
 
   const removeItemCart = (indice: number): void => {
-    setCart((prev) => prev.filter((_, i) => indice !== i) )
+    setCart((prev) => prev.filter((_, i) => indice !== i));
   };
 
   const deleteCart = (): void => {
-    localStorage.clear()
-    window.location.reload()
-  }
+    localStorage.removeItem("codeList");
+    window.location.reload();
+  };
 
   return (
-    <CartContext.Provider value={{ cart, setCart, addToCart, removeItemCart, deleteCart}}>
+    <CartContext.Provider value={{ cart, setCart, addToCart, removeItemCart, deleteCart }}>
       {children}
     </CartContext.Provider>
   );

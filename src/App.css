@@ -73,6 +73,10 @@ html {
 .custom-input {
   color: #fff !important;
   padding-inline: 10px;
+  text-align: start;
+  background-color: var(--ion-background-inputs);
+  padding: 3px;
+  border: 1px solid rgb(180, 180, 180);
 }
 
 .custom-input::placeholder {
@@ -83,4 +87,8 @@ html {
   border-color: #fbbe2475; /* Exemplo: amarelo */
   outline: none;
   box-shadow: 0px 0px 3px #fbbf24;
+}
+
+.shadow-container{
+  box-shadow: 0px 0px 5px #0f0f0f;
 }

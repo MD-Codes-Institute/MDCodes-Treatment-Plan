@@ -1,5 +1,5 @@
 import { z, ZodError } from "zod";
-import { classBtn } from "../../../contents/auth/ContentForms";
+import { classBtn } from "../../../data/auth/ContentForms";
 import useUpdateUserInfo from "../../../api/auth/updateUserInfo";
 import { useState } from "react";
 

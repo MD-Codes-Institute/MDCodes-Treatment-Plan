@@ -1,7 +1,7 @@
-import { VerifyErroCode } from "../../../contents/auth/ContentForms";
+import { VerifyErroCode } from "../../../data/auth/ContentForms";
 import { useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
-import { schemaSignUp } from "../../../contents/auth/ContentForms";
+import { schemaSignUp } from "../../../data/auth/ContentForms";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";

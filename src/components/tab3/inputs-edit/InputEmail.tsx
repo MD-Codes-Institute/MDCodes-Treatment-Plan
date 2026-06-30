@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { classBtn } from "../../../contents/auth/ContentForms";
+import { classBtn } from "../../../data/auth/ContentForms";
 import { z, ZodError } from "zod";
 import { verifyBeforeUpdateEmail } from "firebase/auth";
 import useUpdateUserInfo from "../../../api/auth/updateUserInfo";

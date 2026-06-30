@@ -1,0 +1,16 @@
+
+.register-list select,
+.register-list input {
+  color: white;
+  background-color: var(--ion-background-inputs);
+  max-width: 80px;
+  padding: 4px !important;
+  height: 35px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.title-container p{
+  text-align: center;
+  color: white;
+}

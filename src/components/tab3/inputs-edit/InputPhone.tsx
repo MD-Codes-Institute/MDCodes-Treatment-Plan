@@ -1,5 +1,5 @@
 import { InputField } from "./InputName";
-import { classBtn } from "../../../contents/auth/ContentForms";
+import { classBtn } from "../../../data/auth/ContentForms";
 import { useState } from "react";
 import useUpdateUserInfo from "../../../api/auth/updateUserInfo";
 import { z, ZodError } from "zod";

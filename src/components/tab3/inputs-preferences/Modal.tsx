@@ -1,14 +1,26 @@
 import ActionButtons from "./ActionButtons";
-import { classInputs, ModalProps, Inputs } from "../../../contents/tabs/ContentsTab3";
+import { classInputs, ModalProps, Inputs } from "../../../data/tabs/ContentsTab3";
 import { useForm } from "react-hook-form";
 import { auth } from "../../../firebaseConfig";
 import { getProfilePreferences } from "../../../services/database/preferencesProfile";
 import { useEffect, useState } from "react";
 
 const ModalPreferences: React.FC<ModalProps> = ({
-  dataType, doYouNeedHelp, saveOrUpdateDb, needHelp, closeModal, disabledInput, action, toggleInput, 
+  dataType,
+  doYouNeedHelp,
+  saveOrUpdateDb,
+  needHelp,
+  closeModal,
+  disabledInput,
+  action,
+  toggleInput,
 }) => {
-  const { register, handleSubmit, setValue, formState: { errors }, } = useForm<Inputs>();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<Inputs>();
 
   const onSubmit = async (data: Inputs) => {
     await saveOrUpdateDb(data, action);
@@ -37,7 +49,7 @@ const ModalPreferences: React.FC<ModalProps> = ({
                 // Formata com porcentagem: "15%"
                 formattedValue = `${savedValue}%`;
               }
-              if(disabledInput) setValue(item.id as keyof Inputs, formattedValue)
+              if (disabledInput) setValue(item.id as keyof Inputs, formattedValue);
             }
           });
         }
@@ -67,7 +79,7 @@ const ModalPreferences: React.FC<ModalProps> = ({
             <input
               key={v.id}
               {...register(v.id as keyof Inputs, { required: true })}
-              type={ disabledInput ? "text" :  action === "local_currency" ? "text" : "number" }
+              type={disabledInput ? "text" : action === "local_currency" ? "text" : "number"}
               min={1}
               max={action === "profit_margin" ? 100 : Infinity}
               inputMode={action === "local_currency" ? "text" : "decimal"}
@@ -84,7 +96,7 @@ const ModalPreferences: React.FC<ModalProps> = ({
         ))}
 
         <ActionButtons
-        disabledInput={disabledInput}
+          disabledInput={disabledInput}
           dataType={dataType}
           doYouNeedHelp={doYouNeedHelp}
           saveOrUpdateDb={saveOrUpdateDb}

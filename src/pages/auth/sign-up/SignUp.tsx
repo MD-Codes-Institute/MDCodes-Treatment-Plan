@@ -1,10 +1,10 @@
 import { IonContent, IonPage } from "@ionic/react";
 import { useHistory } from "react-router";
 import React from "react";
-import { contentFormSignUp } from "../../../contents/auth/ContentForms";
+import { contentFormSignUp } from "../../../data/auth/ContentForms";
 import useSignUp from "./useSignUp";
 import { formDataSchema } from "./useSignUp";
-import { classBtn } from "../../../contents/auth/ContentForms";
+import { classBtn } from "../../../data/auth/ContentForms";
 
 const SignUp: React.FC = () => {
   const { onRegister, register, err, errors, handleSubmit } = useSignUp();
@@ -15,9 +15,7 @@ const SignUp: React.FC = () => {
       <IonContent>
         <div className="flex flex-col h-screen justify-center items-center">
           <h1 className="text-white h-[15vh] flex items-center">Sign Up</h1>
-          {err && (
-            <span className="text-red-400 mb-2 px-10 text-center">{err}</span>
-          )}
+          {err && <span className="text-red-400 mb-2 px-10 text-center">{err}</span>}
           <form
             onSubmit={handleSubmit(onRegister)}
             className="flex justify-center items-center flex-col gap-5 h-[80vh]"
@@ -65,8 +63,7 @@ const SignUp: React.FC = () => {
                   background: "transparent",
                 }}
               >
-                Do you already have an account?{" "}
-                <span style={{ color: "#8686fd" }}>Log in.</span>
+                Do you already have an account? <span style={{ color: "#8686fd" }}>Log in.</span>
               </button>
             </div>
           </form>

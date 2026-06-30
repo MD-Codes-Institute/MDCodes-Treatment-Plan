@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { classBtn } from "../../../contents/auth/ContentForms";
+import { classBtn } from "../../../data/auth/ContentForms";
 import useUpdateUserInfo from "../../../api/auth/updateUserInfo";
 import { profileSettings } from "../../../api/routes/profile";
 import { useAuth } from "../../../contexts/AuthContext";
