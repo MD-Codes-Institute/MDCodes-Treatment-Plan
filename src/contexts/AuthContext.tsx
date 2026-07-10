@@ -3,6 +3,7 @@ import { User, onAuthStateChanged, sendEmailVerification, signOut } from "fireba
 import { auth } from "../firebaseConfig";
 import { useHistory } from "react-router";
 import toast from "react-hot-toast";
+import { FirebaseError } from "firebase/app";
 
 interface ContextProps {
   user: User | null;
@@ -44,9 +45,18 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   }, [user, user?.email]);
 
   const sendVerification = async () => {
-    if (user) {
-      console.log("Enviando e-mail");
-      await sendEmailVerification(user);
+    try{
+      if (user) {
+        await sendEmailVerification(user);
+        toast.success("Email sent successfully")
+      }
+    }catch (err){ 
+      if(err instanceof FirebaseError){
+        toast.error(err.message)
+      }
+      if(err instanceof Error){
+        toast.error(err.message)
+      }
     }
   };
 

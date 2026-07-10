@@ -11,6 +11,7 @@ import SaveTreatmentPlan from "../pages/TreatmentPlanForm";
 import React from "react";
 import CartProvider from "../contexts/CartContext";
 import ProfilePreferences from "../pages/ProfilePreferences";
+import ReAuthForm from "../pages/auth/ReAuthForm";
 
 const Tabs: React.FC = () => {
   const location = useLocation();
@@ -25,6 +26,7 @@ const Tabs: React.FC = () => {
               <Route path="/tabs/tab2/save-treatmentplan" component={SaveTreatmentPlan} />
               <Route exact path="/tabs/tab3" component={Tab3} />
               <Route exact path="/tabs/profile-preferences" component={ProfilePreferences} />
+              <Route exact path="/tabs/re-authenticate" component={ReAuthForm} />
               <Redirect exact from="/tabs" to="/tabs/tab1" />
             </IonRouterOutlet>
 
