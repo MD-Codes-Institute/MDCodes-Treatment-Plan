@@ -5,11 +5,7 @@ import useSignIn from "./useSignIn";
 import ForgetPassword from "../ForgetPassword";
 import { useHistory } from "react-router";
 import { useState } from "react";
-import { Dispatch, SetStateAction } from "react";
 
-interface props {
-  setShowForgot: Dispatch<SetStateAction<boolean>>;
-}
 
 const SignIn: React.FC = () => {
   const { onSubmit, err, errors, register, handleSubmit } = useSignIn();

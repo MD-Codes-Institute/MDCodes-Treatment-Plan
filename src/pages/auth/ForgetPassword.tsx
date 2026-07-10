@@ -1,9 +1,11 @@
 import { sendPasswordResetEmail } from "firebase/auth";
-import { z, ZodError } from "zod";
+import { z } from "zod";
 import { useState } from "react";
 import { auth } from "../../firebaseConfig";
 import { classBtn } from "../../data/auth/ContentForms";
 import { Dispatch, SetStateAction } from "react";
+import toast from "react-hot-toast";
+import { FirebaseError } from "firebase/app";
 const schemaEmail = z.object({
   user_email: z
     .string()
@@ -20,18 +22,19 @@ const ForgetPassword: React.FC<Props> = ({ setShowForgot }) => {
     try {
       schemaEmail.parse({ user_email: email });
       await sendPasswordResetEmail(auth, email);
-      alert("Check your email.");
+      toast("Check your email.");
       console.log("Enviado com sucesso!");
       setShowForgot(false);
-    } catch (error: any) {
+    } catch (error) {
       if (error instanceof z.ZodError) {
         console.log(error.issues);
-        alert("Error changing password, invalid parameters.");
+        toast.error(error.message);
         return;
-      } else if (error.code === "auth/user-not-found") {
-        alert("No accounts were found with that email address.");
+      } else if (error instanceof FirebaseError) {
+          toast.error("No accounts were found with that email address.");
+        }
       }
-      alert("Sorry, we're having a problem with our server.");
+      toast.error("Sorry, we're having a problem with our server.");
     }
   };
   return (

@@ -3,6 +3,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { auth } from "../../firebaseConfig";
 import { Redirect } from "react-router";
 import { classBtn } from "../../data/auth/ContentForms";
+import toast from "react-hot-toast";
 
 const VerifiedEmail: React.FC = () => {
   console.log("Página recarregada");
@@ -24,7 +25,7 @@ const VerifiedEmail: React.FC = () => {
                   if (user?.emailVerified) {
                     window.location.reload();
                   } else {
-                    alert(
+                    toast.error(
                       `Please check your email; if you haven't received the email, click on "send verification".`
                     );
                     return;

@@ -58,7 +58,7 @@ const Tab2: React.FC = () => {
               <div className="flex flex-row search-input">
                 <input
                   id="search"
-                  placeholder="Ex: Mauricio de Maio"
+                  placeholder="Ex: Maurício de Maio"
                   onChange={(e) => searchPatient(e.target.value)}
                   className="border border-[#ffcc66] focus:shadow-[0px_0px_5px_#ffcc66] rounded-xl h-8 p-5 w-full outline-none text-white"
                 />

@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { User, onAuthStateChanged, sendEmailVerification, signOut } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { useHistory } from "react-router";
+import toast from "react-hot-toast";
 
 interface ContextProps {
   user: User | null;
@@ -56,9 +57,10 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
         const unsubUser = await signOut(auth);
         console.log(unsubUser);
       }
+      toast.error("Sign out with sucess");
       history.push("/signin");
     } catch (err) {
-      alert("Unknow error");
+      toast.error("Unknow error");
       console.log(err);
     }
   };

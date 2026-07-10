@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import createUser from "../../../api/auth/createUser";
+import { FirebaseError } from "firebase/app";
+import toast from "react-hot-toast";
 
 export type formDataSchema = z.infer<typeof schemaSignUp>;
 
@@ -29,13 +31,13 @@ const useSignUp = () => {
       let msg: string = "";
       if (error && typeof error === "object" && "code" in error) {
         // passando mensagem para o loop VerifyErroCode para verficar qual erro que teve ao tentar criar usuário
-        msg = String(VerifyErroCode((error as any).code));
+        msg = String(VerifyErroCode((error as FirebaseError).code));
         setErr(msg);
         console.log(error, msg);
       } else {
         msg = "Error creating user; we are experiencing an error on our servers.";
         setErr(msg);
-        alert(msg);
+        toast.error(msg);
       }
       console.log(error);
     }
