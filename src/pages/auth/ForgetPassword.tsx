@@ -6,6 +6,7 @@ import { classBtn } from "../../data/auth/ContentForms";
 import { Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
 import { FirebaseError } from "firebase/app";
+
 const schemaEmail = z.object({
   user_email: z
     .string()
@@ -31,6 +32,7 @@ const ForgetPassword: React.FC<Props> = ({ setShowForgot }) => {
         toast.error(error.message);
         return;
       } else if (error instanceof FirebaseError) {
+        if (error.code === "auth/user-not-found") {
           toast.error("No accounts were found with that email address.");
         }
       }
