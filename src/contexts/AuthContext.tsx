@@ -58,7 +58,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       }
       history.push("/signin");
     } catch (err) {
-      alert("Erro ao tentar retornar, volte mais tarde");
+      alert("Unknow error");
       console.log(err);
     }
   };

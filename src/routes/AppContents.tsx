@@ -1,4 +1,4 @@
-import { IonApp, IonLoading, IonRouterOutlet } from "@ionic/react";
+import { IonApp, IonRouterOutlet, IonPage } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
 import SignIn from "../pages/auth/sign-in/SignIn";
@@ -7,69 +7,67 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import Tabs from "./Tabs";
 import "../App.css";
 import VerifiedEmail from "../pages/auth/VerifiedEmail";
-import reauthenticateUser from "../pages/auth/ReauthForm";
-import EditProfileInfo from "../components/tab3/EditProfile";
 import { useAuth } from "../contexts/AuthContext";
+import Loader from "../components/Loader";
 
 const AppContents: React.FC = () => {
-  const { loading, user } = useAuth();
-  if (loading) return <IonLoading />;
+  const { user, loading } = useAuth();
+
+  if(loading) {return( <Loader />)} 
   return (
     <IonApp>
-      <IonReactRouter>
-        <IonRouterOutlet>
-          <Route
-            exact
-            path="/signin"
-            render={() =>
-              user?.emailVerified ? (
-                <Redirect to="/tabs" />
-              ) : user ? (
-                <Redirect to="/verify-email" />
-              ) : (
-                <SignIn />
-              )
-            }
-          />
+      <IonPage>
+        <IonReactRouter>
+          <IonRouterOutlet>
+            <Route
+              exact
+              path="/signin"
+              render={() =>
+                user?.emailVerified ? (
+                  <Redirect to="/tabs" />
+                ) : user ? (
+                  <Redirect to="/verify-email" />
+                ) : (
+                  <SignIn />
+                )
+              }
+            />
 
-          <Route
-            exact
-            path="/signup"
-            render={() =>
-              user?.emailVerified ? (
-                <Redirect to="/tabs" />
-              ) : user ? (
-                <Redirect to="/verify-email" />
-              ) : (
-                <SignUp />
-              )
-            }
-          />
+            <Route
+              exact
+              path="/signup"
+              render={() =>
+                user?.emailVerified ? (
+                  <Redirect to="/tabs" />
+                ) : user ? (
+                  <Redirect to="/verify-email" />
+                ) : (
+                  <SignUp />
+                )
+              }
+            />
 
-          <Route
-            exact
-            path="/verify-email"
-            render={() => (user ? <VerifiedEmail /> : <Redirect to="/signup" />)}
-          />
+            <Route
+              exact
+              path="/verify-email"
+              render={() => (user ? <VerifiedEmail /> : <Redirect to="/signup" />)}
+            />
 
-          <ProtectedRoute
-            path="/tabs"
-            isAllowed={!!user}
-            isVerify={!!user?.emailVerified}
-            redirectTo="/signin"
-            component={Tabs}
-          />
+            <ProtectedRoute
+              path="/tabs"
+              isAllowed={!!user}
+              isVerify={!!user?.emailVerified}
+              redirectTo="/signin"
+              component={Tabs}
+            />
 
-          <Route exact path="/">
-            {user?.emailVerified ? <Redirect to="/tabs" /> : <Redirect to="/signin" />}
-          </Route>
+            <Route exact path="/">
+              {user?.emailVerified ? <Redirect to="/tabs" /> : <Redirect to="/signin" />}
+            </Route>
 
-          <Route path="/re-authenticate" component={reauthenticateUser} />
-          <Route exact path="/verify-email" component={VerifiedEmail} />
-          <Route path="/edit-profile" component={EditProfileInfo} />
-          <IonLoading isOpen={loading} message="Loading..." />
-        </IonRouterOutlet>
-      </IonReactRouter>
+          </IonRouterOutlet>
+        </IonReactRouter>
+      </IonPage>
     </IonApp>
   );
 };
