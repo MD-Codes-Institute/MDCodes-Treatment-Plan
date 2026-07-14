@@ -16,51 +16,48 @@ import ReAuthForm from "../pages/auth/ReAuthForm";
 const Tabs: React.FC = () => {
   const location = useLocation();
   return (
-    <ProfileProvider>
-      <CartProvider>
-        <PatientProvider>
-          <IonTabs>
-            <IonRouterOutlet>
-              <Route exact path="/tabs/tab1" component={Tab1} />
+    <IonTabs>
+      <IonRouterOutlet>
+        <CartProvider>
+          <Route exact path="/tabs/tab1" component={Tab1} />
+          <ProfileProvider>
+            <PatientProvider>
               <Route exact path="/tabs/tab2" component={Tab2} />
               <Route path="/tabs/tab2/save-treatmentplan" component={SaveTreatmentPlan} />
               <Route exact path="/tabs/tab3" component={Tab3} />
               <Route exact path="/tabs/profile-preferences" component={ProfilePreferences} />
-              <Route exact path="/tabs/re-authenticate" component={ReAuthForm} />
-              <Redirect exact from="/tabs" to="/tabs/tab1" />
-            </IonRouterOutlet>
-
-            <IonTabBar
-              slot="bottom"
-              className="bg-(--ion-background-containers) flex flex-row justify-between items-center px-7"
+            </PatientProvider>
+          </ProfileProvider>
+        </CartProvider>
+        <Route exact path="/tabs/re-authenticate" component={ReAuthForm} />
+        <Redirect exact from="/tabs" to="/tabs/tab1" />
+      </IonRouterOutlet>
+      <IonTabBar
+        slot="bottom"
+        className="bg-(--ion-background-containers) flex flex-row justify-between items-center px-7"
+      >
+        {navigationTabs.map((v) => (
+          <IonTabButton
+            key={v.id}
+            tab={`tab${v.id}`}
+            href={v.path}
+            className="w-25  flex flex-col justify-center items-center text-center"
+          >
+            <IonImg
+              src={v.imgUrl}
+              className={`h-8 ${v.path === location.pathname ? "brightness-100" : "brightness-75"}`}
+            />
+            <IonLabel
+              className={`text-[14px] sm:text-xl pt-1 whitespace-nowrap ${
+                v.path === location.pathname ? "text-white" : "text-[#ccc]"
+              }`}
             >
-              {navigationTabs.map((v) => (
-                <IonTabButton
-                  key={v.id}
-                  tab={`tab${v.id}`}
-                  href={v.path}
-                  className="w-25  flex flex-col justify-center items-center text-center"
-                >
-                  <IonImg
-                    src={v.imgUrl}
-                    className={`h-8 ${
-                      v.path === location.pathname ? "brightness-100" : "brightness-75"
-                    }`}
-                  />
-                  <IonLabel
-                    className={`text-[14px] sm:text-xl pt-1 whitespace-nowrap ${
-                      v.path === location.pathname ? "text-white" : "text-[#ccc]"
-                    }`}
-                  >
-                    {v.name}
-                  </IonLabel>
-                </IonTabButton>
-              ))}
-            </IonTabBar>
-          </IonTabs>
-        </PatientProvider>
-      </CartProvider>
-    </ProfileProvider>
+              {v.name}
+            </IonLabel>
+          </IonTabButton>
+        ))}
+      </IonTabBar>
+    </IonTabs>
   );
 };
 

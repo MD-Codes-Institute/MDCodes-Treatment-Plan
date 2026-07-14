@@ -23,7 +23,7 @@ const deleteAccount = async (user: User | null, history: HistoryType) => {
         error.code === "auth/user-token-expired)"
       ) {
         toast.error("Error deleting user. You need to log in again.");
-        history.push("/re-authenticate");
+        history.push("/tabs/re-authenticate");
       } else {
         toast.error("Error deleting user. Please try again later.");
       }
