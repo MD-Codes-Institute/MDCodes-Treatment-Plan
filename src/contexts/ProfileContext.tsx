@@ -1,9 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useContext, createContext, useState, useEffect } from "react";
 import { useAuth } from "./AuthContext";
-import {  profileSettings } from "../api/routes/profile";
+import { profileSettings } from "../api/routes/profile";
 import { get, ref, update } from "firebase/database";
 import { db } from "../firebaseConfig";
+import { getPreferences } from "../api/database/getPreference";
 
 interface UserInfo {
   user_name: string;
@@ -11,9 +12,20 @@ interface UserInfo {
   user_phone: string;
   user_uid: string;
 }
-interface NewData {
+interface NewPreference {
   [x: string]: { value: string };
 }
+
+interface PreferredItems {
+  key: string;
+  value: string;
+}
+
+interface Preferences {
+  title: string;
+  items: PreferredItems[];
+}
+
 interface PromiseResponse {
   message: string;
   status: number;
@@ -22,7 +34,8 @@ interface PromiseResponse {
 interface PropsContext {
   userInfo: UserInfo | null;
   isLoading: boolean;
-  createNewPreference: (newData: NewData) => Promise<PromiseResponse>;
+  createNewPreference: (newData: NewPreference) => Promise<PromiseResponse>;
+  preferenceData: Preferences[] | null;
 }
 
 const ProfileContext = createContext<PropsContext | undefined>(undefined);
@@ -31,7 +44,8 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
   const { user } = useAuth();
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
+  const [preferenceData, setPreferenceData] = useState<Preferences[] | null>(null);
+  
   useEffect(() => {
     if (!user) return;
     get(profileSettings(user.uid)).then((snapshot) => {
@@ -46,14 +60,29 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
     });
   }, [user]);
 
-  const createNewPreference = async (newData: NewData): Promise<PromiseResponse> => {
+  useEffect(() => {
+    if (!user) return;
+    getPreferences(user.uid).then((value) => {
+      if (value.hasPreference === true) {
+        const preference: Preferences[] = Object.entries(value.preferenceData ?? {}).map(([title, values]) => {
+          const items = Object.entries(values).map(([itemKey, itemValue]) => {
+           return { key: itemKey, value: itemValue.value}
+          })
+          return { title, items }
+        })
+        setPreferenceData(preference)
+      }
+    });
+  }, [user]);
+
+
+  const createNewPreference = async (newData: NewPreference): Promise<PromiseResponse> => {
     setIsLoading(true);
     try {
       if (!user?.uid) {
         throw new Error("User not found. Please, connect in your account");
       }
-      
-      await update(ref(db), newData)
+      await update(ref(db), newData);
       return { message: "Sucess in create a new preference", status: 201 };
     } catch (err) {
       if (err instanceof Error) {
@@ -66,7 +95,7 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
   };
 
   return (
-    <ProfileContext.Provider value={{ userInfo, isLoading, createNewPreference }}>
+    <ProfileContext.Provider value={{ userInfo, isLoading, createNewPreference, preferenceData }}>
       {children}
     </ProfileContext.Provider>
   );
