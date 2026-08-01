@@ -19,11 +19,10 @@ const ProfilePreferences: React.FC = () => {
   const localDb = localStorage.getItem("preference") || "";
   const preference = JSON.parse(localDb);
   const { fields: fieldArray } = preference;
-  
-  const history = useHistory();
-
   const isProductValue = preference.id === "product_value";
   const [wantAddAnotherProduct, setWantAddAnotherProduct] = useState<boolean>(false);
+
+  const history = useHistory();
 
   const schema = z.object({
     answers: z.array(
@@ -43,7 +42,7 @@ const ProfilePreferences: React.FC = () => {
   });
 
   const prevPreferenceRef = useRef(JSON.stringify(fieldArray));
-  useEffect(() => {
+  useEffect(() => {//lógica para renderizar o novo formulário com base no localStorage
     const currentPreference = JSON.stringify(fieldArray);
     if (prevPreferenceRef.current !== currentPreference) {
       reset({ answers: fieldArray });
@@ -51,12 +50,14 @@ const ProfilePreferences: React.FC = () => {
     }
   }, [fieldArray, reset]);
 
-  const { fields, append } = useFieldArray({ control, name: "answers" });
+  const { fields, append, remove } = useFieldArray({ control, name: "answers" });
 
   const handleAddAnotherProduct = () => {
-    append({ type: "", label: "Enter name of your product", value: "" });
+    append({ type: "", label: "", value: "" });
     setWantAddAnotherProduct(true);
   };
+
+  const handleRemoveIndex = (index: number) => remove(index)
 
   const handleCancelAnotherProduct = () => {
     setWantAddAnotherProduct(false);
@@ -79,7 +80,9 @@ const ProfilePreferences: React.FC = () => {
         if(data.status !== 201){ 
         throw new Error(data.message)
       }
-        return data.message
+      history.push("/tabs/tab3")
+      window.location.reload()
+      return data.message
       },
       error: (err) => {return err.message}
     })
@@ -103,21 +106,27 @@ const ProfilePreferences: React.FC = () => {
               {fields.map((item, index) => (
                 <div
                   key={item.id}
-                  className="flex flex-row gap-4 overflow-x-hidden! whitespace-nowrap"
+                  className="flex flex-col gap-4 whitespace-nowrap min-w-[80vw]"
                 >
                   {wantAddAnotherProduct && isProductValue && (
-                    <InputField name={`answers.${index}.type`} label="Enter a name of your product" control={control} />
+                    <InputField name={`answers.${index}.type`} label="Enter name of your product" control={control} />
                   )}
                   <InputField 
                   name={`answers.${index}.value`} 
                   {...preference.id !== "local_currency" && {type: "number", inputMode: "numeric"}}
-                  {...(isProductValue ? { label: `Enter a value of product ${item.label}`} : { label: item.label })} 
+                  label={ isProductValue ? `Enter a value of product ${item.label}` : item.label} 
                   control={control} />
+
+                  {wantAddAnotherProduct && isProductValue && (
+                    <ActionButton type="button" className="h-8! max-w-30 rounded-md!" onClick={() => handleRemoveIndex(index)}> 
+                      Remove line 
+                    </ActionButton>
+                  )}
                 </div>
               ))}
             </form>
           </section>
-          <div className="flex flex-row gap-5 w-full sticky bottom-0  bg-(--ion-background-containers) py-3 px-5">
+          <div className="flex flex-row gap-5 w-full sticky bottom-0  bg-(--ion-background-containers) py-3 px-2">
             <ActionButton type="button"  className="h-8 flex-1 rounded-md!" onClick={handleReturnPreviousPage}> 
               Return 
             </ActionButton>
@@ -127,13 +136,11 @@ const ProfilePreferences: React.FC = () => {
               </ActionButton>
             )}
             {isProductValue && (
-              <ActionButton type="button" onClick={handleAddAnotherProduct} className="h-8 flex-3  rounded-md!">
-                Add another product
+              <ActionButton type="button" onClick={handleAddAnotherProduct} className="h-8 flex-2  rounded-md!">
+                Add more
               </ActionButton>
             )}
-            <ActionButton type="submit" form="preference" color="gold" className="h-8 flex-1 rounded-md!">
-              Save
-            </ActionButton>
+            <ActionButton type="submit" form="preference" color="gold" className="h-8 flex-1 rounded-md!">Save</ActionButton>
           </div>
         </section>
       </IonContent>
