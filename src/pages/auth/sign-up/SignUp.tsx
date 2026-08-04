@@ -1,72 +1,73 @@
 import { IonContent, IonPage } from "@ionic/react";
 import { useHistory } from "react-router";
 import React from "react";
-import { contentFormSignUp } from "../../../data/auth/ContentForms";
 import useSignUp from "./useSignUp";
-import { formDataSchema } from "./useSignUp";
-import { classBtn } from "../../../data/auth/ContentForms";
+import InputField from "../../../components/InputField";
+import ActionButton from "../../../components/button/ActionButton";
 
 const SignUp: React.FC = () => {
-  const { onRegister, register, err, errors, handleSubmit } = useSignUp();
+  const { onRegister, control, handleSubmit } = useSignUp();
   const history = useHistory();
 
   return (
     <IonPage>
       <IonContent>
-        <div className="flex flex-col h-screen justify-center items-center">
-          <h1 className="text-white h-[15vh] flex items-center">Sign Up</h1>
-          {err && <span className="text-red-400 mb-2 px-10 text-center">{err}</span>}
+        <div className="flex flex-col justify-center items-center h-full pt-20 pb-20">
+          <div className="flex flex-col items-center justify-center w-full">
+            <h1 className="text-white flex items-center">Sign Up</h1>
+            <p className="text-white">If you don't have an account, create one now.</p>
+          </div>
           <form
+            id="create-user"
             onSubmit={handleSubmit(onRegister)}
-            className="flex justify-center items-center flex-col gap-5 h-[80vh]"
+            className="flex justify-center items-center flex-col gap-7 h-[80vh]"
           >
-            {contentFormSignUp.map((v, _) => (
-              <React.Fragment key={v.id}>
-                <label htmlFor={v.id}>{v.name}</label>
-                <input
-                  type={
-                    v.id == "password"
-                      ? "password"
-                      : v.id == "phone"
-                      ? "number"
-                      : v.id == "email"
-                      ? "email"
-                      : "text"
-                  }
-                  inputMode={v.id == "phone" ? "numeric" : "text"}
-                  {...register(v.id as keyof formDataSchema)}
-                  style={{
-                    textTransform: v.id === "email" ? "lowercase" : "none",
-                  }}
-                  className="border border-amber-50 rounded-2xl w-70 h-10 custom-input placeholder:px-1"
-                />
-                {errors[v.id as keyof formDataSchema] && (
-                  <span className="p-0 m-0 h-1 text-white">
-                    {errors[v.id as keyof formDataSchema]?.message}
-                  </span>
-                )}
-              </React.Fragment>
-            ))}
+            <InputField
+              type="text"
+              name="name"
+              className="w-[80%]"
+              control={control}
+              autoComplete="name"
+              label="Enter your name"
+            />
 
-            <div className="flex flex-col items-center justify-center w-[90vw]  p-10 gap-4 mt-20">
-              <button type="submit" value="Enviar" style={classBtn}>
-                Register
-              </button>
-              <button
-                onClick={() => history.push("/signin")}
-                style={{
-                  borderRadius: 16,
-                  color: "#fff",
-                  fontSize: "0.85rem",
-                  width: "70%",
-                  height: "5vh",
-                  background: "transparent",
-                }}
-              >
-                Do you already have an account? <span style={{ color: "#8686fd" }}>Log in.</span>
-              </button>
-            </div>
+            <InputField
+              type="email"
+              name="email"
+              className="w-[80%]"
+              control={control}
+              autoComplete="email"
+              label="Enter your email"
+            />
+
+            <InputField
+              type="password"
+              name="password"
+              className="w-[80%]"
+              control={control}
+              autoComplete="password"
+              label="Enter your password"
+            />
           </form>
+
+          <div className="flex flex-col gap-5 items-center justify-center w-full px-10">
+            <ActionButton
+              form="create-user"
+              type="submit"
+              color="gold"
+              className="w-[60%] h-6 rounded-sm!"
+            >
+              Send
+            </ActionButton>
+            <ActionButton
+              type="submit"
+              color="default"
+              className="w-[25%] h-6 rounded-sm! bg-transparent! shadow-none!"
+              onClick={() => history.push("/signin")}
+            >
+              Sign in
+            </ActionButton>
+          </div>
         </div>
       </IonContent>
     </IonPage>

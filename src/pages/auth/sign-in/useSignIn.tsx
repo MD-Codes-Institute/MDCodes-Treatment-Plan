@@ -2,44 +2,43 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebaseConfig";
-import z from "zod";
-import { schemaSignIn, VerifyErroCode } from "../../../data/auth/ContentForms";
-import { useState } from "react";
-import toast from "react-hot-toast";
 import { FirebaseError } from "firebase/app";
+import z from "zod";
+import toast from "react-hot-toast";
+
+const schemaSignIn = z.object({
+  email: z
+    .string()
+    .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email address"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .regex(
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/,
+      "Password must contain an uppercase letter, a lowercase letter, a number, and a special character"
+    ),
+});
 
 export type formSchema = z.infer<typeof schemaSignIn>;
 
 const useSignIn = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<formSchema>({ resolver: zodResolver(schemaSignIn) });
-
-  const [err, setErr] = useState<string>("");
+  const { control, handleSubmit } = useForm<formSchema>({ resolver: zodResolver(schemaSignIn) });
 
   const onSubmit = async (data: formSchema) => {
     try {
-      console.log("Tentando conectar usuário");
       await signInWithEmailAndPassword(auth, data.email, data.password);
-      console.log("Conexão feita");
-    } catch (error) {
-      let msg: string = "";
-      if (error && typeof error === "object" && "code" in error) {
-        msg = String(VerifyErroCode((error as FirebaseError).code));
-        setErr(msg);
-        console.log(error, msg);
+      toast.success("Successfully logged in")
+    } catch (err) {
+      if (err instanceof FirebaseError) {
+        toast.error(err.message);
+        throw err;
       } else {
-        msg = "Error connecting user, we are experiencing an error on our servers.";
-        setErr(msg);
-        toast.error(msg);
+        toast.error("Error in our server, please try again later");
       }
-      console.log(error);
     }
   };
 
-  return { onSubmit, err, errors, register, handleSubmit };
+  return { onSubmit, control, handleSubmit };
 };
 
 export default useSignIn;

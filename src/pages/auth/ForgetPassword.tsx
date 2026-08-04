@@ -2,10 +2,10 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { z } from "zod";
 import { useState } from "react";
 import { auth } from "../../firebaseConfig";
-import { classBtn } from "../../data/auth/ContentForms";
 import { Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
 import { FirebaseError } from "firebase/app";
+import ActionButton from "../../components/button/ActionButton";
 
 const schemaEmail = z.object({
   user_email: z
@@ -48,7 +48,7 @@ const ForgetPassword: React.FC<Props> = ({ setShowForgot }) => {
         onChange={(e) => setEmail(e.target.value)}
         className="border border-amber-50 rounded-2xl w-70 h-10 custom-input placeholder:px-1"
       />
-      <input type="button" value="Send" style={classBtn} onClick={resetPassword} />
+      <ActionButton type="button" color="gold" onClick={resetPassword} className="w-[80%] h-7 rounded-md!">Reset password</ActionButton>
       <button onClick={() => setShowForgot(false)} className="text-white">
         Cancel
       </button>
