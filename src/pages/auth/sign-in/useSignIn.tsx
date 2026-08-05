@@ -27,10 +27,14 @@ const useSignIn = () => {
   const onSubmit = async (data: formSchema) => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
-      toast.success("Successfully logged in")
+      toast.success("Successfully logged in");
     } catch (err) {
       if (err instanceof FirebaseError) {
-        toast.error(err.message);
+        if (err.message === "Firebase: Error (auth/invalid-credential).") {
+          toast.error("Invalid credentials or user not found");
+        } else {
+          toast.error(err.message);
+        }
         throw err;
       } else {
         toast.error("Error in our server, please try again later");

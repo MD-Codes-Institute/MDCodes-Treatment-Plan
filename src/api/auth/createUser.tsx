@@ -19,10 +19,10 @@ const createUser = async ({ form }: formProps) => {
     });
   } catch (err) {
     if (err instanceof FirebaseError) {
-      toast.error(err.message);
-      throw err
+      throw err;
     } else {
       toast.error("Error in our server, please try again later");
+      throw err;
     }
   }
 };

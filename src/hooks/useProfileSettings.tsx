@@ -39,8 +39,9 @@ export const useProfileSettings = () => {
       error: (err) => {
         if (err instanceof FirebaseError) {
           return err.message;
+        } else {
+          return err.message;
         }
-        return err.message;
       },
     });
     setTimeout(() => setIsLoading(false), 1000);
@@ -89,7 +90,7 @@ export const useProfileSettings = () => {
           throw new Error("Do you need login again");
         }
       } else {
-        toast.error("Error in our services, please try again later")
+        toast.error("Error in our services, please try again later");
         throw new Error("Error in our services, please try again later");
       }
     }
