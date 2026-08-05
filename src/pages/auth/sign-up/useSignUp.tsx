@@ -29,16 +29,25 @@ const useSignUp = () => {
   });
 
   const onRegister = async (data: formDataSchema) => {
-    try {
-      await createUser({ form: data });
-      await sendVerification();
-      toast.success("Sucess in create user");
-    } catch (err) {
-      if (err instanceof FirebaseError) {
-        toast.error(err.message);
+    await toast.promise(
+      (async () => {
+        await createUser({ form: data });
+        await sendVerification();
+      })(),
+      {
+        loading: "Creating your account...",
+        success: "Account created! Check your email to verify your account.",
+        error: (err) => {
+          if (err instanceof FirebaseError) {
+            if (err.code === "auth/email-already-in-use") {
+              return "This email is already in use. Please try another one.";
+            }
+            return err.message;
+          }
+          return "Error in our server, please try again later.";
+        },
       }
-      toast.error("Error in our server, try again later");
-    }
+    );
   };
   return { onRegister, handleSubmit, control };
 };

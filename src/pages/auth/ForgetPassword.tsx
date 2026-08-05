@@ -23,20 +23,22 @@ const ForgetPassword: React.FC<Props> = ({ setShowForgot }) => {
     try {
       schemaEmail.parse({ user_email: email });
       await sendPasswordResetEmail(auth, email);
-      toast("Check your email.");
-      console.log("Enviado com sucesso!");
+      toast.success("Password reset email sent! Check your inbox and spam folder.");
       setShowForgot(false);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        console.log(error.issues);
-        toast.error(error.message);
+        toast.error("Please enter a valid email address.");
         return;
-      } else if (error instanceof FirebaseError) {
-        if (error.code === "auth/user-not-found") {
-          toast.error("No accounts were found with that email address.");
-        }
       }
-      toast.error("Sorry, we're having a problem with our server.");
+      if (error instanceof FirebaseError) {
+        if (error.code === "auth/user-not-found") {
+          toast.error("No account found with that email address.");
+        } else {
+          toast.error("Sorry, we're having a problem with our server. Please try again later.");
+        }
+        return;
+      }
+      toast.error("Sorry, we're having a problem with our server. Please try again later.");
     }
   };
   return (
@@ -48,7 +50,14 @@ const ForgetPassword: React.FC<Props> = ({ setShowForgot }) => {
         onChange={(e) => setEmail(e.target.value)}
         className="border border-amber-50 rounded-2xl w-70 h-10 custom-input placeholder:px-1"
       />
-      <ActionButton type="button" color="gold" onClick={resetPassword} className="w-[80%] h-7 rounded-md!">Reset password</ActionButton>
+      <ActionButton
+        type="button"
+        color="gold"
+        onClick={resetPassword}
+        className="w-[80%] h-7 rounded-md!"
+      >
+        Reset password
+      </ActionButton>
       <button onClick={() => setShowForgot(false)} className="text-white">
         Cancel
       </button>
