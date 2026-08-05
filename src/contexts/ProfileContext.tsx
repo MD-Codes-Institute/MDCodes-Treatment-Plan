@@ -1,15 +1,13 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useContext, createContext, useState, useEffect } from "react";
 import { useAuth } from "./AuthContext";
-import { profileSettings } from "../api/routes/profile";
-import { get, ref, update } from "firebase/database";
+import { ref, update } from "firebase/database";
 import { db } from "../firebaseConfig";
 import { getPreferences } from "../api/database/getPreference";
 
 interface UserInfo {
   user_name: string;
   user_email: string;
-  user_phone: string;
   user_uid: string;
 }
 interface NewPreference {
@@ -45,36 +43,30 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [preferenceData, setPreferenceData] = useState<Preferences[] | null>(null);
-  
+
   useEffect(() => {
-    if (!user) return;
-    get(profileSettings(user.uid)).then((snapshot) => {
-      if (snapshot.exists()) {
-        setUserInfo(snapshot.val());
-        requestAnimationFrame(() => setIsLoading(false));
-        return;
-      }
-      throw new Error(
-        "Não foi possível obter os dados do banco de dados, tente novamente mais tarde"
-      );
-    });
+    if (user) {
+      setUserInfo({ user_name: user.displayName!, user_email: user.email!, user_uid: user.uid });
+      requestAnimationFrame(() => setIsLoading(false));
+    }
   }, [user]);
 
   useEffect(() => {
     if (!user) return;
     getPreferences(user.uid).then((value) => {
       if (value.hasPreference === true) {
-        const preference: Preferences[] = Object.entries(value.preferenceData ?? {}).map(([title, values]) => {
-          const items = Object.entries(values).map(([itemKey, itemValue]) => {
-           return { key: itemKey, value: itemValue.value}
-          })
-          return { title, items }
-        })
-        setPreferenceData(preference)
+        const preference: Preferences[] = Object.entries(value.preferenceData ?? {}).map(
+          ([title, values]) => {
+            const items = Object.entries(values).map(([itemKey, itemValue]) => {
+              return { key: itemKey, value: itemValue.value };
+            });
+            return { title, items };
+          }
+        );
+        setPreferenceData(preference);
       }
     });
   }, [user]);
-
 
   const createNewPreference = async (newData: NewPreference): Promise<PromiseResponse> => {
     setIsLoading(true);
