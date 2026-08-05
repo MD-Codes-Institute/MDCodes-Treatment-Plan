@@ -1,33 +1,30 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { ref, set } from "firebase/database";
-import { db } from "../../firebaseConfig";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
+import { FirebaseError } from "firebase/app";
+import toast from "react-hot-toast";
 
 type formProps = {
   form: {
     name: string;
     email: string;
     password: string;
-    phone: string;
   };
 };
 const createUser = async ({ form }: formProps) => {
-  const createdUser = await createUserWithEmailAndPassword(
-    auth,
-    form.email,
-    form.password
-  );
-  const uid = createdUser.user.uid;
-  const database = ref(db, `/users/user-${uid}`);
-  console.log("Usuário criado com sucesso!", uid);
-
-  const setUserDB = await set(database, {
-    user_id: uid,
-    user_name: form.name,
-    user_email: form.email,
-    user_phone: form.phone,
-  });
-  console.log(setUserDB);
+  try {
+    const createdUser = await createUserWithEmailAndPassword(auth, form.email, form.password);
+    const user = createdUser.user;
+    await updateProfile(user, {
+      displayName: form.name,
+    });
+  } catch (err) {
+    if (err instanceof FirebaseError) {
+      toast.error(err.message);
+      throw err
+    } else {
+      toast.error("Error in our server, please try again later");
+    }
+  }
 };
 
 export default createUser;

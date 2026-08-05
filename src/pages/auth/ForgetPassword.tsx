@@ -1,9 +1,12 @@
 import { sendPasswordResetEmail } from "firebase/auth";
-import { z, ZodError } from "zod";
+import { z } from "zod";
 import { useState } from "react";
 import { auth } from "../../firebaseConfig";
-import { classBtn } from "../../data/auth/ContentForms";
 import { Dispatch, SetStateAction } from "react";
+import toast from "react-hot-toast";
+import { FirebaseError } from "firebase/app";
+import ActionButton from "../../components/button/ActionButton";
+
 const schemaEmail = z.object({
   user_email: z
     .string()
@@ -20,18 +23,20 @@ const ForgetPassword: React.FC<Props> = ({ setShowForgot }) => {
     try {
       schemaEmail.parse({ user_email: email });
       await sendPasswordResetEmail(auth, email);
-      alert("Check your email.");
+      toast("Check your email.");
       console.log("Enviado com sucesso!");
       setShowForgot(false);
-    } catch (error: any) {
+    } catch (error) {
       if (error instanceof z.ZodError) {
         console.log(error.issues);
-        alert("Error changing password, invalid parameters.");
+        toast.error(error.message);
         return;
-      } else if (error.code === "auth/user-not-found") {
-        alert("No accounts were found with that email address.");
+      } else if (error instanceof FirebaseError) {
+        if (error.code === "auth/user-not-found") {
+          toast.error("No accounts were found with that email address.");
+        }
       }
-      alert("Sorry, we're having a problem with our server.");
+      toast.error("Sorry, we're having a problem with our server.");
     }
   };
   return (
@@ -43,7 +48,7 @@ const ForgetPassword: React.FC<Props> = ({ setShowForgot }) => {
         onChange={(e) => setEmail(e.target.value)}
         className="border border-amber-50 rounded-2xl w-70 h-10 custom-input placeholder:px-1"
       />
-      <input type="button" value="Send" style={classBtn} onClick={resetPassword} />
+      <ActionButton type="button" color="gold" onClick={resetPassword} className="w-[80%] h-7 rounded-md!">Reset password</ActionButton>
       <button onClick={() => setShowForgot(false)} className="text-white">
         Cancel
       </button>

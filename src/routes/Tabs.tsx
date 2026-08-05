@@ -2,13 +2,17 @@ import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonImg, IonLabel } f
 import { Route, Redirect } from "react-router-dom";
 import { navigationTabs } from "../data/tabs/ContentsTabs";
 import { useLocation } from "react-router-dom";
+import { PatientProvider } from "../contexts/PatientsContext";
+import { ProfileProvider } from "../contexts/ProfileContext";
 import Tab1 from "../pages/Tab1";
 import Tab2 from "../pages/Tab2";
 import Tab3 from "../pages/Tab3";
 import SaveTreatmentPlan from "../pages/TreatmentPlanForm";
 import React from "react";
 import CartProvider from "../contexts/CartContext";
-import { PatientProvider } from "../contexts/PatientsContext";
+import ProfilePreferences from "../pages/ProfilePreferences";
+import ReAuthForm from "../pages/auth/ReAuthForm";
+import EditSettingsProfile from "../pages/auth/EditSettingsProfile";
 
 const Tabs: React.FC = () => {
   const location = useLocation();
@@ -17,15 +21,19 @@ const Tabs: React.FC = () => {
       <IonRouterOutlet>
         <CartProvider>
           <Route exact path="/tabs/tab1" component={Tab1} />
-          <PatientProvider>
-            <Route exact path="/tabs/tab2" component={Tab2} />
-            <Route path="/tabs/tab2/save-treatmentplan" component={SaveTreatmentPlan} />
-          </PatientProvider>
+          <ProfileProvider>
+            <PatientProvider>
+              <Route exact path="/tabs/tab2" component={Tab2} />
+              <Route path="/tabs/tab2/save-treatmentplan" component={SaveTreatmentPlan} />
+              <Route exact path="/tabs/tab3" component={Tab3} />
+              <Route exact path="/tabs/profile-preferences" component={ProfilePreferences} />
+              <Route exact path="/tabs/edit-settings" component={EditSettingsProfile} />
+            </PatientProvider>
+          </ProfileProvider>
         </CartProvider>
-        <Route exact path="/tabs/tab3" component={Tab3} />
+        <Route exact path="/tabs/re-authenticate" component={ReAuthForm} />
         <Redirect exact from="/tabs" to="/tabs/tab1" />
       </IonRouterOutlet>
-
       <IonTabBar
         slot="bottom"
         className="bg-(--ion-background-containers) flex flex-row justify-between items-center px-7"

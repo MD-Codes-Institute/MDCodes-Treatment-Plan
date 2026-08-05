@@ -1,95 +1,48 @@
-import { User } from "firebase/auth";
-
-const localCurrency = {
-  id: "local_currency",
-  title: "Currency",
-  texts: [{ id: "currency", value: "Write your currency" }],
-};
-const codeValue = {
-  id: "code_value",
-  title: "Enter the price you charge per region",
-  texts: [
-    { id: "foundation", value: "Foundation" },
-    { id: "countor_upper", value: "Contour Upper Face" },
-    { id: "counter_lower", value: "Contour Lower Face" },
-    { id: "refinement_periorbital", value: "Refinement Periorbital" },
-    { id: "refinement_perioral", value: "Refinement Perioral" },
-  ],
-};
-const productsProfit = {
-  id: "product_profit",
-  title: "Enter the price you charge per region",
-  texts: [
-    { id: "vm", value: "VM" },
-    { id: "vx", value: "VX" },
-    { id: "vl", value: "VL" },
-    { id: "vb", value: "VB" },
-    { id: "btx", value: "BTX" },
-    { id: "haca", value: "HACA" },
-    { id: "skv", value: "SKV" },
-  ],
-  placeholder: "%",
-};
-const productValue = {
-  id: "product_value",
-  title: "Please enter the product value",
-  texts: [
-    { id: "vm", value: "VM" },
-    { id: "vx", value: "VX" },
-    { id: "vl", value: "VL" },
-    { id: "vb", value: "VB" },
-    { id: "btx", value: "BTX" },
-    { id: "haca", value: "HACA" },
-    { id: "skv", value: "SKV" },
-  ],
-};
-
-const classInputs = {
-  color: "#FFF",
-  borderRadius: "0.5rem",
-  boxShadow: "0px 0px 2px #000",
-  background: "var(--ion-background-inputs)",
-  height: "2.5rem",
-};
-
-const classInputDisabled = {
-  color: "#ccc",
-  opacity: 0.7,
-  borderRadius: "0.5rem",
-  boxShadow: "0px 0px 2px #000",
-  background: "var(--ion-background-inputs)",
-  height: "2.5rem",
-}
-
-type TextItem = { id: string; value: string };
-
-export interface PreferencesData {
-  id: string;
-  title: string;
-  texts?: TextItem[];
-  placeholder?: string;
-}
-
-export interface UserProps {
-  user: User;
-  preferences?: boolean;
-}
-export interface ModalProps {
-  dataType: PreferencesData;
-  needHelp?: boolean;
-  closeModal: () => void;
-  doYouNeedHelp: (state: boolean) => void;
-  saveOrUpdateDb: ( newData: { local_currency?: string[]; code_value?: string[]; product_value?: string[]; profit_margin?: string[]; }, action: string
-  ) => void | Promise<void>;
-  disabledInput?: boolean;
-  action: string
-  toggleInput: (e: any) => void
-}
-
-export interface Inputs {
-  local_currency?: string[];
-  code_value?: string[];
-  product_value?: string[];
-  profit_margin?: string[];
-}
-export { localCurrency, codeValue, productValue, productsProfit, classInputs, classInputDisabled};
+export const preferences = [
+  {
+    id: "local_currency",
+    title: "Local currency",
+    description: "Enter your currency",
+    fields: [{ type: "currency", label: "Write your currency", value: "" }],
+  },
+  {
+    id: "code_value",
+    title: "Code value",
+    description: "Enter the price you charge per region",
+    fields: [
+      { type: "foundation", label: "Foundation", value: "" },
+      { type: "countor_upper", label: "Contour Upper Face", value: "" },
+      { type: "counter_lower", label: "Contour Lower Face", value: "" },
+      { type: "refinement_periorbital", label: "Refinement Periorbital", value: "" },
+      { type: "refinement_perioral", label: "Refinement Perioral", value: "" },
+    ],
+  },
+  // {
+  //   id: "profit_margin",
+  //   title: "Profit margin",
+  //   description: "Enter the price you charge per region",
+  //   fields: [
+  //     { type: "vm", label: "VM", value: "" },
+  //     { type: "vx", label: "VX", value: "" },
+  //     { type: "vl", label: "VL", value: "" },
+  //     { type: "vb", label: "VB", value: "" },
+  //     { type: "btx", label: "BTX", value: "" },
+  //     { type: "haca", label: "HACA", value: "" },
+  //     { type: "skv", label: "SKV", value: "" },
+  //   ],
+  // },
+  {
+    id: "product_value",
+    title: "Product value",
+    description: "Enter the product value",
+    fields: [
+      { type: "vm", label: "VM", value: "" },
+      { type: "vx", label: "VX", value: "" },
+      { type: "vl", label: "VL", value: "" },
+      { type: "vb", label: "VB", value: "" },
+      { type: "btx", label: "BTX", value: "" },
+      { type: "haca", label: "HACA", value: "" },
+      { type: "skv", label: "SKV", value: "" },
+    ],
+  },
+];

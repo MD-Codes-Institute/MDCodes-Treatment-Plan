@@ -1,4 +1,5 @@
 // import CartContext from "../contexts/CartContext";
+/* eslint-disable react-refresh/only-export-components */
 import { getPatients } from "../api/database/getPatients";
 import { createContext, useContext, useState, useEffect, useMemo } from "react";
 import { Patient, PatientFormatted, TreatmentPlan } from "../types/Patients";

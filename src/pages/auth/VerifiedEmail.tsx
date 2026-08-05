@@ -2,7 +2,8 @@ import { IonPage, IonContent } from "@ionic/react";
 import { useAuth } from "../../contexts/AuthContext";
 import { auth } from "../../firebaseConfig";
 import { Redirect } from "react-router";
-import { classBtn } from "../../data/auth/ContentForms";
+import toast from "react-hot-toast";
+import ActionButton from "../../components/button/ActionButton";
 
 const VerifiedEmail: React.FC = () => {
   console.log("Página recarregada");
@@ -18,22 +19,24 @@ const VerifiedEmail: React.FC = () => {
               This email is not verified. Please click on "Send Verification" and check your email.
             </p>
             <div className="flex flex-wrap justify-center w-[70vw] md:w-[20vw] gap-7">
-              <button
+              <ActionButton
+                type="button"
+                color="gold"
+                className="h-8 flex-1"
                 onClick={async () => {
                   await auth.currentUser?.reload();
                   if (user?.emailVerified) {
                     window.location.reload();
                   } else {
-                    alert(
+                    toast.error(
                       `Please check your email; if you haven't received the email, click on "send verification".`
                     );
                     return;
                   }
                 }}
-                style={classBtn}
               >
                 Continue
-              </button>
+              </ActionButton>
               <button onClick={sendVerification} className=" text-white">
                 Send verification
               </button>
