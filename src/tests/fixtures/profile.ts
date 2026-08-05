@@ -1,20 +1,17 @@
+import { User } from "firebase/auth";
+
 export const mockUserUid = "user-123456789";
-export const mockUser = { uid: mockUserUid, emailVerified: true };
 
-export const mockUserInfo = {
-  user_name: "Logger MdM",
-  user_email: "logger@mdcodes.com",
-  user_phone: "11967548946",
-  user_uid: mockUserUid,
-};
-export const mockSnapshot = {
-  exists: () => true,
-  val: () => mockUserInfo,
-};
+// Mock do User do Firebase Authentication
+export const mockUser = {
+  uid: mockUserUid,
+  email: "logger@mdcodes.com",
+  displayName: "Logger",
+  emailVerified: true,
+} as unknown as User;
 
-export const mockDatabaseRef = "mock-database-ref"
-export const mockDb = "mock-db"
-
+export const mockDatabaseRef = "mock-database-ref";
+export const mockDb = "mock-db";
 
 export const mockLocationDb = "preference_location";
 
