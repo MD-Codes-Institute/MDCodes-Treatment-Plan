@@ -1,5 +1,5 @@
 import { useHistory } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { IonContent, IonPage } from "@ionic/react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { products, volumes } from "../data/tabs/ContentsTab2";
@@ -15,16 +15,27 @@ import z from "zod";
 import Loader from "../components/Loader";
 import toast from "react-hot-toast";
 import "./TreatmentPlanForm.css";
+import { useProfile } from "../contexts/ProfileContext";
 
 const TreatmentPlanForm: React.FC = () => {
   const { cart, deleteCart } = useCart();
+  const { preferenceData } = useProfile();
   const history = useHistory();
   const { saveNewPatient, saveExistingPatient, displayed, searchPatient, isLoading } = usePatient();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [treatmentPlan, setTreatmentPlan] = useState<TreatmentPlan | null>(null);
   const [confirmNew, setConfirmNew] = useState<boolean>(false);
+  const [databaseProducts, setDatabaseProducts] = useState<string[] | undefined>(undefined);
   const dateNow: string = new Date().toISOString().slice(0, 10);
 
+  const fetchDatabaseProducts = useCallback(() => {
+    if (preferenceData) {
+      const products = preferenceData
+        .find((item) => item.title === "product_value")
+        ?.items.map((value) => value.key);
+      setDatabaseProducts(products);
+    }
+  }, [preferenceData]);
   type formData = z.infer<typeof formSchema>;
   const {
     handleSubmit,
@@ -39,7 +50,7 @@ const TreatmentPlanForm: React.FC = () => {
       treatmentPlan: {
         dateTreatment: dateNow,
         cart: [
-          { code: "", product: products[0], right: volumes[0], mid: volumes[0], left: volumes[0] },
+          { code: "", product: databaseProducts?.[0] ?? products[0], right: volumes[0], mid: volumes[0], left: volumes[0] },
         ],
       },
     },
@@ -47,20 +58,26 @@ const TreatmentPlanForm: React.FC = () => {
 
   const { fields, replace } = useFieldArray({ control, name: "treatmentPlan.cart" });
 
+  // Fetch products from database when preferenceData changes
+  useEffect(() => {
+    fetchDatabaseProducts();
+  }, [fetchDatabaseProducts]);
+
+  // Handle cart changes and replace fields
   useEffect(() => {
     if (cart.length === 0) history.push("/tabs/tab2");
     const replaceFields = cart.map((item) => {
       const response = getValueForCode(item.code);
       return {
         code: item.code,
-        product: response.product,
+        product: databaseProducts?.[0] ?? products[0],
         right: response.right,
         mid: response.mid,
         left: response.left,
       };
     });
     replace(replaceFields);
-}, [cart, replace, history]);
+  }, [cart, replace, history, databaseProducts]);
 
   const handleSaveExistingPatient = async (patientId: string, treatmentPlan: TreatmentPlan) => {
     const response = await toast.promise(saveExistingPatient(patientId, treatmentPlan), {
@@ -154,8 +171,8 @@ const TreatmentPlanForm: React.FC = () => {
                   <input {...register(`treatmentPlan.cart.${index}.code`)} disabled className="whitespace-nowrap max-w-15!" />
                   
                   <select {...register(`treatmentPlan.cart.${index}.product`)}>
-                    {products.map((product, index) => (
-                      <option key={product + index}>{product}</option>
+                    {(databaseProducts ?? products).map((product) => (
+                      <option key={product}>{product}</option>
                     ))}
                   </select>
                   <select {...register(`treatmentPlan.cart.${index}.right`)}>
