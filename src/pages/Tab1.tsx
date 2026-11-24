@@ -14,7 +14,7 @@ import ActionButton from "../components/button/ActionButton";
 const Tab1: React.FC = () => {
   const { imgZoom, setImgZoom, openId, setOpenId, handleSpotClick, zoomScale, origin, activeList } =
     useTab1Handlers();
-  const { cart, removeItemCart, addToCart } = useCart();
+  const { cart, removeItemCart, addToCart, deleteCart } = useCart();
   const [modal, setModal] = useState<boolean>(false);
   const history = useHistory();
   const toggleModal = (): void => setModal(!modal);
@@ -128,13 +128,17 @@ const Tab1: React.FC = () => {
                 ))}
               </Modal.Content>
               <Modal.Actions>
-                <ActionButton className="h-10 rounded-md! w-25" onClick={toggleModal} type="button">
+                <ActionButton className="h-10 rounded-md! px-2!" onClick={toggleModal} type="button">
                   Select More
                 </ActionButton>
+                <ActionButton className="h-10 rounded-md! px-3!" onClick={deleteCart} type="button" color='warning' >
+                  Delete 
+                </ActionButton>
                 <ActionButton
-                  className="h-10 rounded-md! w-30"
+                  className="h-10 rounded-md! px-3!"
                   onClick={() => history.push("/tabs/tab2")}
                   type="button"
+                  color="gold"
                 >
                   Go to Flip Chart
                 </ActionButton>
