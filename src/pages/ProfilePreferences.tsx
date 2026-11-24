@@ -112,10 +112,11 @@ const ProfilePreferences: React.FC = () => {
                     <InputField name={`answers.${index}.type`} label="Enter name of your product" control={control} />
                   )}
                   <InputField 
-                  name={`answers.${index}.value`} 
-                  {...preference.id !== "local_currency" && {type: "number", inputMode: "numeric"}}
-                  label={ isProductValue ? `Enter a value of product ${item.label}` : item.label} 
-                  control={control} />
+                    name={`answers.${index}.value`} 
+                    {...preference.id !== "local_currency" && {type: "number", inputMode: "numeric"}}
+                    label={ isProductValue ? `Enter a value of product ${wantAddAnotherProduct ? "" : item.label}` : item.label} 
+                    control={control} 
+                  />
 
                   {wantAddAnotherProduct && isProductValue && (
                     <ActionButton type="button" className="h-8! max-w-30 rounded-md!" onClick={() => handleRemoveIndex(index)}> 

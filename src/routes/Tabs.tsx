@@ -13,6 +13,7 @@ import CartProvider from "../contexts/CartContext";
 import ProfilePreferences from "../pages/ProfilePreferences";
 import ReAuthForm from "../pages/auth/ReAuthForm";
 import EditSettingsProfile from "../pages/auth/EditSettingsProfile";
+import EditPLan from "../pages/EditPlan";
 
 const Tabs: React.FC = () => {
   const location = useLocation();
@@ -28,6 +29,7 @@ const Tabs: React.FC = () => {
               <Route exact path="/tabs/tab3" component={Tab3} />
               <Route exact path="/tabs/profile-preferences" component={ProfilePreferences} />
               <Route exact path="/tabs/edit-settings" component={EditSettingsProfile} />
+              <Route path="/tabs/edit-plan" component={EditPLan} />
             </PatientProvider>
           </ProfileProvider>
         </CartProvider>
@@ -50,9 +52,8 @@ const Tabs: React.FC = () => {
               className={`h-8 ${v.path === location.pathname ? "brightness-100" : "brightness-75"}`}
             />
             <IonLabel
-              className={`text-[14px] sm:text-xl pt-1 whitespace-nowrap ${
-                v.path === location.pathname ? "text-white" : "text-[#ccc]"
-              }`}
+              className={`text-[14px] sm:text-xl pt-1 whitespace-nowrap ${v.path === location.pathname ? "text-white" : "text-[#ccc]"
+                }`}
             >
               {v.name}
             </IonLabel>

@@ -16,11 +16,11 @@
     <meta
       http-equiv="Content-Security-Policy"
       content="
-    default-src 'self' capacitor: data: blob: https:;
+    default-src 'self' capacitor: data: blob: https: ws: wss:;
     img-src 'self' data: blob: https:;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     script-src 'self' 'unsafe-inline' 'unsafe-eval' capacitor: blob: https://www.gstatic.com https://apis.google.com https://*.firebaseio.com;
-    connect-src 'self' capacitor: data: blob:
+    connect-src 'self' capacitor: data: blob: ws: wss:
       https://identitytoolkit.googleapis.com
       https://securetoken.googleapis.com
       https://www.googleapis.com
@@ -30,7 +30,8 @@
       https://*.gstatic.com
       https://*.firebaseio.com
       wss://*.firebaseio.com
-      http://localhost:* ws://localhost:*;
+      http://localhost:* ws://localhost:*
+      http://127.0.0.1:* ws://127.0.0.1:*;
     frame-src 'self' https://www.google.com https://www.recaptcha.net https://recaptcha.google.com;
     font-src 'self' data: https://fonts.gstatic.com;
   "

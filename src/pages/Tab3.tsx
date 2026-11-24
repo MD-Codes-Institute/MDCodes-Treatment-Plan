@@ -79,7 +79,7 @@ const Tab3: React.FC = () => {
 
           <div className="w-[90%] flex flex-col gap-1 mt-5 pb-18">
             {preferenceData !== null && (
-              <h3 className="text-white text-2xl! text-center">Saved Preferences</h3>
+              <h3 className="text-white text-2xl! text -center">Saved Preferences</h3>
             )}
             {preferenceData?.map((item) => (
               <div key={item.title} className="flex flex-col gap-2">
@@ -92,8 +92,7 @@ const Tab3: React.FC = () => {
                 </div>
 
                 {item.items.map((v) => (
-                  <Card key={v.key} className="h-8 flex items-center">
-                    <p className="text-white font-regular! text-[0.9em] flex flex-row gap-1">
+                    <p key={v.key} className="text-white font-regular! text-[0.9em] flex flex-row gap-1">
                       <strong>
                         {v.key
                           .split("_")
@@ -104,7 +103,6 @@ const Tab3: React.FC = () => {
                       {/* {currency} */}
                       {v.key !== "currency" && currency} {v.value}
                     </p>
-                  </Card>
                 ))}
               </div>
             ))}

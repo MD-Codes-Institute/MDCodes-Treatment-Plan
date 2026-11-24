@@ -4,7 +4,7 @@ import { getPatients } from "../api/database/getPatients";
 import { createContext, useContext, useState, useEffect, useMemo } from "react";
 import { Patient, PatientFormatted, TreatmentPlan } from "../types/Patients";
 import { useAuth } from "./AuthContext";
-import { push, set, child, remove, type DatabaseReference } from "firebase/database";
+import { push, set, child, remove, type DatabaseReference, get, update, serverTimestamp } from "firebase/database";
 import { patientsDatabase } from "../api/routes/patients";
 import { flushSync } from "react-dom";
 
@@ -17,7 +17,8 @@ interface PatientProps {
   saveNewPatient: (infoPatient: Patient, treatmentPlan: TreatmentPlan) => Promise<PatientResponse>;
   saveExistingPatient: (
     patientId: string,
-    treatmentPlan: TreatmentPlan
+    treatmentPlan: TreatmentPlan,
+    age: string
   ) => Promise<PatientResponse>;
   deletePatient: (patientId: string, planId?: string) => Promise<PatientResponse>;
   patients: PatientFormatted[] | null;
@@ -65,11 +66,17 @@ export const PatientProvider = ({ children }: { children: React.ReactNode }) => 
       const newPatientId = push(databaseRef);
       const newPlanId = push(child(newPatientId, `treatmentPlan`));
       const { age, name } = infoPatient;
-      const newData: Patient = {
+
+      const treatmentPlanFormatted = {
+        createdAt: serverTimestamp(),
+        ...treatment
+      }
+      const newData = {
         age,
         name,
-        treatmentPlan: { [newPlanId.key]: treatment },
+        treatmentPlan: { [newPlanId.key]: treatmentPlanFormatted, },
       };
+
       await set(newPatientId, newData);
       await user.reload();
       return { message: "Patient created successfully", status: 201 };
@@ -85,18 +92,28 @@ export const PatientProvider = ({ children }: { children: React.ReactNode }) => 
 
   const saveExistingPatient = async (
     patientId: string,
-    treatmentPlan: TreatmentPlan
-  ): Promise<PatientResponse> => {
+    treatmentPlan: TreatmentPlan,
+    age: string
+  ) => {
     if (!user) return { message: "User not found", status: 404 };
     if (!databaseRef) return { message: "Database reference not set", status: 500 };
     setIsLoading(true);
     try {
-      const newPlanId = push(child(databaseRef, `${patientId}/treatmentPlan`));
-      await set(newPlanId, treatmentPlan);
+      const previousAge = (await get(child(databaseRef, `${patientId}/age`))).val()
+      const newPlanId = push(child(databaseRef, `${patientId}/treatmentPlan`)).key;
+      const updates: Record<string, unknown> = {}
+      updates[`${patientId}/treatmentPlan/${newPlanId}`] = { createdAt: serverTimestamp(), ...treatmentPlan }
+
+      if (Number(previousAge) !== Number(age)) {
+        updates[`${patientId}/age`] = age
+      }
+
+      await update(databaseRef, updates)
       await user.reload();
       return { message: "TreatmentPlan created successfully", status: 201 };
     } catch (err) {
       if (err instanceof Error) {
+        console.error(err)
         return { message: err.message, status: 500 };
       }
       return { message: "Unknow error, please try again later", status: 500 };

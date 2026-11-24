@@ -41,6 +41,7 @@ const TreatmentPlanForm: React.FC = () => {
     handleSubmit,
     register,
     control,
+    watch,
     formState: { errors },
   } = useForm<formData>({
     resolver: zodResolver(formSchema),
@@ -57,13 +58,8 @@ const TreatmentPlanForm: React.FC = () => {
   });
 
   const { fields, replace } = useFieldArray({ control, name: "treatmentPlan.cart" });
+  const age = watch("age")
 
-  // Fetch products from database when preferenceData changes
-  useEffect(() => {
-    fetchDatabaseProducts();
-  }, [fetchDatabaseProducts]);
-
-  // Handle cart changes and replace fields
   useEffect(() => {
     if (cart.length === 0) history.push("/tabs/tab2");
     const replaceFields = cart.map((item) => {
@@ -77,10 +73,10 @@ const TreatmentPlanForm: React.FC = () => {
       };
     });
     replace(replaceFields);
-  }, [cart, replace, history, databaseProducts]);
+  }, [cart, replace, history]);
 
   const handleSaveExistingPatient = async (patientId: string, treatmentPlan: TreatmentPlan) => {
-    const response = await toast.promise(saveExistingPatient(patientId, treatmentPlan), {
+    const response = await toast.promise(saveExistingPatient(patientId, treatmentPlan, age), {
       loading: "Loading...",
       success: (data) => {
         if (data.status !== 201) throw new Error(data.message);
@@ -169,7 +165,7 @@ const TreatmentPlanForm: React.FC = () => {
                 <li key={item.id} className="w-full grid grid-cols-5 grid-flow-col gap-5 px-3 place-items-center register-list" >
 
                   <input {...register(`treatmentPlan.cart.${index}.code`)} disabled className="whitespace-nowrap max-w-15!" />
-                  
+
                   <select {...register(`treatmentPlan.cart.${index}.product`)}>
                     {(databaseProducts ?? products).map((product) => (
                       <option key={product}>{product}</option>
@@ -219,6 +215,7 @@ const TreatmentPlanForm: React.FC = () => {
               <p className="text-md text-white"> If desired, click on a folder to insert this treatment plan. </p>
               {displayed.map((value) => (
                 <button
+                  key={value.id}
                   onClick={() => handleSaveExistingPatient(value.id, treatmentPlan!)}
                   className="w-full h-[7vh] bg-(--ion-background-inputs) flex flex-row items-center justify-center gap-5 rounded-md! shadow-[0px_0px_10px_#000]"
                 >

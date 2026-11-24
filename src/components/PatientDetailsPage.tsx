@@ -6,6 +6,8 @@ import { Modal } from "./modal";
 import ActionButton from "./button/ActionButton";
 import Card from "./Card";
 import toast from "react-hot-toast";
+import { canEditPlan } from "../utils/canEditPlan";
+import { useSearchParams } from "../hooks/useSearchParams";
 
 interface PropPatientDetails {
   patient: PatientFormatted;
@@ -27,6 +29,7 @@ const PatientDetailsPage: React.FC<PropPatientDetails> = ({ patient, closePage }
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
   const confirmDeletion = useRef(false)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { setSearchParams } = useSearchParams()
 
   const patientId = patient.id;
 
@@ -75,16 +78,16 @@ const PatientDetailsPage: React.FC<PropPatientDetails> = ({ patient, closePage }
       className="fixed inset-0 bg-(--ion-background-containers) flex flex-col items-center"
     >
       <section className=" flex-1 flex flex-col gap-5 overflow-y-auto pt-10 px-5 w-full">
-        <h1 className="text-white text-2xl!">Treatment Plans: {patient.name}</h1>
+        <h1 className="text-white text-2xl!">Patient's name: {patient.name}</h1>
         <aside className="flex flex-col">
           <span className="text-white"> Last clinical consultation: <b>{patient.treatmentPlan.at(-1)?.dateTreatment}</b> </span>
           <p className="text-white">Age Patient: {patient.age}</p>
         </aside>
-        <p className="text-white">Treatment's total: {patient.treatmentPlan.length}</p>
+        <p className="text-white">Total treatment's: {patient.treatmentPlan.length}</p>
 
         {patient.treatmentPlan.map((value) => (
           <div key={value.idPlan}>
-            <Card className="flex-col gap-4 py-5 items-start">
+            <Card className="flex-col gap-4 py-5 items-start" >
               <p className="text-white flex flex-row gap-5 w-full justify-between"> Date: {value.dateTreatment} <span>Applied codes: {value.cart.length}</span> </p>
               <div className="grid grid-cols-5 gap-3 w-full text-center font-bold whitespace-nowrap">
                 <p>Code</p>
@@ -102,15 +105,29 @@ const PatientDetailsPage: React.FC<PropPatientDetails> = ({ patient, closePage }
                   <p>{item.left}</p>
                 </div>
               ))}
-              <ActionButton
-                onClick={() => setIsModalOpen(true)}
-                type="button"
-                color="warning"
-                className="w-20 h-8 rounded-md!"
-                disabled={isButtonDisabled}
-              >
-                Delete
-              </ActionButton>
+              <div className="flex w-full gap-4">
+                <ActionButton
+                  onClick={() => setIsModalOpen(true)}
+                  type="button"
+                  color="warning"
+                  className="w-20 h-8 rounded-md!"
+                  disabled={isButtonDisabled}
+                >
+                  Delete
+                </ActionButton>
+                {canEditPlan(value.createdAt) && (
+                  <ActionButton
+                    onClick={() => setSearchParams({ patientId: patient.id, planId: value.idPlan })}
+                    type="button"
+                    color="gold"
+                    className="w-[30%] px-2 h-8 rounded-md!"
+                    disabled={isButtonDisabled}
+                  >
+                    Edit your plan
+                  </ActionButton>
+                )}
+              </div>
+
             </Card>
 
             {isModalOpen && (
@@ -132,9 +149,12 @@ const PatientDetailsPage: React.FC<PropPatientDetails> = ({ patient, closePage }
           </div>
         ))}
       </section>
-      <div className="sicky bg-(--ion-background-containers) w-full h-11 flex items-center justify-start p-5">
+      <div className="sicky bg-(--ion-background-containers) w-full h-11 flex items-center justify-start p-5 gap-5">
         <ActionButton onClick={closePage} type="button" className="w-20 h-8 rounded-md!">
           Return
+        </ActionButton>
+        <ActionButton onClick={closePage} type="button" className="w-20 h-8 rounded-md!">
+          Help
         </ActionButton>
       </div>
     </motion.section>

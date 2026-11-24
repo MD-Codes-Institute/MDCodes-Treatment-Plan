@@ -1,7 +1,7 @@
 import { renderHook, act, waitFor } from "@testing-library/react";
 import { PatientProvider, usePatient } from "../PatientsContext";
 import { useAuth } from "../AuthContext";
-import { set, remove, child, push } from "firebase/database";
+import { set, remove, child, push, update, get } from "firebase/database";
 import { getPatients } from "../../api/database/getPatients";
 import { patientsDatabase } from "../../api/routes/patients";
 import { mockPatients, newDataRaw, mockUser } from "../../tests/fixtures/patients";
@@ -19,6 +19,8 @@ jest.mock("firebase/database", () => ({
   set: jest.fn(),
   child: jest.fn(),
   remove: jest.fn(),
+  update: jest.fn(),
+  get: jest.fn(),
 }));
 
 jest.mock("../../api/routes/patients", () => ({
@@ -40,9 +42,16 @@ describe("Testing all function of the ContextPatient", () => {
       status: 200,
     });
 
+    const mockGetPreviousAge = get as jest.Mock;
+    mockGetPreviousAge.mockResolvedValueOnce({ val: () => "22" })
+
     const mockPush = push as jest.Mock;
-    mockPush.mockImplementationOnce(() => "mock-ref-id");
-    mockPush.mockImplementationOnce(() => ({ key: "mock-ref-plan-id" }));
+    mockPush.mockImplementation((ref) => {
+      if (typeof ref === 'string') {
+        return { key: "mock-ref-plan-id" };
+      }
+      return "mock-ref-id";
+    });
 
     (child as jest.Mock).mockImplementation((ref, path) => `${ref}/${path}`);
   });
@@ -124,23 +133,23 @@ describe("Testing all function of the ContextPatient", () => {
   it("Tested function add existing patient", async () => {
     const { result } = renderHook(() => usePatient(), { wrapper: PatientProvider });
 
-    (set as jest.Mock).mockResolvedValueOnce(undefined);
-
     await waitFor(() => expect(result.current.isLoading).toBe(false));
+
     const patientId = "patient-123";
     const { treatmentPlan } = newDataRaw;
     let response;
     await act(async () => {
-      response = await result.current.saveExistingPatient(patientId, treatmentPlan);
+      response = await result.current.saveExistingPatient(patientId, treatmentPlan, "22");
     });
 
-    const pushed = (push as jest.Mock).mock.results[0].value
-    expect(child).toHaveBeenCalledWith("mock-database-ref", `${patientId}/treatmentPlan`);
     expect(result.current.isLoading).toBe(false);
-    expect(push).toHaveBeenCalledTimes(1);
-    expect(mockUser.reload).toHaveBeenCalledTimes(1);
     expect(response).toEqual({ message: "TreatmentPlan created successfully", status: 201 });
-    expect(set).toHaveBeenCalledWith(pushed, treatmentPlan);
+    expect(update).toHaveBeenCalledWith(
+      "mock-database-ref",
+      expect.objectContaining({
+        [`${patientId}/treatmentPlan/mock-ref-plan-id`]: treatmentPlan
+      })
+    )
   });
 
   it("Tested function remove patient when the planId is not passed to the function", async () => {

@@ -14,6 +14,7 @@ export interface TreatmentPlan {
 
 export interface TreatmentPlanFormatted extends TreatmentPlan {
   idPlan: string;
+  createdAt: number;
 }
 
 export interface Patient {
@@ -22,7 +23,12 @@ export interface Patient {
   treatmentPlan?: FormattedTemplateValues<TreatmentPlan>;
 }
 
-export type PatientRaw = FormattedTemplateValues<Patient>;
+export type PatientRaw = {
+  name: string
+  age: string 
+  treatmentPlan: Record<string, TreatmentPlan & {createdAt: number, idPlan: string}>
+}
+
 
 export interface PatientFormatted {
   name: string;
