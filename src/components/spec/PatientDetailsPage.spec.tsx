@@ -3,39 +3,12 @@ import userEvent from "@testing-library/user-event";
 import { PatientProvider } from "../../contexts/PatientsContext";
 import PatientDetailsPage from "../PatientDetailsPage";
 import AuthProvider from "../../contexts/AuthContext";
+import { mockPatients } from "../../tests/fixtures/patients";
 
 describe("PatientDetailsPage", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-
-  const mockPatient = {
-    id: "id-patient-random",
-    name: "Anderson Martins",
-    age: "22",
-    treatmentPlan: [
-      {
-        idPlan: "id-plan-random",
-        dateTreatment: "17/04/2026",
-        cart: [
-          {
-            code: "T1",
-            left: "0.5",
-            mid: "0",
-            product: "VM",
-            right: "0.5",
-          },
-          {
-            code: "T2",
-            left: "0.5",
-            mid: "0",
-            product: "VM",
-            right: "0.5",
-          },
-        ],
-      },
-    ],
-  };
 
   const user = userEvent.setup();
 
@@ -45,18 +18,18 @@ describe("PatientDetailsPage", () => {
     render(
       <AuthProvider>
         <PatientProvider>
-          <PatientDetailsPage patient={mockPatient} closePage={mockClosePage} />
+          <PatientDetailsPage patient={mockPatients[0]} closePage={mockClosePage} />
         </PatientProvider>
       </AuthProvider>
     );
-    expect(screen.findByText(`Treatments Plans: ${mockPatient.name}`));
+    expect(screen.findByText(`Treatments Plans: ${mockPatients[0].name}`));
   });
 
   it("Should when clicked in the button return close the component and call the closePage function", async () => {
     render(
       <AuthProvider>
         <PatientProvider>
-          <PatientDetailsPage closePage={mockClosePage} patient={mockPatient} />
+          <PatientDetailsPage closePage={mockClosePage} patient={mockPatients[0]} />
         </PatientProvider>
       </AuthProvider>
     );
@@ -72,7 +45,7 @@ describe("PatientDetailsPage", () => {
     render(
       <AuthProvider>
         <PatientProvider>
-          <PatientDetailsPage closePage={mockClosePage} patient={mockPatient} />
+          <PatientDetailsPage closePage={mockClosePage} patient={mockPatients[0]} />
         </PatientProvider>
       </AuthProvider>
     );

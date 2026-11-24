@@ -1,6 +1,9 @@
 import { PatientFormatted } from "../../types/Patients";
 
-export const mockUser = { uid: "user-123", reload: jest.fn().mockResolvedValueOnce(undefined) };
+export const mockUser = {
+  uid: "user-123",
+  reload: jest.fn().mockResolvedValueOnce(undefined),
+};
 export const mockPatients: PatientFormatted[] = [
   {
     id: "id-patient-random",
@@ -10,6 +13,7 @@ export const mockPatients: PatientFormatted[] = [
       {
         idPlan: "id-plan-random",
         dateTreatment: "17/04/2026",
+        createdAt: 12345678,
         cart: [
           {
             code: "T1",
@@ -37,6 +41,7 @@ export const mockPatients: PatientFormatted[] = [
       {
         idPlan: "id-plan-random",
         dateTreatment: "18/10/2022",
+        createdAt: 123456789,
         cart: [
           {
             code: "T1",
