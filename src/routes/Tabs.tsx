@@ -23,14 +23,14 @@ const Tabs: React.FC = () => {
         <CartProvider>
           <Route exact path="/tabs/tab1" component={Tab1} />
           <ProfileProvider>
-            <PatientProvider>
-              <Route exact path="/tabs/tab2" component={Tab2} />
-              <Route path="/tabs/tab2/save-treatmentplan" component={SaveTreatmentPlan} />
-              <Route exact path="/tabs/tab3" component={Tab3} />
-              <Route exact path="/tabs/profile-preferences" component={ProfilePreferences} />
-              <Route exact path="/tabs/edit-settings" component={EditSettingsProfile} />
-              <Route path="/tabs/edit-plan" component={EditPLan} />
-            </PatientProvider>
+              <PatientProvider>
+                <Route exact path="/tabs/tab2" component={Tab2} />
+                <Route path="/tabs/tab2/save-treatmentplan" component={SaveTreatmentPlan} />
+                <Route exact path="/tabs/tab3" component={Tab3} />
+                <Route exact path="/tabs/profile-preferences" component={ProfilePreferences} />
+                <Route exact path="/tabs/edit-settings" component={EditSettingsProfile} />
+                <Route path="/tabs/edit-plan" component={EditPLan} />
+              </PatientProvider>
           </ProfileProvider>
         </CartProvider>
         <Route exact path="/tabs/re-authenticate" component={ReAuthForm} />
