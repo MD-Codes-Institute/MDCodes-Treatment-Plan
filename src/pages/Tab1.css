@@ -175,14 +175,168 @@
 .cluster-f .f-2{ top: 25vh; left: 20vh;} 
 .cluster-f .f-3{ top: 25vh; left: -5vh;}
 
-/*Acho que um intervalo de 50 px(pixels) é o ideia, pois ele consegue abranger variso dispositivos, porem apenas quando falamos de largura.
+/*Acho que um intervalo de 50 px(pixels) é o ideia, pois ele consegue abranger varios dispositivos, porem apenas quando falamos de largura.
 
   Quando falamos de altura, existem um conflito de alguns dispositivos, para isso apenas delimitamos um range maximo com foi feito para o ipad air e o Tab S11
   */
 
 /* EXEMPLO: distância diferente por breakpoint (todos os clusters) */
+@media (min-width:320px) and (max-width:379px){ /* Dispostivos similares ao Samsung Galaxy S8+ */
 
- @media (min-width:380px) and (max-width:430px){ /* dispostivos mobiles similares ao pixel 7 */
+  .cluster{
+     --r:48px;
+  }
+      /* Posicionando as regiões de cada código*/
+  .ck { top:53%; left:70%; } 
+  .e  { top:29%; left:49%; }
+  .o  { top:38.5%; left: 65%}
+  .t  { top:31%; left:72%; }
+  .tt { top:45%; left:46%; }
+  .nl { top:57%; left:42%; }
+  .m  { top:69%; left:50%; }
+  .jw { top:69%; left:70%; }
+  .c  { top:75%; left:20%; }
+  .lp { top:64%; left:18%; }
+  .n  { top:46%; left:16%; }
+  .g  { top:32%; left:19.5%; }
+  .f  { top:22%; left:24%; }
+
+
+
+  .cluster{ position:absolute; width:0; height:0; z-index:3; --r:56px; --rd:calc(var(--r) * 0.707); }
+  .child{ position:absolute; left:0; top:0; }
+
+
+    .img-c{
+    position:absolute; inset:0;
+    background-image:url("../resources/Rosto Frontal C.png");
+    transition: 0.2s;
+    background-size:110%; background-position: 340% 80%;
+    background-repeat: no-repeat;
+    will-change:transform; z-index:1;
+  }
+
+  .img-tt{
+    position:absolute; inset:0;
+    background-image:url("../resources/Rosto MDCI 2024 - Frontal_V5_FINAL.png");
+    transition: 0.2s;
+    background-size:150%; background-position: 110% 50%;
+    background-repeat: no-repeat;
+    will-change:transform; z-index:1;
+  }
+
+
+  .img-lp{
+    position:absolute; inset:0;
+    background-image:url("../resources/Rosto Frontal C.png");
+    transition: 0.2s;
+    background-size: 150%;
+    background-position: 70% 90%;
+    background-repeat: no-repeat;
+    will-change:transform; z-index:1;
+  }
+  
+  .img-f{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto MDCI 2024 - Frontal_V5_FINAL.png");
+  transition: 0.2s;
+  background-size:140.5%;
+   background-position: 125.5% -290.5%;
+  background-repeat: no-repeat;
+  will-change:transform; z-index:1;
+}
+
+.img-g{
+  position:absolute; inset:0;
+  background-image:url("../resources/Rosto MDCI 2024 - Frontal_V5_FINAL.png");
+  transition:0.2s;
+  background-size:142%;
+  background-position: 72% 95%;     /* 10px ≈ 1% */
+  background-repeat:no-repeat;
+  will-change:transform; z-index:1;
+
+}
+
+.point{
+    width:27px;          
+    height:27px;           
+    line-height:3px;     
+    font-size:0.7rem;       
+    box-shadow:0 0 10px rgba(0,0,0,.4);  
+  }
+
+  /* Posicionando os filhos (childs) */
+  .cluster-ck .ck-1{ top: -80px; left: 17px;} 
+  .cluster-ck .ck-2{ top: -45px; left: -35px;} 
+  .cluster-ck .ck-3{ top: -10px; left: -90px;} 
+  .cluster-ck .ck-4{ top: 10px; left: 28px;}
+  .cluster-ck .ck-5{ top: 50px; left: -60px;}
+
+  .cluster-e .e-1{ top: 45px; left: 90px;} 
+  .cluster-e .e-2{ top: 3px; left: 15px;} 
+  .cluster-e .e-3{ top: 25px; left: -90px;}
+
+  .cluster-o .o-1{ top: 6px; left: 30px;} 
+  .cluster-o .o-2{ top: 47px; left: 13px;} 
+  .cluster-o .o-3{ top: -30px; left: 10px;}
+
+  .cluster-t .t-1{ top: 35px; left: 9px;} 
+  .cluster-t .t-2{ top: 18px; left:45px;} 
+
+
+  .cluster-jw .jw-1{ top: -33px; left: -53px;} 
+  .cluster-jw .jw-2{ top: -125px; left: -38px;} 
+  .cluster-jw .jw-3{ top: 23px; left: -115px;} 
+  .cluster-jw .jw-4{ top: 72.5px; left: -210px;}
+  .cluster-jw .jw-5{ top: 82.9px; left: -260.3px;}
+
+  .cluster-nl .nl-1{ top: -15px; left: -20px;} 
+  .cluster-nl .nl-2{ top: 28px; left: 0px;} 
+  .cluster-nl .nl-3{ top: 75px; left: 15px;}
+
+  .cluster-n .n-1{ top: 105px; left: 15px;} 
+  .cluster-n .n-2{ top: 70px; left: 2px;} 
+  .cluster-n .n-3{ top: -79px; left: 25px;} 
+  .cluster-n .n-4{ top: -29px; left: 17px;}
+  .cluster-n .n-5{ top: 20px; left: 4px;}
+
+  .cluster-c .c-1{ top: -27.5px; left: 0px; }
+  .cluster-c .c-2{ top: 74.5px;  left: -19.5px; }
+  .cluster-c .c-3{ top: 12.3px;  left: 23px; }
+  .cluster-c .c-4{ top: 26.2px;  left: -10px; }
+  .cluster-c .c-5{ top: 55.1px;  left: 33.8px; }
+  .cluster-c .c-6{ top: -36.8px; left: 96.5px; }
+
+  .cluster-m .m-1{ top: -10px; left: -34.6px;} 
+  .cluster-m .m-2{ top: 23px; left: -10px;} 
+  .cluster-m .m-3{ top: 56px; left: 10px;}
+
+
+  .cluster-tt .tt-1{ top:130px;  left:-20px; }
+  .cluster-tt .tt-2{ top:100px;   left:85px; }
+  .cluster-tt .tt-3{ top:100px;   left:-125px; }
+
+  .cluster-lp .lp-2{  top:-28px;   left:65px; } /* Lp1 upper/Cima */
+  .cluster-lp .lp-1{  top:15px;    left:50px; } /*  Lp1 Lower/Baixo */
+  .cluster-lp .lp-3{  top:-70px; left:90px; } /* Lp2 */
+  .cluster-lp .lp-4{  top:-50px;left:180px; } /* Lp3 Upper/Cima */
+  .cluster-lp .lp-5{  top:50px; left:180px; } /* Lower/Baixo */
+  .cluster-lp .lp-6{  top:-17px; left:110px; } /* Lp4 */
+  .cluster-lp .lp-7{  top:25px; left:127px; } /* Lp5 */
+  .cluster-lp .lp-8{  top:-8px; left:-25px; } /* Lp6 */
+  .cluster-lp .lp-9{  top:-95px; left:137px;} /* Lp7 */
+  .cluster-lp .lp-10{ top:-80px;  left:215px; } /*  Lp8 Upper/Cima */
+  .cluster-lp .lp-11{ top:80px;   left:215px; } /* Lp8 Lower/Baixo*/
+
+  .cluster-g .g-1{ top: 45.2px;  left: 63.9px; } /* Lp1 Lower */
+  .cluster-g .g-2{ top: 45.2px;  left: 128.1px; } /* Lp1 Upper */
+  .cluster-g .g-3{ top: 70.2px; left: 97px; } /* Lp1 Upper */
+
+  .cluster-f .f-1{ top: 180.8px; left: 70px; } 
+  .cluster-f .f-2{ top: 180.8px; left: 150px; } 
+  .cluster-f .f-3{ top: 180.8px; left: -10px; }
+
+}@media (min-width:380px) and (max-width:430px){ /* dispostivos mobiles similares ao pixel 7 */
   .cluster{ --r:48px; }
  
 
