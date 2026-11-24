@@ -3,7 +3,8 @@
 .register-list input {
   color: white;
   background-color: var(--ion-background-inputs);
-  max-width: 80px;
+  width: fit-content;
+  max-width: 70px;
   padding: 4px !important;
   height: 35px;
   border-radius: 5px;
