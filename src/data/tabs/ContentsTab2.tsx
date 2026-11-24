@@ -13,6 +13,7 @@ export const volumes = [
   "0.8",
   "0.9",
   "1",
+  'Other'
 ];
 export const products = ["VM", "VX", "VL", "VB", "BTX", "HACA", "SKV", "VT"];
 
