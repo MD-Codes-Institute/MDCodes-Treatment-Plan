@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 export interface CartItem {
   code: string;
@@ -14,7 +15,11 @@ interface CartContextValue {
 
 const CartContext = createContext<CartContextValue | undefined>(undefined);
 
-export default function CartProvider({ children }: { children: React.ReactNode }) {
+export default function CartProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [cart, setCart] = useState<CartItem[]>(() => {
     const rawCart = localStorage.getItem("codeList");
     return rawCart ? (JSON.parse(rawCart) as CartItem[]) : [];
@@ -26,19 +31,24 @@ export default function CartProvider({ children }: { children: React.ReactNode }
 
   const addToCart = (code: string, region: string): void => {
     setCart((prev) => [...prev, { code, region }]);
+    toast.success("Added to the Treatment Plan");
   };
 
   const removeItemCart = (indice: number): void => {
     setCart((prev) => prev.filter((_, i) => indice !== i));
+    toast.success("Removed from the flip chart");
   };
 
   const deleteCart = (): void => {
     localStorage.removeItem("codeList");
+    toast.success("Delete flip chart");
     window.location.reload();
   };
 
   return (
-    <CartContext.Provider value={{ cart, setCart, addToCart, removeItemCart, deleteCart }}>
+    <CartContext.Provider
+      value={{ cart, setCart, addToCart, removeItemCart, deleteCart }}
+    >
       {children}
     </CartContext.Provider>
   );
@@ -47,7 +57,9 @@ export default function CartProvider({ children }: { children: React.ReactNode }
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
-    throw new Error("O useCart deve ser usado dentro de um provider. Tab1 ou Tab2");
+    throw new Error(
+      "O useCart deve ser usado dentro de um provider. Tab1 ou Tab2"
+    );
   }
   return context;
 };
